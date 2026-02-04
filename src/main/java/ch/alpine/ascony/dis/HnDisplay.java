@@ -37,7 +37,7 @@ public abstract class HnDisplay implements ManifoldDisplay, Serializable {
 
   @Override // from ManifoldDisplay
   public final Tensor xya2point(Tensor xya) {
-//    return HnWeierstrassCoordinate.toPoint(xya.extract(0, dimensions));
+    // return HnWeierstrassCoordinate.toPoint(xya.extract(0, dimensions));
     return xya.extract(0, dimensions);
   }
 
@@ -48,7 +48,7 @@ public abstract class HnDisplay implements ManifoldDisplay, Serializable {
 
   @Override // from ManifoldDisplay
   public final TensorUnaryOperator tangentProjection(Tensor xyz) {
-    return v->v;
+    return v -> v;
   }
 
   @Override // from ManifoldDisplay
@@ -76,7 +76,7 @@ public abstract class HnDisplay implements ManifoldDisplay, Serializable {
     Distribution distribution = UniformDistribution.of(CLIP);
     return randomGenerator -> {
       // return VectorQ.requireLength(RandomVariate.of(distribution, random, 2).append(RealScalar.ZERO), 3);
-//      return HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, randomGenerator, dimensions));
+      // return HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, randomGenerator, dimensions));
       return RandomVariate.of(distribution, randomGenerator, dimensions);
     };
   }

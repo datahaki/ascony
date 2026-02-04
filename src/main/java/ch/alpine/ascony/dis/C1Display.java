@@ -55,7 +55,6 @@ public enum C1Display implements ManifoldDisplay, D2Raster {
   @Override
   public Tensor point2xy(Tensor p) {
     return ReIm.of((Scalar) p).vector();
-    
   }
 
   @Override

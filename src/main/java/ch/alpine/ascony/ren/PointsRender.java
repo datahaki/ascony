@@ -10,10 +10,10 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
 public record PointsRender(Color color_fill, Color color_draw) {
-
   public RenderInterface show(TensorUnaryOperator matrixLift, Tensor shape, Tensor points) {
     return new Show(matrixLift, shape, points);
   }
+
   private class Show implements RenderInterface {
     private final TensorUnaryOperator matrixLift;
     private final Tensor shape;

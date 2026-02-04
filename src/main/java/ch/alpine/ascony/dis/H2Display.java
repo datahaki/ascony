@@ -18,7 +18,7 @@ public class H2Display extends HnDisplay implements D2Raster {
 
   @Override // from HsArrayPlot
   public Optional<Tensor> d2lift(Tensor pxy) {
-//    return Optional.of(HnWeierstrassCoordinate.toPoint(pxy));
+    // return Optional.of(HnWeierstrassCoordinate.toPoint(pxy));
     return Optional.of(pxy);
   }
 
