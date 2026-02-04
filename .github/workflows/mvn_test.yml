@@ -27,7 +27,7 @@ jobs:
           repository: datahaki/tensor
           path: tensor
       - name: build and install tensor
-        run: mvn install -DskipTests
+        run: mvn -B --no-transfer-progress install -DskipTests
         working-directory: ./tensor
 
       - name: checkout sophus
@@ -36,7 +36,7 @@ jobs:
           repository: datahaki/sophus
           path: sophus
       - name: build and install sophus
-        run: mvn install -DskipTests
+        run: mvn -B --no-transfer-progress install -DskipTests
         working-directory: ./sophus
 
       - name: checkout sophis
@@ -45,7 +45,7 @@ jobs:
           repository: datahaki/sophis
           path: sophis
       - name: build and install sophis
-        run: mvn install -DskipTests
+        run: mvn -B --no-transfer-progress install -DskipTests
         working-directory: ./sophis
 
       - name: checkout bridge
@@ -54,14 +54,14 @@ jobs:
           repository: datahaki/bridge
           path: bridge
       - name: build and install bridge
-        run: mvn install -DskipTests
+        run: mvn -B --no-transfer-progress install -DskipTests
         working-directory: ./bridge
 
       - name: mvn test
         shell: bash
         run: |
           if [ "$RUNNER_OS" == "Linux" ]; then
-            xvfb-run --auto-servernum mvn test -B
+            xvfb-run --auto-servernum mvn -B test
           else
-            mvn test -B
+            mvn -B test
           fi

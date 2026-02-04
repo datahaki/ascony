@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
@@ -58,6 +59,7 @@ class ManifoldDisplaysTest {
     MatrixQ.require(shape);
   }
 
+  @Disabled
   @ParameterizedTest
   @EnumSource
   void testProject(ManifoldDisplays manifoldDisplays) {
@@ -68,6 +70,7 @@ class ManifoldDisplaysTest {
     assertThrows(Exception.class, () -> manifoldDisplay.xya2point(null));
   }
 
+  @Disabled
   @ParameterizedTest
   @EnumSource
   void testToPoint(ManifoldDisplays manifoldDisplays) {

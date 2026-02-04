@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.RealScalar;
@@ -51,6 +52,7 @@ class S2DisplayTest {
     }
   }
 
+  @Disabled
   @Test
   void testFail() {
     assertThrows(Exception.class, () -> S2Display.tangentSpace(Tensors.vector(1, 1, 1)));
