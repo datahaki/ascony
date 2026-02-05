@@ -3,7 +3,7 @@ package ch.alpine.ascony.dis;
 
 import ch.alpine.sophis.crv.clt.ClothoidBuilder;
 import ch.alpine.sophis.crv.clt.ClothoidBuilders;
-import ch.alpine.sophis.crv.clt.ClothoidTransitionSpace;
+import ch.alpine.sophis.ts.ClothoidTransitionSpace;
 import ch.alpine.sophis.ts.TransitionSpace;
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.tensor.Tensor;

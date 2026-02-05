@@ -26,7 +26,7 @@ public class InsideConvexHullLogWeighting implements LogWeighting {
       ScalarUnaryOperator variogram, // <- ignored
       Tensor sequence) {
     return HsGenesis.wrap( //
-        biinvariant.hsDesign(), //
+        biinvariant.manifold(), //
         new InsideConvexHullCoordinate(genesis), //
         sequence);
   }

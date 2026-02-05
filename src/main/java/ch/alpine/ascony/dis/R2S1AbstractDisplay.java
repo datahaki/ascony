@@ -3,7 +3,7 @@ package ch.alpine.ascony.dis;
 
 import java.io.Serializable;
 
-import ch.alpine.sophis.crv.d2.Arrowhead;
+import ch.alpine.sophis.crv.d2.ex.Arrowhead;
 import ch.alpine.sophis.decim.LineDistance;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.sophus.lie.so2.So2;

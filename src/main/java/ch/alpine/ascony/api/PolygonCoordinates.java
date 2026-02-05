@@ -75,7 +75,7 @@ public enum PolygonCoordinates implements LogWeighting {
       ScalarUnaryOperator variogram, // <- ignored
       Tensor sequence) {
     return HsGenesis.wrap( //
-        biinvariant.hsDesign(), //
+        biinvariant.manifold(), //
         CONVEX.contains(this) //
             ? new InsideConvexHullCoordinate(genesis)
             : new InsidePolygonCoordinate(genesis), //

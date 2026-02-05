@@ -6,7 +6,7 @@ import java.io.Serializable;
 import ch.alpine.ascony.ren.EmptyRender;
 import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.sophis.crv.clt.ClothoidBuilder;
-import ch.alpine.sophis.crv.d2.Arrowhead;
+import ch.alpine.sophis.crv.d2.ex.Arrowhead;
 import ch.alpine.sophis.decim.LineDistance;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.Tensor;

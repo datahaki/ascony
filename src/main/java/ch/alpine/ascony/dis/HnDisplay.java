@@ -3,7 +3,7 @@ package ch.alpine.ascony.dis;
 
 import java.io.Serializable;
 
-import ch.alpine.sophis.crv.d2.StarPoints;
+import ch.alpine.sophis.crv.d2.ex.StarPoints;
 import ch.alpine.sophis.decim.LineDistance;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.h.Hyperboloid;

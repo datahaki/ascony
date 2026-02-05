@@ -2,9 +2,9 @@
 package ch.alpine.ascony.dis;
 
 import ch.alpine.ascony.ren.RenderInterface;
-import ch.alpine.sophis.crv.UniformTransitionSpace;
 import ch.alpine.sophis.decim.LineDistance;
 import ch.alpine.sophis.ts.TransitionSpace;
+import ch.alpine.sophis.ts.UniformTransitionSpace;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.LieGroup;

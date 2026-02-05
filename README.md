@@ -1,10 +1,10 @@
 ![alpine_877](https://user-images.githubusercontent.com/4012178/116814864-1b1a1580-ab5b-11eb-97e6-1441af4ececa.png)
 
-# ch.alpine.ascona
+# ch.alpine.ascony
 
-Computational non-linear geometry demos in Java 17
+Computational non-linear geometry demo utils in Java 25
 
-![](https://github.com/datahaki/ascona/actions/workflows/mvn_test.yml/badge.svg)
+![](https://github.com/datahaki/ascony/actions/workflows/mvn_test.yml/badge.svg)
 
 ## Student Projects
 
@@ -45,33 +45,7 @@ Clothoid
 A geodesic average is the generalization of an affine combination from the Euclidean space to a non-linear space.
 A geodesic average consists of a nested binary averages.
 Generally, an affine combination does not have a unique expression as a geodesic average.
-Instead, several geodesic averages reduce to the same affine combination when applied in Euclidean space. 
-
-## Integration
-
-Specify `repository` and `dependency` of the owl library in the `pom.xml` file of your maven project:
-
-```xml
-<dependencies>
-  <dependency>
-    <groupId>ch.alpine</groupId>
-    <artifactId>ascona</artifactId>
-    <version>0.0.1</version>
-  </dependency>
-</dependencies>
-
-<repositories>
-  <repository>
-    <id>ascona-mvn-repo</id>
-    <url>https://raw.github.com/datahaki/ascona/mvn-repo/</url>
-    <snapshots>
-      <enabled>true</enabled>
-      <updatePolicy>always</updatePolicy>
-    </snapshots>
-  </repository>
-</repositories>
-
-```
+Instead, several geodesic averages reduce to the same affine combination when applied in Euclidean space.
 
 ## Contributors
 

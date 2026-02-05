@@ -97,7 +97,7 @@ public enum LogWeightings implements LogWeighting {
     @Override // from LogWeighting
     public Sedarim sedarim(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
       return new KrigingCoordinate( //
-          biinvariant.hsDesign(), //
+          biinvariant.manifold(), //
           biinvariant.var_dist(variogram, sequence), //
           sequence);
     }
@@ -115,7 +115,7 @@ public enum LogWeightings implements LogWeighting {
     @Override // from LogWeighting
     public Sedarim sedarim(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
       return new InverseCoordinate( //
-          biinvariant.hsDesign(), //
+          biinvariant.manifold(), //
           biinvariant.var_dist(variogram, sequence), //
           sequence);
     }
