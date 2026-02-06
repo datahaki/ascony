@@ -14,12 +14,12 @@ import ch.alpine.sophis.dv.LeveragesGenesis;
 import ch.alpine.sophis.dv.MetricBiinvariant;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophis.gbc.amp.Amplifiers;
-import ch.alpine.sophis.gbc.d2.Barycenter;
 import ch.alpine.sophis.gbc.d2.InsideConvexHullCoordinate;
 import ch.alpine.sophis.gbc.d2.InsidePolygonCoordinate;
 import ch.alpine.sophis.gbc.d2.IterativeCoordinate;
 import ch.alpine.sophis.gbc.d2.IterativeMeanValueCoordinate;
 import ch.alpine.sophis.gbc.d2.ThreePointCoordinate;
+import ch.alpine.sophis.gbc.d2.ThreePointScalings;
 import ch.alpine.sophis.gbc.it.IterativeAffineCoordinate;
 import ch.alpine.sophis.gbc.it.IterativeTargetCoordinate;
 import ch.alpine.sophus.lie.rn.RGroup;
@@ -32,14 +32,14 @@ import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 public enum PolygonCoordinates implements LogWeighting {
-  MEAN_VALUE(ThreePointCoordinate.of(Barycenter.MEAN_VALUE)),
+  MEAN_VALUE(ThreePointCoordinate.of(ThreePointScalings.MEAN_VALUE)),
   // CIRCULAR(CircularCoordinate.INSTANCE), //
   ITERATIVE_MV_1(IterativeMeanValueCoordinate.of(1)),
   ITERATIVE_MV_2(IterativeMeanValueCoordinate.of(2)),
   ITERATIVE_MV_3(IterativeMeanValueCoordinate.of(3)),
   ITERATIVE_MV_5(IterativeMeanValueCoordinate.of(5)),
-  WACHSPRESS(ThreePointCoordinate.of(Barycenter.WACHSPRESS)),
-  DISCRETE_HARMONIC(ThreePointCoordinate.of(Barycenter.DISCRETE_HARMONIC)),
+  WACHSPRESS(ThreePointCoordinate.of(ThreePointScalings.WACHSPRESS)),
+  DISCRETE_HARMONIC(ThreePointCoordinate.of(ThreePointScalings.DISCRETE_HARMONIC)),
   INVERSE_DISTANCE(new MetricBiinvariant(RGroup.INSTANCE).coordinate(InversePowerVariogram.of(2))),
   LAGRANG_DISTANCE(new LagrangeCoordinate(new MetricBiinvariant(RGroup.INSTANCE).weighting(InversePowerVariogram.of(2)))),
   ITER_TARGET(new IterativeTargetCoordinate(new MetricBiinvariant(RGroup.INSTANCE).weighting(InversePowerVariogram.of(2)), RealScalar.ONE, 50)),

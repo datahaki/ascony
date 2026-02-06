@@ -20,7 +20,7 @@ import ch.alpine.tensor.mat.GaussianMatrix;
       matrix = matrix.map(scalar -> Scalars.lessThan(RealScalar.of(0.001), scalar) ? scalar : DoubleScalar.INDETERMINATE);
       Tensor image = Raster.of(matrix, colorDataFunction);
       System.out.println(Dimensions.of(image));
-      Export.of(HomeDirectory.Pictures(colorDataFunction.name() + ".png"), image);
+      Export.of(HomeDirectory.Pictures.resolve(colorDataFunction.name() + ".png"), image);
     }
   }
 }

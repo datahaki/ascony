@@ -2,6 +2,7 @@
 package ch.alpine.ascony.win;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -41,7 +42,7 @@ public class TimerFrame extends BaseFrame {
       jToggleButton.addActionListener(_ -> {
         if (jToggleButton.isSelected() && Objects.isNull(_animationWriter)) {
           try {
-            File file = HomeDirectory.Videos(String.format("ascona_%d_%s.%s", //
+            Path file = HomeDirectory.Videos.resolve(String.format("ascona_%d_%s.%s", //
                 System.currentTimeMillis(), //
                 jFrame.getTitle(), //
                 VIDEO_FORMAT));
