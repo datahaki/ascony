@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.OutputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 import javax.imageio.ImageIO;
@@ -45,12 +47,12 @@ public class BaseFrame {
       }
       jButton.setToolTipText("snapshot is stored in ~/Pictures/...");
       jButton.addActionListener(_ -> {
-        try {
-          Path file = HomeDirectory.Pictures.resolve(String.format("ascona_%d_%s.%s", //
-              System.currentTimeMillis(), //
-              jFrame.getTitle(), //
-              IMAGE_FORMAT));
-          ImageIO.write(offscreen(), IMAGE_FORMAT, file.toFile());
+        Path path = HomeDirectory.Pictures.resolve(String.format("ascona_%d_%s.%s", //
+            System.currentTimeMillis(), //
+            jFrame.getTitle(), //
+            IMAGE_FORMAT));
+        try (OutputStream inputStream = Files.newOutputStream(path)) {
+          ImageIO.write(offscreen(), IMAGE_FORMAT, inputStream);
         } catch (Exception exception) {
           exception.printStackTrace();
         }

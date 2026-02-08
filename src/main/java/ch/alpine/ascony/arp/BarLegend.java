@@ -15,7 +15,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import ch.alpine.bridge.awt.RenderQuality;
-import ch.alpine.bridge.lang.Unicode;
+import ch.alpine.bridge.lang.UnicodeString;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensors;
@@ -30,7 +30,7 @@ import ch.alpine.tensor.sca.Clips;
  * <a href="https://reference.wolfram.com/language/ref/BarLegend.html">BarLegend</a> */
 public class BarLegend {
   public static BarLegend of(ScalarTensorFunction colorDataGradient, Clip clip, Set<Scalar> set) {
-    return new BarLegend(colorDataGradient, clip, set.stream().collect(Collectors.toMap(s -> s, Unicode::valueOf)));
+    return new BarLegend(colorDataGradient, clip, set.stream().collect(Collectors.toMap(s -> s, UnicodeString::of)));
   }
 
   private final ScalarTensorFunction colorDataGradient;
