@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.ascony.win;
 
-import java.io.File;
 import java.nio.file.Path;
 import java.util.Objects;
 import java.util.Timer;
