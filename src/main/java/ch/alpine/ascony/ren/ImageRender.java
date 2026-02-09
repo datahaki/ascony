@@ -28,9 +28,9 @@ public class ImageRender implements RenderInterface {
     Clip clipX = coordinateBoundingBox.clip(0);
     Clip clipY = coordinateBoundingBox.clip(1);
     Tensor range = Tensors.of(clipX.width(), clipY.width());
-    Tensor scale = Times.of(Tensors.vector(w, h), range.map(Scalar::reciprocal));
+    Tensor scale = Times.of(Tensors.vector(w, h), range.maps(Scalar::reciprocal));
     Tensor mat = Se2Matrix.translation(Tensors.of(clipX.min(), clipY.min()));
-    return mat.dot(Times.of(Append.of(scale.map(Scalar::reciprocal), RealScalar.ONE), Se2Matrix.flipY(h)));
+    return mat.dot(Times.of(Append.of(scale.maps(Scalar::reciprocal), RealScalar.ONE), Se2Matrix.flipY(h)));
   }
 
   public static boolean DRAW_BOX = false;

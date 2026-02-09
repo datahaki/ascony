@@ -59,7 +59,7 @@ public class BarLegend {
     BufferedImage bufferedImage = new BufferedImage(width + maxWidth, height, BufferedImage.TYPE_INT_ARGB);
     Graphics2D graphics = bufferedImage.createGraphics();
     graphics.drawImage( //
-        ImageFormat.of(Subdivide.decreasing(Clips.unit(), height - 1).map(Tensors::of).map(colorDataGradient)), //
+        ImageFormat.of(Subdivide.decreasing(Clips.unit(), height - 1).maps(Tensors::of).maps(colorDataGradient)), //
         0, //
         0, //
         width, //

@@ -98,6 +98,6 @@ import ch.alpine.tensor.sca.Round;
 
   public static String nice(Scalar scalar, int maxLength) {
     String string = scalar.toString();
-    return maxLength < string.length() ? scalar.map(Round._4).toString() : string;
+    return maxLength < string.length() ? scalar.maps(Round._4).toString() : string;
   }
 }

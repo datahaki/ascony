@@ -31,7 +31,7 @@ public class ArrayPlotImage {
    * @param clip of data range before {@link Rescale}
    * @param colorDataGradient */
   public ArrayPlotImage(Tensor matrix, Clip clip, ScalarTensorFunction colorDataGradient, Set<Scalar> set) {
-    bufferedImage = ImageFormat.of(matrix.map(colorDataGradient));
+    bufferedImage = ImageFormat.of(matrix.maps(colorDataGradient));
     barLegend = BarLegend.of(colorDataGradient, clip, set);
   }
 

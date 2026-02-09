@@ -37,7 +37,7 @@ public class CurveVisualSet {
   public void addArcTan(Show show, Tensor refined) {
     Tensor arcTan2D = Tensor.of(differences.stream().map(ArcTan2D::of));
     Tensor extract = refined.get(Tensor.ALL, 2).extract(0, arcTan2D.length());
-    Showable showable = show.add(ListLinePlot.of(arcLength0, arcTan2D.subtract(extract).map(So2.MOD)));
+    Showable showable = show.add(ListLinePlot.of(arcLength0, arcTan2D.subtract(extract).maps(So2.MOD)));
     showable.setLabel("arcTan[dx, dy] - phase");
   }
 

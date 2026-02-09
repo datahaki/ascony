@@ -1,9 +1,12 @@
 // code by jph
 package ch.alpine.ascony.win;
 
+import java.lang.StackWalker.Option;
+import java.lang.StackWalker.StackFrame;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.bridge.awt.WindowBounds;
@@ -23,20 +26,26 @@ public abstract class AbstractDemo implements RenderInterface {
     ReflectionMarkers.INSTANCE.DEBUG_PRINT.set(true);
     LookAndFeels.LIGHT.updateComponentTreeUI();
     // ---
-    // TODO stackwalker
-    StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
-    StackTraceElement stackTraceElement = stackTraceElements[2];
-    try {
-      String clsName = stackTraceElement.getClassName();
-      return run(Class.forName(clsName));
-    } catch (Exception exception) {
-      throw new RuntimeException(exception);
+    StackWalker stackWalker = StackWalker.getInstance(Option.RETAIN_CLASS_REFERENCE);
+    Optional<StackFrame> optional = stackWalker.walk(stream -> stream //
+        .skip(1) // skip AbstractDemo
+        .findFirst());
+    if (optional.isPresent()) {
+      String clsName = optional.orElseThrow().getClassName();
+      try {
+        return run(Class.forName(clsName));
+      } catch (Exception exception) {
+        throw new RuntimeException(exception);
+      }
+    } else {
+      System.err.println("nothing found");
+      throw new RuntimeException("no entry");
     }
   }
 
   public static AbstractDemo run(Class<?> cls) {
     try {
-      Constructor<?> constructor = cls.getConstructor();
+      Constructor<?> constructor = cls.getDeclaredConstructor();
       AbstractDemo abstractDemo = (AbstractDemo) constructor.newInstance();
       WindowBounds.persistent(abstractDemo.timerFrame.jFrame, WINDOW.properties(cls));
       abstractDemo.timerFrame.jFrame.setVisible(true);

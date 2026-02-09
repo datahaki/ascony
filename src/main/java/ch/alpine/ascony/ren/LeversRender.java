@@ -187,7 +187,7 @@ public class LeversRender {
     for (Tensor p : sequence) {
       ScalarTensorFunction scalarTensorFunction = geodesicSpace.curve(origin, p);
       Tensor domain = Subdivide.of(0, 1, 21);
-      Tensor ms = Tensor.of(domain.map(scalarTensorFunction).stream().map(manifoldDisplay::point2xy));
+      Tensor ms = Tensor.of(domain.maps(scalarTensorFunction).stream().map(manifoldDisplay::point2xy));
       Tensor rgba = COLOR_DATA_GRADIENT.apply(rescale.Get(index));
       graphics.setColor(ColorFormat.toColor(rgba));
       graphics.draw(geometricLayer.toPath2D(ms));
@@ -207,7 +207,7 @@ public class LeversRender {
         ScalarTensorFunction scalarTensorFunction = geodesicSpace.curve(origin, point);
         Tensor ms = manifoldDisplay.point2xy(scalarTensorFunction.apply(RationalScalar.HALF));
         Point2D point2d = geometricLayer.toPoint2D(ms);
-        String string = "" + d.map(Round._3);
+        String string = "" + d.maps(Round._3);
         int width = fontMetrics.stringWidth(string);
         int pix = (int) point2d.getX() - width / 2;
         int piy = (int) point2d.getY() + fheight / 2;
@@ -375,7 +375,7 @@ public class LeversRender {
     for (int index = 0; index < sequence.length(); ++index) {
       Tensor prev = sequence.get(Math.floorMod(index - 1, sequence.length()));
       Tensor next = sequence.get(index);
-      DOMAIN.map(manifoldDisplay.geodesicSpace().curve(prev, next)).stream() //
+      DOMAIN.maps(manifoldDisplay.geodesicSpace().curve(prev, next)).stream() //
           .map(manifoldDisplay::point2xy) //
           .forEach(all::append);
     }
@@ -391,7 +391,7 @@ public class LeversRender {
     graphics.setFont(FONT_MATRIX);
     MatrixRender matrixRender = MatrixRender.arcTan(graphics, CONSTANT, colorDataGradient);
     Tensor alt = Tensors.of(Eigensystem.ofSymmetric(mahalanobis.sigma_n()).values());
-    renderMatrix(p, matrixRender, Transpose.of(alt.map(Round._4)));
+    renderMatrix(p, matrixRender, Transpose.of(alt.maps(Round._4)));
   }
 
   public static boolean form_shadow = false;

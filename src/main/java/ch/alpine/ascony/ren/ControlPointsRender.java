@@ -219,7 +219,7 @@ public class ControlPointsRender implements RenderInterface {
   public final void setControlPointsSe2(Tensor control) {
     min_index = null;
     this.control = Tensor.of(control.stream() //
-        .map(row -> VectorQ.requireLength(row, 3).map(Tensor::copy)));
+        .map(row -> VectorQ.requireLength(row, 3).maps(Tensor::copy)));
   }
 
   /** @return control points as matrix of dimensions N x 3 */
@@ -240,7 +240,7 @@ public class ControlPointsRender implements RenderInterface {
         .skip(skip) //
         .limit(maxSize) //
         .map(manifoldDisplay()::xya2point) //
-        .map(tensor -> tensor.map(N.DOUBLE)));
+        .map(tensor -> tensor.maps(N.DOUBLE)));
   }
 
   public final ManifoldDisplay manifoldDisplay() {

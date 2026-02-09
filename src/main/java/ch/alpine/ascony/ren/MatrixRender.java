@@ -47,7 +47,7 @@ public class MatrixRender {
   }
 
   public void renderMatrix(Tensor matrix, int pix, int piy) {
-    Tensor rounded = matrix.map(round);
+    Tensor rounded = matrix.maps(round);
     FontMetrics fontMetrics = graphics.getFontMetrics();
     int fheight = fontMetrics.getAscent();
     int max = Flatten.stream(rounded, -1) //

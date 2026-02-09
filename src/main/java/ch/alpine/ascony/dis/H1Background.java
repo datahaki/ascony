@@ -16,11 +16,11 @@ import ch.alpine.tensor.sca.pow.Power;
   INSTANCE;
 
   private static final Color BORDER = new Color(192, 192, 192, 128);
-  private static final Tensor H1_DOMAIN = Subdivide.of(-2.0, 2.0, 20).map(Power.function(3));
+  private static final Tensor H1_DOMAIN = Subdivide.of(-2.0, 2.0, 20).maps(Power.function(3));
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    Tensor points = Tensor.of(H1_DOMAIN.map(Tensors::of).stream() //
+    Tensor points = Tensor.of(H1_DOMAIN.maps(Tensors::of).stream() //
         .map(HWeierstrassCoordinate::new) //
         .map(HWeierstrassCoordinate::toPoint));
     // ---
