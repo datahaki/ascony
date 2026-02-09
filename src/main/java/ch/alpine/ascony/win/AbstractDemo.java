@@ -23,6 +23,7 @@ public abstract class AbstractDemo implements RenderInterface {
     ReflectionMarkers.INSTANCE.DEBUG_PRINT.set(true);
     LookAndFeels.LIGHT.updateComponentTreeUI();
     // ---
+    // TODO stackwalker
     StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
     StackTraceElement stackTraceElement = stackTraceElements[2];
     try {
