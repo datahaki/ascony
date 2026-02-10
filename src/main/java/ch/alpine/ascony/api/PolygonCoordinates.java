@@ -8,7 +8,7 @@ import java.util.Set;
 
 import ch.alpine.sophis.dv.AffineCoordinate;
 import ch.alpine.sophis.dv.Biinvariant;
-import ch.alpine.sophis.dv.HsGenesis;
+import ch.alpine.sophis.dv.HsCoordinates;
 import ch.alpine.sophis.dv.LagrangeCoordinate;
 import ch.alpine.sophis.dv.LeveragesGenesis;
 import ch.alpine.sophis.dv.MetricBiinvariant;
@@ -74,7 +74,7 @@ public enum PolygonCoordinates implements LogWeighting {
       Biinvariant biinvariant, // <- only used to generate hsDesign
       ScalarUnaryOperator variogram, // <- ignored
       Tensor sequence) {
-    return HsGenesis.wrap( //
+    return HsCoordinates.wrap( //
         biinvariant.manifold(), //
         CONVEX.contains(this) //
             ? new InsideConvexHullCoordinate(genesis)

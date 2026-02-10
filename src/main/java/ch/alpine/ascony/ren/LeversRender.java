@@ -478,8 +478,8 @@ public class LeversRender {
   public void renderInfluenceX(ColorDataGradient colorDataGradient) {
     if (Tensors.nonEmpty(sequence)) {
       Manifold manifold = (Manifold) manifoldDisplay.geodesicSpace();
-      Tensor design = manifold.exponential(origin).log().slash(sequence);
-      Tensor matrix = InfluenceMatrix.of(design).matrix();
+      Tensor levers = manifold.exponential(origin).log().slash(sequence);
+      Tensor matrix = InfluenceMatrix.of(levers).matrix();
       // ---
       graphics.setFont(FONT_MATRIX);
       MatrixRender matrixRender = MatrixRender.absoluteOne(graphics, CONSTANT, colorDataGradient);

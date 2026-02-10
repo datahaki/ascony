@@ -4,7 +4,7 @@ package ch.alpine.ascony.api;
 import java.util.Objects;
 
 import ch.alpine.sophis.dv.Biinvariant;
-import ch.alpine.sophis.dv.HsGenesis;
+import ch.alpine.sophis.dv.HsCoordinates;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophis.gbc.d2.InsideConvexHullCoordinate;
 import ch.alpine.sophus.math.Genesis;
@@ -25,7 +25,7 @@ public class InsideConvexHullLogWeighting implements LogWeighting {
       Biinvariant biinvariant, // only used for hsDesign
       ScalarUnaryOperator variogram, // <- ignored
       Tensor sequence) {
-    return HsGenesis.wrap( //
+    return HsCoordinates.wrap( //
         biinvariant.manifold(), //
         new InsideConvexHullCoordinate(genesis), //
         sequence);
