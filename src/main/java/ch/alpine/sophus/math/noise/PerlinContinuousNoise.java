@@ -38,6 +38,11 @@ public enum PerlinContinuousNoise implements NativeContinuousNoise {
     return lerp(w, lerp(v, i1a, i1b), lerp(v, i2a, i2b));
   }
 
+  @Override
+  public double at(double x, double y, double z, double w) {
+    throw new UnsupportedOperationException();
+  }
+
   /** smooth transition function f:[0, 1] -> [0, 1] with
    * f(0) == 0
    * f(1) == 1

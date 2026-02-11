@@ -6,6 +6,7 @@ import java.util.random.RandomGenerator;
 
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.pdf.Distribution;
 
 /* Adapted version of 'PinkNoise.java' to 'ColoredNoise.java'
@@ -43,13 +44,9 @@ import ch.alpine.tensor.pdf.Distribution;
  * 
  * @author Sampo Niskanen <sampo.niskanen@iki.fi> */
 public class ColoredNoise implements Distribution {
-  private final int poles;
-  private final double[] multipliers;
-  private final double[] values;
-
   /** Generate White noise by choosing the color alpha, using a five-pole IIR. */
-  public ColoredNoise() {
-    this(0.0);
+  public static Distribution white() {
+    return new ColoredNoise(0.0, 5, ThreadLocalRandom.current());
   }
 
   /** Generate a specific colored noise using a five-pole IIR.
@@ -61,9 +58,17 @@ public class ColoredNoise implements Distribution {
    * @param alpha = 1: Pink Noise
    * @param alpha = 2: Brownian Noise
    * @throws IllegalArgumentException: if <code>alpha < 0</code> or <code>alpha > 2</code>. */
-  public ColoredNoise(double alpha) {
-    this(alpha, 5);
+  public static Distribution of(double alpha, RandomGenerator randomGenerator) {
+    return new ColoredNoise(alpha, 5, ThreadLocalRandom.current());
   }
+
+  public static Distribution of(double alpha) {
+    return of(alpha, ThreadLocalRandom.current());
+  }
+
+  private final double alpha;
+  private final double[] multipliers;
+  private final double[] values;
 
   /** Generate colored noise specifying alpha and the number of poles. The larger
    * the number of poles, the lower are the lowest frequency components that
@@ -78,8 +83,8 @@ public class ColoredNoise implements Distribution {
    * @param alpha = 2: Brownian Noise
    * @param poles: the number of poles to use.
    * @throws IllegalArgumentException: if <code>alpha < 0</code> or <code>alpha > 2</code>. */
-  public ColoredNoise(double alpha, int poles) {
-    this.poles = poles;
+  private ColoredNoise(double alpha, int poles, RandomGenerator randomGenerator) {
+    this.alpha = alpha;
     this.multipliers = new double[poles];
     this.values = new double[poles];
     double a = 1;
@@ -89,27 +94,28 @@ public class ColoredNoise implements Distribution {
     }
     // Fill the history with random values
     for (int i = 0; i < 5 * poles; ++i)
-      nextValue(ThreadLocalRandom.current());
+      nextValue(randomGenerator);
   }
 
   /** @return the next pink noise sample. */
-  public double nextValue(RandomGenerator randomGenerator) {
+  private double nextValue(RandomGenerator randomGenerator) {
     /* The following may be changed to rnd.nextDouble()-0.5 if strict
      * Gaussian distribution of resulting values is not required. */
     double x = randomGenerator.nextGaussian();
-    for (int i = 0; i < poles; ++i)
+    for (int i = 0; i < values.length; ++i)
       x -= multipliers[i] * values[i];
     System.arraycopy(values, 0, values, 1, values.length - 1);
     values[0] = x;
     return x;
   }
 
-  public double nextValue() {
-    return nextValue(ThreadLocalRandom.current());
-  }
-
   @Override
   public Scalar randomVariate(RandomGenerator randomGenerator) {
     return RealScalar.of(nextValue(randomGenerator));
+  }
+
+  @Override
+  public String toString() {
+    return MathematicaFormat.concise("ColoredNoise", alpha);
   }
 }

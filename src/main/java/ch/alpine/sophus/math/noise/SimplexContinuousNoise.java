@@ -1,10 +1,6 @@
 // code by stegu
 package ch.alpine.sophus.math.noise;
 
-import ch.alpine.tensor.DoubleScalar;
-import ch.alpine.tensor.Scalar;
-import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.api.TensorScalarFunction;
 
 /** A speed-improved simplex noise algorithm for 2D, 3D and 4D in Java.
@@ -23,52 +19,52 @@ public enum SimplexContinuousNoise implements NativeContinuousNoise, TensorScala
   FUNCTION;
 
   private static final Grad[] GRAD3 = { //
-      new Grad(1, 1, 0), //
-      new Grad(-1, 1, 0), //
-      new Grad(1, -1, 0), //
-      new Grad(-1, -1, 0), //
-      new Grad(1, 0, 1), //
-      new Grad(-1, 0, 1), //
-      new Grad(1, 0, -1), //
-      new Grad(-1, 0, -1), //
-      new Grad(0, 1, 1), //
-      new Grad(0, -1, 1), //
-      new Grad(0, 1, -1), //
-      new Grad(0, -1, -1) };
+      Grad.of(1, 1, 0), //
+      Grad.of(-1, 1, 0), //
+      Grad.of(1, -1, 0), //
+      Grad.of(-1, -1, 0), //
+      Grad.of(1, 0, 1), //
+      Grad.of(-1, 0, 1), //
+      Grad.of(1, 0, -1), //
+      Grad.of(-1, 0, -1), //
+      Grad.of(0, 1, 1), //
+      Grad.of(0, -1, 1), //
+      Grad.of(0, 1, -1), //
+      Grad.of(0, -1, -1) };
   // ---
   private static final Grad[] GRAD4 = { //
-      new Grad(0, 1, 1, 1), //
-      new Grad(0, 1, 1, -1), //
-      new Grad(0, 1, -1, 1), //
-      new Grad(0, 1, -1, -1), //
-      new Grad(0, -1, 1, 1), //
-      new Grad(0, -1, 1, -1), //
-      new Grad(0, -1, -1, 1), //
-      new Grad(0, -1, -1, -1), //
-      new Grad(1, 0, 1, 1), //
-      new Grad(1, 0, 1, -1), //
-      new Grad(1, 0, -1, 1), //
-      new Grad(1, 0, -1, -1), //
-      new Grad(-1, 0, 1, 1), //
-      new Grad(-1, 0, 1, -1), //
-      new Grad(-1, 0, -1, 1), //
-      new Grad(-1, 0, -1, -1), //
-      new Grad(1, 1, 0, 1), //
-      new Grad(1, 1, 0, -1), //
-      new Grad(1, -1, 0, 1), //
-      new Grad(1, -1, 0, -1), //
-      new Grad(-1, 1, 0, 1), //
-      new Grad(-1, 1, 0, -1), //
-      new Grad(-1, -1, 0, 1), //
-      new Grad(-1, -1, 0, -1), //
-      new Grad(1, 1, 1, 0), //
-      new Grad(1, 1, -1, 0), //
-      new Grad(1, -1, 1, 0), //
-      new Grad(1, -1, -1, 0), //
-      new Grad(-1, 1, 1, 0), //
-      new Grad(-1, 1, -1, 0), //
-      new Grad(-1, -1, 1, 0), //
-      new Grad(-1, -1, -1, 0) };
+      Grad.of(0, 1, 1, 1), //
+      Grad.of(0, 1, 1, -1), //
+      Grad.of(0, 1, -1, 1), //
+      Grad.of(0, 1, -1, -1), //
+      Grad.of(0, -1, 1, 1), //
+      Grad.of(0, -1, 1, -1), //
+      Grad.of(0, -1, -1, 1), //
+      Grad.of(0, -1, -1, -1), //
+      Grad.of(1, 0, 1, 1), //
+      Grad.of(1, 0, 1, -1), //
+      Grad.of(1, 0, -1, 1), //
+      Grad.of(1, 0, -1, -1), //
+      Grad.of(-1, 0, 1, 1), //
+      Grad.of(-1, 0, 1, -1), //
+      Grad.of(-1, 0, -1, 1), //
+      Grad.of(-1, 0, -1, -1), //
+      Grad.of(1, 1, 0, 1), //
+      Grad.of(1, 1, 0, -1), //
+      Grad.of(1, -1, 0, 1), //
+      Grad.of(1, -1, 0, -1), //
+      Grad.of(-1, 1, 0, 1), //
+      Grad.of(-1, 1, 0, -1), //
+      Grad.of(-1, -1, 0, 1), //
+      Grad.of(-1, -1, 0, -1), //
+      Grad.of(1, 1, 1, 0), //
+      Grad.of(1, 1, -1, 0), //
+      Grad.of(1, -1, 1, 0), //
+      Grad.of(1, -1, -1, 0), //
+      Grad.of(-1, 1, 1, 0), //
+      Grad.of(-1, 1, -1, 0), //
+      Grad.of(-1, -1, 1, 0), //
+      Grad.of(-1, -1, -1, 0) };
   // skewing and unskewing factors for 2, 3, and 4 dimensions
   private static final double F2 = 0.5 * (Math.sqrt(3.0) - 1);
   private static final double G2 = (3 - Math.sqrt(3.0)) / 6;
@@ -279,14 +275,8 @@ public enum SimplexContinuousNoise implements NativeContinuousNoise, TensorScala
     return 32.7 * (n0 + n1 + n2 + n3); // used to be 32.0
   }
 
-  /** 4D simplex noise, better simplex rank ordering method 2012-03-09
-   * 
-   * @param x
-   * @param y
-   * @param z
-   * @param w
-   * @return value in the interval [-1, 1] */
-  public static double at(double x, double y, double z, double w) {
+  @Override
+  public double at(double x, double y, double z, double w) {
     double n0, n1, n2, n3, n4; // Noise contributions from the five corners
     // Skew the (x, y, z, w) space to determine which cell of 24 simplices we're in
     double s = (x + y + z + w) * F4; // Factor for 4D skewing
@@ -422,26 +412,5 @@ public enum SimplexContinuousNoise implements NativeContinuousNoise, TensorScala
       n4 = t4 * t4 * GRAD4[gi4].dot(x4, y4, z4, w4);
     }
     return 27.23 * (n0 + n1 + n2 + n3 + n4); // used to be 27.0
-  }
-
-  @Override
-  public Scalar apply(Tensor vector) {
-    return switch (vector.length()) {
-    case 1 -> DoubleScalar.of(at( //
-        vector.Get(0).number().doubleValue()));
-    case 2 -> DoubleScalar.of(at( //
-        vector.Get(0).number().doubleValue(), //
-        vector.Get(1).number().doubleValue()));
-    case 3 -> DoubleScalar.of(at( //
-        vector.Get(0).number().doubleValue(), //
-        vector.Get(1).number().doubleValue(), //
-        vector.Get(2).number().doubleValue()));
-    case 4 -> DoubleScalar.of(at( //
-        vector.Get(0).number().doubleValue(), //
-        vector.Get(1).number().doubleValue(), //
-        vector.Get(2).number().doubleValue(), //
-        vector.Get(3).number().doubleValue()));
-    default -> throw new Throw(vector);
-    };
   }
 }
