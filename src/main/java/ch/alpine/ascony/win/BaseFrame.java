@@ -47,7 +47,7 @@ public class BaseFrame {
       }
       jButton.setToolTipText("snapshot is stored in ~/Pictures/...");
       jButton.addActionListener(_ -> {
-        Path path = HomeDirectory.Pictures.resolve(String.format("ascona_%d_%s.%s", //
+        Path path = HomeDirectory.Pictures.resolve(String.format("ascona_%d_%s.%s", // TODO
             System.currentTimeMillis(), //
             jFrame.getTitle(), //
             IMAGE_FORMAT));

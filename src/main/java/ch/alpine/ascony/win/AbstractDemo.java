@@ -35,6 +35,7 @@ public abstract class AbstractDemo implements RenderInterface {
       try {
         return run(Class.forName(clsName));
       } catch (Exception exception) {
+        System.err.println("class Name: " + clsName);
         throw new RuntimeException(exception);
       }
     } else {

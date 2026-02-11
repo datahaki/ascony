@@ -5,18 +5,22 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Scalars;
+import ch.alpine.tensor.qty.Quantity;
+
 class IntervalClockTest {
   @Test
   void testHertz() {
     IntervalClock intervalClock = new IntervalClock();
-    double hertz = intervalClock.hertz();
-    assertTrue(100 < hertz);
+    Scalar hertz = intervalClock.hertz();
+    assertTrue(Scalars.lessThan(Quantity.of(100, "Hz"), hertz));
   }
 
   @Test
   void testSeconds() {
     IntervalClock intervalClock = new IntervalClock();
-    double seconds = intervalClock.seconds();
-    assertTrue(seconds < 0.01);
+    Scalar seconds = intervalClock.seconds();
+    assertTrue(Scalars.lessThan(seconds, Quantity.of(0.01, "s")));
   }
 }

@@ -1,6 +1,9 @@
 // code by jph
 package ch.alpine.ascony.win;
 
+import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.qty.Quantity;
+
 /** measure length of intervals between invocations of methods
  * {@link #seconds()} and {@link #hertz()} */
 /* package */ class IntervalClock {
@@ -8,13 +11,13 @@ package ch.alpine.ascony.win;
   private long tic = System.nanoTime();
 
   /** @return period in seconds since last invocation */
-  public double seconds() {
-    return elapsed() * 1e-9;
+  public Scalar seconds() {
+    return Quantity.of(elapsed() * 1E-9, "s");
   }
 
   /** @return reciprocal of period in seconds since last invocation */
-  public double hertz() {
-    return 1.0e9 / elapsed();
+  public Scalar hertz() {
+    return Quantity.of(1E9 / elapsed(), "Hz");
   }
 
   private long elapsed() {

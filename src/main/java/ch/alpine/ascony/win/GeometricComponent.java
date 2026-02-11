@@ -21,22 +21,25 @@ import javax.swing.event.MouseInputListener;
 import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.bridge.awt.AwtUtil;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.lang.UnicodeString;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
+import ch.alpine.sophus.lie.so2.ArcTan2D;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Append;
 import ch.alpine.tensor.alg.Array;
+import ch.alpine.tensor.alg.Dot;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.re.Det;
 import ch.alpine.tensor.mat.re.LinearSolve;
 import ch.alpine.tensor.qty.Degree;
 import ch.alpine.tensor.sca.Chop;
+import ch.alpine.tensor.sca.Round;
 import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.pow.Power;
 import ch.alpine.tensor.sca.pow.Sqrt;
-import ch.alpine.tensor.sca.tri.ArcTan;
 
 public final class GeometricComponent {
   private static final Scalar SCALE_FACTOR = Sqrt.FUNCTION.apply(RealScalar.TWO);
@@ -61,7 +64,7 @@ public final class GeometricComponent {
       graphics.setFont(FONT_DEFAULT);
       graphics.setColor(Color.LIGHT_GRAY);
       graphics.setClip(null);
-      graphics.drawString(String.format("%3.1f Hz", intervalClock.hertz()), 0, 10);
+      graphics.drawString(UnicodeString.of(Round._1.apply(intervalClock.hertz())), 0, 10);
       graphics.dispose();
     }
   };
@@ -99,7 +102,7 @@ public final class GeometricComponent {
     });
     {
       MouseInputListener mouseInputListener = new MouseInputAdapter() {
-        private Point down = null;
+        private Tensor down = null;
         private Tensor center = null;
 
         @Override
@@ -110,7 +113,7 @@ public final class GeometricComponent {
         @Override
         public void mousePressed(MouseEvent mouseEvent) {
           if (mouseEvent.getButton() == buttonDrag) {
-            down = mouseEvent.getPoint();
+            down = AwtUtil.toTensor(mouseEvent.getPoint());
             Dimension dimension = jComponent.getSize();
             center = toModel(AwtUtil.center(dimension)).unmodifiable();
           }
@@ -120,25 +123,24 @@ public final class GeometricComponent {
         public void mouseDragged(MouseEvent mouseEvent) {
           mouseLocation = toModel(mouseEvent.getPoint());
           if (Objects.nonNull(down)) {
-            Point now = mouseEvent.getPoint();
-            int dx = now.x - down.x;
-            int dy = now.y - down.y;
+            Tensor now = AwtUtil.toTensor(mouseEvent.getPoint());
             // ---
             Dimension dimension = jComponent.getSize();
-            Scalar a1 = ArcTan.of(now.x - dimension.width / 2, now.y - dimension.height / 2);
-            Scalar a2 = ArcTan.of(down.x - dimension.width / 2, down.y - dimension.height / 2);
+            Tensor mid = AwtUtil.toTensor(AwtUtil.center(dimension));
+            Scalar ang = ArcTan2D.of(down.subtract(mid)).subtract(ArcTan2D.of(now.subtract(mid)));
             // ---
+            Tensor diff = now.subtract(down);
             down = now;
             final int mods = mouseEvent.getModifiersEx();
             final int mask = InputEvent.CTRL_DOWN_MASK; // 128 = 2^7
             if ((mods & mask) == 0 || !isRotatable) {
-              model2pixel.set(RealScalar.of(dx)::add, 0, 2);
-              model2pixel.set(RealScalar.of(dy)::add, 1, 2);
-            } else {
-              Tensor t1 = Se2Matrix.translation(center.negate());
-              Tensor t2 = Se2Matrix.of(Append.of(center, a2.subtract(a1)));
-              model2pixel = model2pixel.dot(t2).dot(t1);
-            }
+              model2pixel.set(diff.get(0)::add, 0, 2);
+              model2pixel.set(diff.get(1)::add, 1, 2);
+            } else
+              model2pixel = Dot.of( //
+                  model2pixel, //
+                  Se2Matrix.of(Append.of(center, ang)), //
+                  Se2Matrix.translation(center.negate()));
             jComponent.repaint();
           }
         }

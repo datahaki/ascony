@@ -2,6 +2,7 @@
 package ch.alpine.ascony.dis;
 
 import ch.alpine.ascony.ren.RenderInterface;
+import ch.alpine.sophis.crv.clt.ClothoidBuilder;
 import ch.alpine.sophis.decim.LineDistance;
 import ch.alpine.sophis.ts.TransitionSpace;
 import ch.alpine.sophis.ts.UniformTransitionSpace;
@@ -47,7 +48,8 @@ public interface ManifoldDisplay {
 
   /** @return never null
    * @see HomogeneousSpace
-   * @see LieGroup */
+   * @see LieGroup
+   * @see ClothoidBuilder */
   GeodesicSpace geodesicSpace();
 
   default TransitionSpace transitionSpace() {
