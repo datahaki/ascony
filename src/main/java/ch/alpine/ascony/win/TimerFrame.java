@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.ascony.win;
 
+import java.awt.image.BufferedImage;
 import java.nio.file.Path;
 import java.util.Objects;
 import java.util.Timer;
@@ -10,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
 
+import ch.alpine.bridge.awt.OffscreenRender;
 import ch.alpine.bridge.awt.WindowClosed;
 import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.ext.ResourceData;
@@ -87,8 +89,9 @@ public class TimerFrame extends BaseFrame {
           if (Objects.nonNull(animationWriter)) {
             synchronized (animationWriter) {
               try {
+                BufferedImage bufferedImage = OffscreenRender.of(geometricComponent.jComponent);
                 System.out.println("record");
-                animationWriter.write(offscreen());
+                animationWriter.write(bufferedImage);
               } catch (Exception e) {
                 e.printStackTrace();
               }

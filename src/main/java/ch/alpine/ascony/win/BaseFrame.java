@@ -2,9 +2,7 @@
 package ch.alpine.ascony.win;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.OutputStream;
 import java.nio.file.Files;
@@ -19,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.WindowConstants;
 
+import ch.alpine.bridge.awt.OffscreenRender;
 import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.ext.ResourceData;
 
@@ -51,8 +50,9 @@ public class BaseFrame {
             System.currentTimeMillis(), //
             jFrame.getTitle(), //
             IMAGE_FORMAT));
-        try (OutputStream inputStream = Files.newOutputStream(path)) {
-          ImageIO.write(offscreen(), IMAGE_FORMAT, inputStream);
+        BufferedImage bufferedImage = OffscreenRender.of(geometricComponent.jComponent);
+        try (OutputStream outputStream = Files.newOutputStream(path)) {
+          ImageIO.write(bufferedImage, IMAGE_FORMAT, outputStream);
         } catch (Exception exception) {
           exception.printStackTrace();
         }
@@ -66,13 +66,7 @@ public class BaseFrame {
   }
 
   public final BufferedImage offscreen() {
-    Dimension dimension = geometricComponent.jComponent.getSize();
-    BufferedImage bufferedImage = //
-        new BufferedImage(dimension.width, dimension.height, BufferedImage.TYPE_INT_ARGB);
-    Graphics2D graphics = bufferedImage.createGraphics();
-    geometricComponent.render(graphics, dimension);
-    graphics.dispose();
-    return bufferedImage;
+    return OffscreenRender.of(geometricComponent.jComponent);
   }
 
   public final void close() {
