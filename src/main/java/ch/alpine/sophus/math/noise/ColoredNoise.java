@@ -4,10 +4,17 @@ package ch.alpine.sophus.math.noise;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.random.RandomGenerator;
 
+import ch.alpine.tensor.RationalScalar;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.alg.Array;
+import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.io.MathematicaFormat;
 import ch.alpine.tensor.pdf.Distribution;
+import ch.alpine.tensor.pdf.RandomVariate;
+import ch.alpine.tensor.pdf.c.NormalDistribution;
 
 /* Adapted version of 'PinkNoise.java' to 'ColoredNoise.java'
  *
@@ -44,11 +51,6 @@ import ch.alpine.tensor.pdf.Distribution;
  * 
  * @author Sampo Niskanen <sampo.niskanen@iki.fi> */
 public class ColoredNoise implements Distribution {
-  /** Generate White noise by choosing the color alpha, using a five-pole IIR. */
-  public static Distribution white() {
-    return new ColoredNoise(0.0, 5, ThreadLocalRandom.current());
-  }
-
   /** Generate a specific colored noise using a five-pole IIR.
    * 
    * @param alpha: the exponent of the colored noise, 1/f^alpha.
@@ -58,17 +60,17 @@ public class ColoredNoise implements Distribution {
    * @param alpha = 1: Pink Noise
    * @param alpha = 2: Brownian Noise
    * @throws IllegalArgumentException: if <code>alpha < 0</code> or <code>alpha > 2</code>. */
-  public static Distribution of(double alpha, RandomGenerator randomGenerator) {
+  public static Distribution of(Scalar alpha, RandomGenerator randomGenerator) {
     return new ColoredNoise(alpha, 5, ThreadLocalRandom.current());
   }
 
-  public static Distribution of(double alpha) {
+  public static Distribution of(Scalar alpha) {
     return of(alpha, ThreadLocalRandom.current());
   }
 
-  private final double alpha;
-  private final double[] multipliers;
-  private final double[] values;
+  private final Scalar alpha;
+  private final Tensor multi;
+  private Tensor values;
 
   /** Generate colored noise specifying alpha and the number of poles. The larger
    * the number of poles, the lower are the lowest frequency components that
@@ -83,39 +85,30 @@ public class ColoredNoise implements Distribution {
    * @param alpha = 2: Brownian Noise
    * @param poles: the number of poles to use.
    * @throws IllegalArgumentException: if <code>alpha < 0</code> or <code>alpha > 2</code>. */
-  private ColoredNoise(double alpha, int poles, RandomGenerator randomGenerator) {
+  private ColoredNoise(Scalar alpha, int poles, RandomGenerator randomGenerator) {
     this.alpha = alpha;
-    this.multipliers = new double[poles];
-    this.values = new double[poles];
-    double a = 1;
+    multi = Tensors.empty();
+    this.values = Array.zeros(poles);
+    Scalar a = RealScalar.ONE;
     for (int i = 0; i < poles; ++i) {
-      a = (i - alpha / 2) * a / (i + 1);
-      multipliers[i] = a;
+      a = RealScalar.of(i).subtract(alpha.multiply(RationalScalar.HALF)).multiply(a).divide(RealScalar.of(i + 1));
+      multi.append(a);
     }
     // Fill the history with random values
     for (int i = 0; i < 5 * poles; ++i)
-      nextValue(randomGenerator);
+      randomVariate(randomGenerator);
   }
 
   /** @return the next pink noise sample. */
-  private double nextValue(RandomGenerator randomGenerator) {
-    /* The following may be changed to rnd.nextDouble()-0.5 if strict
-     * Gaussian distribution of resulting values is not required. */
-    double x = randomGenerator.nextGaussian();
-    for (int i = 0; i < values.length; ++i)
-      x -= multipliers[i] * values[i];
-    System.arraycopy(values, 0, values, 1, values.length - 1);
-    values[0] = x;
+  @Override
+  public Scalar randomVariate(RandomGenerator randomGenerator) {
+    Scalar x = RandomVariate.of(NormalDistribution.standard(), randomGenerator).subtract(multi.dot(values));
+    values = Join.of(Tensors.of(x), values.extract(0, values.length() - 1));
     return x;
   }
 
   @Override
-  public Scalar randomVariate(RandomGenerator randomGenerator) {
-    return RealScalar.of(nextValue(randomGenerator));
-  }
-
-  @Override
   public String toString() {
-    return MathematicaFormat.concise("ColoredNoise", alpha);
+    return MathematicaFormat.concise("ColoredNoise", alpha, multi);
   }
 }

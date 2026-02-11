@@ -1,8 +1,6 @@
 // code by stegu
 package ch.alpine.sophus.math.noise;
 
-import ch.alpine.tensor.api.TensorScalarFunction;
-
 /** A speed-improved simplex noise algorithm for 2D, 3D and 4D in Java.
  * 
  * Based on example code by Stefan Gustavson (stegu@itn.liu.se).
@@ -15,7 +13,7 @@ import ch.alpine.tensor.api.TensorScalarFunction;
  * 
  * This code was placed in the public domain by its original author,
  * Stefan Gustavson. You may use it as you see fit, but attribution is appreciated. */
-public enum SimplexContinuousNoise implements NativeContinuousNoise, TensorScalarFunction {
+public enum SimplexContinuousNoise implements NativeContinuousNoise {
   FUNCTION;
 
   private static final Grad[] GRAD3 = { //
