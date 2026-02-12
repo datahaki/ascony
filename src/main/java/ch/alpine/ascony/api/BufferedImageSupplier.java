@@ -5,6 +5,6 @@ import java.awt.image.BufferedImage;
 
 @FunctionalInterface
 public interface BufferedImageSupplier {
-  /** @return bufferedImage */
+  /** @return bufferedImage may be null */
   BufferedImage bufferedImage();
 }
