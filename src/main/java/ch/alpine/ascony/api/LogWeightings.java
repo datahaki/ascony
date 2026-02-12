@@ -21,7 +21,7 @@ public enum LogWeightings implements LogWeighting {
   DISTANCES {
     @Override // from LogWeighting
     public Sedarim sedarim(Biinvariant biinvariant, ScalarUnaryOperator variogram, Tensor sequence) {
-      return biinvariant.distances(sequence);
+      return biinvariant.relative_distances(sequence);
     }
 
     @Override // from LogWeighting

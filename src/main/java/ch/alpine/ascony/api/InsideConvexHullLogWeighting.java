@@ -13,13 +13,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorScalarFunction;
 
-public class InsideConvexHullLogWeighting implements LogWeighting {
-  private final Genesis genesis;
-
-  public InsideConvexHullLogWeighting(Genesis genesis) {
-    this.genesis = Objects.requireNonNull(genesis);
-  }
-
+public record InsideConvexHullLogWeighting(Genesis genesis) implements LogWeighting {
   @Override // from LogWeighting
   public Sedarim sedarim( //
       Biinvariant biinvariant, // only used for hsDesign

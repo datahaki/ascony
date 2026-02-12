@@ -245,7 +245,7 @@ public class LeversRender {
       HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
       Manifold manifold = homogeneousSpace;
       Biinvariant biinvariant = Biinvariants.GARDEN.ofSafe(manifold);
-      Tensor weights = biinvariant.distances(sequence).sunder(origin);
+      Tensor weights = biinvariant.relative_distances(sequence).sunder(origin);
       renderWeights(weights);
     }
   }
