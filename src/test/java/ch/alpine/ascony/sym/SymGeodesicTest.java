@@ -31,7 +31,7 @@ class SymGeodesicTest {
     assertEquals(tensor.toString(), "{{{0, 1, 1/2}, 2, 1/5}, {2, {3, 4, 1/2}, 4/5}, 1/2}");
     SymScalar symScalar = (SymScalar) tensor;
     SymLink root = symScalar.build();
-    Tensor pose = root.getPosition();
+    Tensor pose = root.position();
     assertEquals(pose, Tensors.vector(2, -1.5));
     SymScalar res = (SymScalar) tensor;
     assertEquals(res.evaluate(), RealScalar.of(2));

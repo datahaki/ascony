@@ -8,33 +8,15 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.itp.BinaryAverage;
 
 /** characterized by {@link #isNode()} == true */
-public class SymLinkLeaf extends SymLink {
-  private final Scalar scalar;
-  /** position is assigned in sym link builder */
-  Tensor position;
-
-  /* package */ SymLinkLeaf(Scalar scalar) {
-    this.scalar = scalar;
-  }
-
+public record SymLinkLeaf(Scalar scalar, Tensor position) implements SymLink {
   @Override // from SymLink
-  public int getIndex() {
-    return scalar.number().intValue();
-  }
-
-  @Override // from SymLink
-  public Tensor getPosition() {
+  public Tensor position() {
     return Tensors.of(scalar, RealScalar.ZERO);
   }
 
   @Override // from SymLink
-  public Tensor getPosition(BinaryAverage binaryAverage) {
+  public Tensor position(BinaryAverage binaryAverage) {
     return position;
-  }
-
-  @Override
-  public boolean isNode() {
-    return true;
   }
 
   @Override

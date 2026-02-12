@@ -6,39 +6,40 @@ import java.io.Serializable;
 import ch.alpine.tensor.MultiplexScalar;
 import ch.alpine.tensor.Scalar;
 
-public abstract class SymScalar extends MultiplexScalar implements Serializable {
+public sealed abstract class SymScalar extends MultiplexScalar implements Serializable //
+    permits SymScalarLeaf, SymScalarPart {
   /** @return recursive evaluation of this coordinate */
   protected abstract Scalar evaluate();
 
   public abstract SymLink build();
 
   @Override
-  public Scalar multiply(Scalar scalar) {
+  public final Scalar multiply(Scalar scalar) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public Scalar negate() {
+  public final Scalar negate() {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public Scalar reciprocal() {
+  public final Scalar reciprocal() {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public Scalar zero() {
+  public final Scalar zero() {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public Scalar one() {
+  public final Scalar one() {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  protected Scalar plus(Scalar scalar) {
+  protected final Scalar plus(Scalar scalar) {
     throw new UnsupportedOperationException();
   }
 }

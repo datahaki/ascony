@@ -9,42 +9,28 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.itp.BinaryAverage;
 import ch.alpine.tensor.red.Min;
 
-public class SymLinkPart extends SymLink {
+public record SymLinkPart(SymLink lP, SymLink lQ, Scalar lambda) implements SymLink {
   private static final Scalar SHIFT_Y = RealScalar.of(0.5);
-  public final SymLink lP;
-  public final SymLink lQ;
-  public final Scalar lambda;
-
-  SymLinkPart(SymLink lP, SymLink lQ, Scalar lambda) {
-    this.lP = lP;
-    this.lQ = lQ;
-    this.lambda = lambda;
-  }
 
   @Override
-  public boolean isNode() {
-    return false;
-  }
-
-  @Override
-  public int depth() {
-    return Math.max(lP.depth(), lQ.depth()) + 1;
-  }
-
-  @Override
-  public Tensor getPosition() {
-    Tensor posP = lP.getPosition();
-    Tensor posQ = lQ.getPosition();
+  public Tensor position() {
+    Tensor posP = lP.position();
+    Tensor posQ = lQ.position();
     return Tensors.of( //
         RGroup.INSTANCE.split(posP.Get(0), posQ.Get(0), lambda), //
         Min.of(posP.Get(1), posQ.Get(1)).subtract(SHIFT_Y));
   }
 
   @Override
-  public Tensor getPosition(BinaryAverage binaryAverage) {
+  public Tensor position(BinaryAverage binaryAverage) {
     return binaryAverage.split( //
-        lP.getPosition(binaryAverage), //
-        lQ.getPosition(binaryAverage), //
+        lP.position(binaryAverage), //
+        lQ.position(binaryAverage), //
         lambda);
+  }
+
+  @Override
+  public int depth() {
+    return Math.max(lP.depth(), lQ.depth()) + 1;
   }
 }

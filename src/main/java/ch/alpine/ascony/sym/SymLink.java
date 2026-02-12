@@ -5,17 +5,12 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.itp.BinaryAverage;
 
 /** SymNode extends from here */
-// TODO ASCONA make interface
-public abstract class SymLink {
-  public abstract boolean isNode();
+public interface SymLink {
+  /** @return */
+  Tensor position();
 
-  public abstract int depth();
+  Tensor position(BinaryAverage binaryAverage);
 
-  public int getIndex() {
-    throw new RuntimeException();
-  }
-
-  public abstract Tensor getPosition();
-
-  public abstract Tensor getPosition(BinaryAverage binaryAverage);
+  /** @return depth from leaft */
+  int depth();
 }

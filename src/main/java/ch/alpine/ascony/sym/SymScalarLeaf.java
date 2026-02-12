@@ -7,7 +7,7 @@ import java.util.function.UnaryOperator;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 
-/* package */ class SymScalarLeaf extends SymScalar {
+/* package */ final class SymScalarLeaf extends SymScalar {
   /** @param index
    * @return */
   public static Scalar of(int index) {
@@ -28,7 +28,7 @@ import ch.alpine.tensor.Scalar;
 
   @Override
   public SymLink build() {
-    return new SymLinkLeaf(scalar);
+    return new SymLinkLeaf(scalar, null);
   }
 
   @Override

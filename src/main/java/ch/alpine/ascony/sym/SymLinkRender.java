@@ -31,7 +31,7 @@ import ch.alpine.tensor.sca.Round;
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    Tensor position = symLink.getPosition();
+    Tensor position = symLink.position();
     if (symLink instanceof SymLinkPart symLinkPart) {
       {
         geometricLayer.pushMatrix(Se2Matrix.translation(position));
@@ -43,16 +43,16 @@ import ch.alpine.tensor.sca.Round;
         geometricLayer.popMatrix();
       }
       {
-        new SymLinkRender(symLinkPart.lP).render(geometricLayer, graphics);
-        Tensor there = symLinkPart.lP.getPosition();
+        new SymLinkRender(symLinkPart.lP()).render(geometricLayer, graphics);
+        Tensor there = symLinkPart.lP().position();
         Path2D path2d = geometricLayer.toPath2D(Tensors.of(position, there));
         graphics.setStroke(new BasicStroke(1.5f));
         graphics.setColor(Color.BLACK);
         graphics.draw(path2d);
       }
       {
-        new SymLinkRender(symLinkPart.lQ).render(geometricLayer, graphics);
-        Tensor there = symLinkPart.lQ.getPosition();
+        new SymLinkRender(symLinkPart.lQ()).render(geometricLayer, graphics);
+        Tensor there = symLinkPart.lQ().position();
         Path2D path2d = geometricLayer.toPath2D(Tensors.of(position, there));
         graphics.setStroke(new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0));
         graphics.setColor(Color.BLACK);
@@ -60,7 +60,7 @@ import ch.alpine.tensor.sca.Round;
       }
       {
         Point2D point2d = geometricLayer.toPoint2D(position);
-        String string = nice3(symLinkPart.lambda);
+        String string = nice3(symLinkPart.lambda());
         FontMetrics fontMetrics = graphics.getFontMetrics();
         int stringWidth = fontMetrics.stringWidth(string);
         int rgb = 192 + 32;

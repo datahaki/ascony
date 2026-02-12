@@ -51,7 +51,7 @@ public class SymLinkImage {
     final SymLink root = symScalar.build();
     final Tensor vector = SymWeights.of(symScalar);
     final int depth = root.depth();
-    Tensor position = root.getPosition();
+    Tensor position = root.position();
     double max = Math.max(position.Get(0).number().doubleValue(), vector.length() - 1);
     // ---
     bufferedImage = new BufferedImage( //
@@ -87,7 +87,7 @@ public class SymLinkImage {
       graphics.setStroke(new BasicStroke(1f));
     }
     { // circle bottom node
-      geometricLayer.pushMatrix(Se2Matrix.translation(root.getPosition()));
+      geometricLayer.pushMatrix(Se2Matrix.translation(root.position()));
       Path2D path2d = geometricLayer.toPath2D(SymLinkRender.CIRCLE_END);
       path2d.closePath();
       graphics.setColor(Color.BLACK);
