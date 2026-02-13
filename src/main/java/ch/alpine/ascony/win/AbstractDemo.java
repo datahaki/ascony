@@ -19,7 +19,7 @@ import ch.alpine.tensor.ext.HomeDirectory;
 
 public abstract class AbstractDemo implements RenderInterface {
   public static final ResourceLocator RESOURCE_LOCATOR = //
-      new ResourceLocator(HomeDirectory.path(".local", "share", "ascona"));
+      new ResourceLocator(HomeDirectory._local_share.resolve("ascona"));
   public static final ResourceLocator WINDOW = RESOURCE_LOCATOR.sub(WindowBounds.class.getSimpleName());
 
   public static AbstractDemo launch() {
