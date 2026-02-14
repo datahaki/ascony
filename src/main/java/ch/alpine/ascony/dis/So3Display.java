@@ -8,7 +8,7 @@ import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.sophis.decim.LineDistance;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
-import ch.alpine.sophus.lie.so.Rodrigues;
+import ch.alpine.sophus.lie.so.So3Exponential;
 import ch.alpine.sophus.lie.so.So3Group;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -49,12 +49,12 @@ public class So3Display implements ManifoldDisplay, Serializable {
     Scalar norm = Vector2Norm.of(axis);
     if (Scalars.lessThan(RealScalar.ONE, norm))
       axis = axis.divide(norm);
-    return Rodrigues.vectorExp(axis);
+    return So3Exponential.vectorExp(axis);
   }
 
   @Override // from ManifoldDisplay
   public Tensor point2xya(Tensor p) {
-    return Rodrigues.vector_log(p).multiply(radius);
+    return So3Exponential.vector_log(p).multiply(radius);
   }
 
   @Override // from ManifoldDisplay
