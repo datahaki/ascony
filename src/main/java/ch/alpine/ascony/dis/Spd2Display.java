@@ -45,7 +45,7 @@ public enum Spd2Display implements ManifoldDisplay {
 
   private static Tensor xya2sim(Tensor xya) {
     xya = xya.multiply(SCALE);
-    Tensor sim = DiagonalMatrix.with(xya.extract(0, 2));
+    Tensor sim = DiagonalMatrix.sparse(xya.extract(0, 2));
     sim.set(xya.Get(2), 0, 1);
     sim.set(xya.Get(2), 1, 0);
     return sim;
