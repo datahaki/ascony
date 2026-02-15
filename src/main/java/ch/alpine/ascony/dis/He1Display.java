@@ -4,16 +4,14 @@ package ch.alpine.ascony.dis;
 import ch.alpine.ascony.ren.EmptyRender;
 import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.sophis.decim.LineDistance;
-import ch.alpine.sophus.hs.GeodesicSpace;
-import ch.alpine.sophus.lie.he.HeGroup;
-import ch.alpine.sophus.lie.he.HeRandomSample;
+import ch.alpine.sophus.lie.LieGroup;
+import ch.alpine.sophus.lie.he.HeNGroup;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
-import ch.alpine.tensor.pdf.c.UniformDistribution;
 
 public enum He1Display implements ManifoldDisplay {
   INSTANCE;
@@ -51,8 +49,8 @@ public enum He1Display implements ManifoldDisplay {
   }
 
   @Override
-  public GeodesicSpace geodesicSpace() {
-    return HeGroup.INSTANCE;
+  public LieGroup geodesicSpace() {
+    return new HeNGroup(1);
   }
 
   @Override // from ManifoldDisplay
@@ -62,7 +60,7 @@ public enum He1Display implements ManifoldDisplay {
 
   @Override // from ManifoldDisplay
   public RandomSampleInterface randomSampleInterface() {
-    return new HeRandomSample(1, UniformDistribution.of(-1, 1));
+    return new HeNGroup(1);
   }
 
   @Override // from ManifoldDisplay

@@ -6,7 +6,6 @@ import java.io.Serializable;
 import ch.alpine.sophis.decim.LineDistance;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.rpn.RpnManifold;
-import ch.alpine.sophus.hs.rpn.RpnRandomSample;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.lie.rot.CirclePoints;
@@ -34,7 +33,7 @@ public abstract class RpnDisplay implements ManifoldDisplay, Serializable {
 
   @Override // from ManifoldDisplay
   public final GeodesicSpace geodesicSpace() {
-    return RpnManifold.INSTANCE;
+    return new RpnManifold(dimensions);
   }
 
   @Override // from ManifoldDisplay
@@ -44,6 +43,6 @@ public abstract class RpnDisplay implements ManifoldDisplay, Serializable {
 
   @Override // from ManifoldDisplay
   public final RandomSampleInterface randomSampleInterface() {
-    return RpnRandomSample.of(dimensions());
+    return new RpnManifold(dimensions);
   }
 }

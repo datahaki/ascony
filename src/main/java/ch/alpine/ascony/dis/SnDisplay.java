@@ -6,7 +6,7 @@ import java.io.Serializable;
 import ch.alpine.sophis.decim.LineDistance;
 import ch.alpine.sophis.decim.SnLineDistance;
 import ch.alpine.sophus.hs.GeodesicSpace;
-import ch.alpine.sophus.hs.rpn.RpnRandomSample;
+import ch.alpine.sophus.hs.rpn.HemisphereRandomSample;
 import ch.alpine.sophus.hs.s.SnManifold;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -45,6 +45,6 @@ public abstract class SnDisplay implements ManifoldDisplay, Serializable {
 
   @Override // from ManifoldDisplay
   public final RandomSampleInterface randomSampleInterface() {
-    return RpnRandomSample.of(dimensions());
+    return HemisphereRandomSample.of(dimensions);
   }
 }
