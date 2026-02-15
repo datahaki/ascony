@@ -6,8 +6,8 @@ import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.sophis.decim.LineDistance;
 import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.spd.Spd0Exponential;
+import ch.alpine.sophus.hs.spd.Spd0RandomSample;
 import ch.alpine.sophus.hs.spd.SpdManifold;
-import ch.alpine.sophus.hs.spd.TSpdRandomSample;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -88,8 +88,7 @@ public enum Spd2Display implements ManifoldDisplay {
 
   @Override // from ManifoldDisplay
   public RandomSampleInterface randomSampleInterface() {
-    TSpdRandomSample tSpdRandomSample = new TSpdRandomSample(2, UniformDistribution.of(-1, 1));
-    return randomGenerator -> Spd0Exponential.INSTANCE.exp(tSpdRandomSample.randomSample(randomGenerator));
+    return new Spd0RandomSample(2, UniformDistribution.of(-1, 1));
   }
 
   @Override // from ManifoldDisplay

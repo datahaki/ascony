@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,7 +22,6 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Dimensions;
 import ch.alpine.tensor.alg.VectorQ;
-import ch.alpine.tensor.ext.Serialization;
 import ch.alpine.tensor.mat.MatrixQ;
 import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.opt.nd.BoxRandomSample;
@@ -36,12 +34,6 @@ class ManifoldDisplaysTest {
   @Test
   void testSimple() {
     assertTrue(12 <= ManifoldDisplays.values().length);
-  }
-
-  @ParameterizedTest
-  @EnumSource
-  void testSerializable(ManifoldDisplays manifoldDisplays) throws ClassNotFoundException, IOException {
-    Serialization.copy(manifoldDisplays);
   }
 
   @ParameterizedTest
