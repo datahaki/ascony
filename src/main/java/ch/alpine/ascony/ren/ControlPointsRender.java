@@ -59,8 +59,8 @@ public class ControlPointsRender implements RenderInterface {
           .map(manifoldDisplay::point2xy) //
           .map(mouse.extract(0, 2)::subtract) //
           .map(Vector2Norm::of));
-      ArgMinValue argMinValue = ArgMinValue.of(mouse_dist);
-      index = argMinValue.index();
+      Optional<ArgMinValue> argMinValue = ArgMinValue.of(mouse_dist);
+      index = argMinValue.map(ArgMinValue::index).orElseThrow();
     }
 
     Tensor closestXY() {
@@ -83,14 +83,14 @@ public class ControlPointsRender implements RenderInterface {
             .map(mouse::subtract) //
             .map(Extract2D.FUNCTION) //
             .map(Vector2Norm::of));
-        ArgMinValue argMinValue = ArgMinValue.of(mouse_dist);
-        Optional<Scalar> value = argMinValue.value(getPositioningThreshold());
+        Optional<ArgMinValue> argMinValue = ArgMinValue.of(mouse_dist, getPositioningThreshold());
+        Optional<Scalar> value = argMinValue.map(ArgMinValue::value);
         hold = value.isPresent() && isPositioningEnabled();
         graphics.setColor(hold ? ORANGE : GREEN);
         Tensor posit = mouse;
         if (hold) {
           graphics.setStroke(new BasicStroke(2f));
-          Tensor closest = control.get(argMinValue.index());
+          Tensor closest = control.get(argMinValue.map(ArgMinValue::index).orElseThrow());
           graphics.draw(geometricLayer.toPath2D(Tensors.of(mouse, closest)));
           graphics.setStroke(new BasicStroke());
           posit.set(closest.get(0), 0);
@@ -129,8 +129,8 @@ public class ControlPointsRender implements RenderInterface {
                 .map(mouse::subtract) //
                 .map(Extract2D.FUNCTION) //
                 .map(Vector2Norm::of));
-            ArgMinValue argMinValue = ArgMinValue.of(mouse_dist);
-            min_index = argMinValue.index(getPositioningThreshold()).orElse(null);
+            Optional<ArgMinValue> argMinValue = ArgMinValue.of(mouse_dist, getPositioningThreshold());
+            min_index = argMinValue.map(ArgMinValue::index).orElse(null);
           }
           if (!isPositioningOngoing() && asconaParam.addRemoveControlPoints) {
             // insert
@@ -152,8 +152,8 @@ public class ControlPointsRender implements RenderInterface {
                 .map(mouse::subtract) //
                 .map(Extract2D.FUNCTION) //
                 .map(Vector2Norm::of));
-            ArgMinValue argMinValue = ArgMinValue.of(mouse_dist);
-            min_index = argMinValue.index(getPositioningThreshold()).orElse(null);
+            Optional<ArgMinValue> argMinValue = ArgMinValue.of(mouse_dist, getPositioningThreshold());
+            min_index = argMinValue.map(ArgMinValue::index).orElse(null);
           }
           if (isPositioningOngoing()) {
             control = Join.of(control.extract(0, min_index), control.extract(min_index + 1, control.length()));

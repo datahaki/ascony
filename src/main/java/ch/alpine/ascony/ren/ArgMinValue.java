@@ -8,48 +8,29 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.ArgMin;
+import ch.alpine.tensor.ext.PackageTestAccess;
 
-// TODO ASCONA this package needs to be distributed
-/** Hint:
- * does not implement {@link Serializable} because {@link Optional} does not implement {@link Serializable} */
-/* package */ class ArgMinValue {
+public record ArgMinValue(int index, Scalar value) implements Serializable {
   /** @param tensor
    * @return */
-  public static ArgMinValue of(Tensor tensor) {
+  public static Optional<ArgMinValue> of(Tensor tensor) {
     int index = ArgMin.of(tensor);
-    return new ArgMinValue(index, 0 <= index //
-        ? Optional.of(tensor.Get(index))
-        : Optional.empty());
+    return 0 <= index //
+        ? Optional.of(new ArgMinValue(index, tensor.Get(index)))
+        : Optional.empty();
   }
 
-  // ---
-  private final int index;
-  private final Optional<Scalar> value;
-
-  private ArgMinValue(int index, Optional<Scalar> value) {
-    this.index = index;
-    this.value = value;
+  public static Optional<ArgMinValue> of(Tensor tensor, Scalar threshold) {
+    int index = ArgMin.of(tensor);
+    return 0 <= index //
+        ? new ArgMinValue(index, tensor.Get(index)).filter(threshold)
+        : Optional.empty();
   }
 
-  public int index() {
-    return index;
-  }
-
-  public Optional<Integer> index(Scalar threshold) {
-    return value.isPresent() //
-        && Scalars.lessEquals(value.get(), threshold) //
-            ? Optional.of(index)
-            : Optional.empty();
-  }
-
-  public Optional<Scalar> value() {
-    return value;
-  }
-
-  public Optional<Scalar> value(Scalar threshold) {
-    return value.isPresent() //
-        && Scalars.lessEquals(value.get(), threshold) //
-            ? value
-            : Optional.empty();
+  @PackageTestAccess
+  Optional<ArgMinValue> filter(Scalar threshold) {
+    return Scalars.lessEquals(value, threshold) //
+        ? Optional.of(this)
+        : Optional.empty();
   }
 }

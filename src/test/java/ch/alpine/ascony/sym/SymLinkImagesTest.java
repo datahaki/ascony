@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.sca.win.WindowFunctions;
@@ -22,7 +22,7 @@ class SymLinkImagesTest {
 
   @Test
   void testDeBoorRational() {
-    Scalar parameter = RationalScalar.of(9, 4);
+    Scalar parameter = Rational.of(9, 4);
     SymLinkImage symLinkImage = SymLinkImages.symLinkImageGBSF(4, 20, parameter);
     BufferedImage bufferedImage = symLinkImage.bufferedImage();
     assertTrue(300 < bufferedImage.getWidth());

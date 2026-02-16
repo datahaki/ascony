@@ -4,7 +4,7 @@ package ch.alpine.sophus.math.noise;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.random.RandomGenerator;
 
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -91,7 +91,7 @@ public class ColoredNoise implements Distribution {
     this.values = Array.zeros(poles);
     Scalar a = RealScalar.ONE;
     for (int i = 0; i < poles; ++i) {
-      a = RealScalar.of(i).subtract(alpha.multiply(RationalScalar.HALF)).multiply(a).divide(RealScalar.of(i + 1));
+      a = RealScalar.of(i).subtract(alpha.multiply(Rational.HALF)).multiply(a).divide(RealScalar.of(i + 1));
       multi.append(a);
     }
     // Fill the history with random values

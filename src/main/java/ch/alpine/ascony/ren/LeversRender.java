@@ -26,7 +26,7 @@ import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.Manifold;
 import ch.alpine.sophus.math.api.TensorMetric;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -205,7 +205,7 @@ public class LeversRender {
       for (Tensor point : sequence) {
         Scalar d = tensorMetric.distance(origin, point);
         ScalarTensorFunction scalarTensorFunction = geodesicSpace.curve(origin, point);
-        Tensor ms = manifoldDisplay.point2xy(scalarTensorFunction.apply(RationalScalar.HALF));
+        Tensor ms = manifoldDisplay.point2xy(scalarTensorFunction.apply(Rational.HALF));
         Point2D point2d = geometricLayer.toPoint2D(ms);
         String string = "" + d.maps(Round._3);
         int width = fontMetrics.stringWidth(string);

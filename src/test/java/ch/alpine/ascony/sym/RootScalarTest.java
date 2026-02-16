@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -32,19 +32,19 @@ class RootScalarTest {
 
   @Test
   void testReciprocal() {
-    RootScalar rootScalar = new RootScalar(RationalScalar.of(-7, 13), RationalScalar.of(3, -11), RealScalar.of(2));
+    RootScalar rootScalar = new RootScalar(Rational.of(-7, 13), Rational.of(3, -11), RealScalar.of(2));
     assertEquals(rootScalar.multiply(rootScalar.reciprocal()), RealScalar.ONE);
   }
 
   @Test
   void testNumber() {
-    RootScalar rootScalar = new RootScalar(RationalScalar.of(-7, 5), RationalScalar.of(-3, 17), RealScalar.of(3));
+    RootScalar rootScalar = new RootScalar(Rational.of(-7, 5), Rational.of(-3, 17), RealScalar.of(3));
     assertThrows(Throw.class, rootScalar::number);
   }
 
   @Test
   void testReal() {
-    RootScalar rootScalar = new RootScalar(RationalScalar.of(-7, 5), RationalScalar.of(-3, 17), RealScalar.of(3));
+    RootScalar rootScalar = new RootScalar(Rational.of(-7, 5), Rational.of(-3, 17), RealScalar.of(3));
     Number number = rootScalar.explicit().number();
     double value = -7 / 5.0 - 3 / 17.0 * Math.sqrt(3);
     Tolerance.CHOP.requireClose(RealScalar.of(number), RealScalar.of(value));
@@ -52,7 +52,7 @@ class RootScalarTest {
 
   @Test
   void testZero() {
-    RootScalar rootScalar = new RootScalar(RationalScalar.of(-2, 13), RationalScalar.of(-8, 11), RealScalar.of(2));
+    RootScalar rootScalar = new RootScalar(Rational.of(-2, 13), Rational.of(-8, 11), RealScalar.of(2));
     Scalar zero = rootScalar.zero();
     assertEquals(zero, RealScalar.ZERO);
   }

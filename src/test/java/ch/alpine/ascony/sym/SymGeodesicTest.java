@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophis.flt.ga.GeodesicCenter;
-import ch.alpine.tensor.RationalScalar;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -19,11 +19,11 @@ class SymGeodesicTest {
   void testSimple() {
     Scalar s1 = SymScalarLeaf.of(1);
     Scalar s2 = SymScalarLeaf.of(2);
-    SymScalar s3 = new SymScalarPart(s1, s2, RationalScalar.HALF);
-    Scalar scalar = new SymScalarPart(s1, s2, RationalScalar.of(1, 2));
+    SymScalar s3 = new SymScalarPart(s1, s2, Rational.HALF);
+    Scalar scalar = new SymScalarPart(s1, s2, Rational.of(1, 2));
     assertEquals(s3, scalar);
     Scalar evaluate = s3.evaluate();
-    assertEquals(evaluate, RationalScalar.of(3, 2));
+    assertEquals(evaluate, Rational.of(3, 2));
     TensorUnaryOperator tensorUnaryOperator = //
         GeodesicCenter.of(SymGeodesic.INSTANCE, WindowFunctions.DIRICHLET.get());
     Tensor vector = SymSequence.of(5);

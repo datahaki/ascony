@@ -51,6 +51,11 @@ public final class GeometricComponent {
       { 0, -60, 300 }, //
       { 0, 0, 1 }, //
   }).unmodifiable();
+
+  private static Tensor toTensor(Point point) {
+    return Tensors.vector(point.x, point.y);
+  }
+
   // ---
   /** public access to final JComponent: attach mouse listeners, get/set properties, ... */
   public final JComponent jComponent = new JComponent() {
@@ -113,7 +118,7 @@ public final class GeometricComponent {
         @Override
         public void mousePressed(MouseEvent mouseEvent) {
           if (mouseEvent.getButton() == buttonDrag) {
-            down = AwtUtil.toTensor(mouseEvent.getPoint());
+            down = toTensor(mouseEvent.getPoint());
             Dimension dimension = jComponent.getSize();
             center = toModel(AwtUtil.center(dimension)).unmodifiable();
           }
@@ -123,10 +128,10 @@ public final class GeometricComponent {
         public void mouseDragged(MouseEvent mouseEvent) {
           mouseLocation = toModel(mouseEvent.getPoint());
           if (Objects.nonNull(down)) {
-            Tensor now = AwtUtil.toTensor(mouseEvent.getPoint());
+            Tensor now = toTensor(mouseEvent.getPoint());
             // ---
             Dimension dimension = jComponent.getSize();
-            Tensor mid = AwtUtil.toTensor(AwtUtil.center(dimension));
+            Tensor mid = toTensor(AwtUtil.center(dimension));
             Scalar ang = ArcTan2D.of(down.subtract(mid)).subtract(ArcTan2D.of(now.subtract(mid)));
             // ---
             Tensor diff = now.subtract(down);
