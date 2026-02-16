@@ -7,7 +7,7 @@ import ch.alpine.sophis.dv.Biinvariant;
 import ch.alpine.sophis.dv.HsCoordinates;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophis.gbc.d2.InsideConvexHullCoordinate;
-import ch.alpine.sophus.math.Genesis;
+import ch.alpine.sophis.math.Genesis;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
