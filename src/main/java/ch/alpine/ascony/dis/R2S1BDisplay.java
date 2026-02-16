@@ -3,8 +3,8 @@ package ch.alpine.ascony.dis;
 
 import ch.alpine.ascony.ren.EmptyRender;
 import ch.alpine.ascony.ren.RenderInterface;
-import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.rs.Se2inR2S;
+import ch.alpine.sophus.math.api.GeodesicSpace;
 
 public class R2S1BDisplay extends R2S1AbstractDisplay {
   public static final ManifoldDisplay INSTANCE = new R2S1BDisplay();

@@ -1,9 +1,9 @@
 // code by jph
 package ch.alpine.ascony.dis;
 
-import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.sophus.lie.so2.So2;
+import ch.alpine.sophus.math.api.GeodesicSpace;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.num.Pi;
 import ch.alpine.tensor.pdf.Distribution;

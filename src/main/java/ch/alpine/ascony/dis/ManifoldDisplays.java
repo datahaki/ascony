@@ -6,8 +6,8 @@ import java.util.List;
 
 import ch.alpine.ascony.arp.D2Raster;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.hs.Manifold;
-import ch.alpine.sophus.hs.MetricManifold;
+import ch.alpine.sophus.math.api.Manifold;
+import ch.alpine.sophus.math.api.MetricManifold;
 
 // TODO ASCONA rename to SpaceDisplay(s) etc.
 public enum ManifoldDisplays {

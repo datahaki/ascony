@@ -4,8 +4,8 @@ package ch.alpine.ascony.api;
 import ch.alpine.sophis.flt.bm.BiinvariantMeanCenter;
 import ch.alpine.sophis.flt.ga.GeodesicCenter;
 import ch.alpine.sophis.flt.ga.GeodesicCenterMidSeeded;
-import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.sophus.math.api.GeodesicSpace;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 

@@ -5,9 +5,9 @@ import java.io.Serializable;
 
 import ch.alpine.sophis.crv.d2.ex.StarPoints;
 import ch.alpine.sophis.decim.LineDistance;
-import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.h.HManifold;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
+import ch.alpine.sophus.math.api.GeodesicSpace;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.PadRight;
 import ch.alpine.tensor.api.TensorUnaryOperator;

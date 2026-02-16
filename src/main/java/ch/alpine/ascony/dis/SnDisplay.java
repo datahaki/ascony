@@ -5,9 +5,9 @@ import java.io.Serializable;
 
 import ch.alpine.sophis.decim.LineDistance;
 import ch.alpine.sophis.decim.SnLineDistance;
-import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.rpn.HemisphereRandomSample;
 import ch.alpine.sophus.hs.s.SnManifold;
+import ch.alpine.sophus.math.api.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.lie.rot.CirclePoints;

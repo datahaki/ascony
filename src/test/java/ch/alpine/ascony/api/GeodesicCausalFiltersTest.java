@@ -8,8 +8,8 @@ import org.junit.jupiter.params.provider.EnumSource;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.sophus.hs.GeodesicSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.sophus.math.api.GeodesicSpace;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.sca.win.WindowFunctions;
