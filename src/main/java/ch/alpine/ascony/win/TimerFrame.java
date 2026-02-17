@@ -89,7 +89,7 @@ public class TimerFrame extends BaseFrame {
           if (Objects.nonNull(animationWriter)) {
             synchronized (animationWriter) {
               try {
-                BufferedImage bufferedImage = OffscreenRender.of(geometricComponent.jComponent);
+                BufferedImage bufferedImage = OffscreenRender.of(geometricComponent.jComponent, BufferedImage.TYPE_INT_ARGB);
                 System.out.println("record");
                 animationWriter.write(bufferedImage);
               } catch (Exception e) {

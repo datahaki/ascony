@@ -50,7 +50,7 @@ public class BaseFrame {
             System.currentTimeMillis(), //
             jFrame.getTitle(), //
             IMAGE_FORMAT));
-        BufferedImage bufferedImage = OffscreenRender.of(geometricComponent.jComponent);
+        BufferedImage bufferedImage = OffscreenRender.of(geometricComponent.jComponent, BufferedImage.TYPE_INT_ARGB);
         try (OutputStream outputStream = Files.newOutputStream(path)) {
           ImageIO.write(bufferedImage, IMAGE_FORMAT, outputStream);
         } catch (Exception exception) {
@@ -66,7 +66,7 @@ public class BaseFrame {
   }
 
   public final BufferedImage offscreen() {
-    return OffscreenRender.of(geometricComponent.jComponent);
+    return OffscreenRender.of(geometricComponent.jComponent, BufferedImage.TYPE_INT_ARGB);
   }
 
   public final void close() {
