@@ -1,28 +1,18 @@
 // code by jph
 package ch.alpine.ascony.win;
 
-import java.awt.image.BufferedImage;
-import java.nio.file.Path;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
-import javax.swing.ImageIcon;
-import javax.swing.JToggleButton;
-
-import ch.alpine.bridge.awt.OffscreenRender;
 import ch.alpine.bridge.awt.WindowClosed;
-import ch.alpine.tensor.ext.HomeDirectory;
-import ch.alpine.tensor.ext.ResourceData;
-import ch.alpine.tensor.io.AnimationWriter;
-import ch.alpine.tensor.io.GifAnimationWriter;
+import ch.alpine.tensor.Throw;
 
 public class TimerFrame extends BaseFrame {
-  protected static final String VIDEO_FORMAT = "gif";
-  // ---
-  protected final Timer timer = new Timer();
-  AnimationWriter _animationWriter = null;
+  protected Timer timer = null;
 
   /** frame with repaint rate of 20[Hz] */
   public TimerFrame() {
@@ -31,76 +21,23 @@ public class TimerFrame extends BaseFrame {
 
   /** @param period between repaint invocations */
   public TimerFrame(int period, TimeUnit timeUnit) {
-    {
-      JToggleButton _jToggleButton = new JToggleButton("save2gif");
-      try {
-        _jToggleButton = new JToggleButton(new ImageIcon(ResourceData.bufferedImage("/ch/alpine/ascona/icon/video.png")));
-      } catch (Exception exception) {
-        System.err.println(exception);
+    jFrame.addWindowListener(new WindowAdapter() {
+      @Override
+      public void windowOpened(WindowEvent e) {
+        Throw.unless(Objects.isNull(timer));
+        timer = new Timer();
+        // periodic task for rendering
+        TimerTask timerTask = new TimerTask() {
+          @Override
+          public void run() {
+            geometricComponent.jComponent.repaint();
+          }
+        };
+        timer.schedule(timerTask, 100, TimeUnit.MILLISECONDS.convert(period, timeUnit));
       }
-      JToggleButton jToggleButton = _jToggleButton;
-      jToggleButton.setToolTipText("animation is stored in ~/Videos/...");
-      jToggleButton.addActionListener(_ -> {
-        if (jToggleButton.isSelected() && Objects.isNull(_animationWriter)) {
-          try {
-            Path file = HomeDirectory.Videos.resolve(String.format("ascona_%d_%s.%s", //
-                System.currentTimeMillis(), //
-                jFrame.getTitle(), //
-                VIDEO_FORMAT));
-            _animationWriter = new GifAnimationWriter(file, 100, TimeUnit.MILLISECONDS);
-            // Dimension dimension = geometricComponent.jComponent.getSize();
-            // _animationWriter = //
-            // new BGR3AnimationWriter( //
-            // new Mp4AnimationWriter( //
-            // HomeDirectory.file("animation.mp4").toString(), dimension, 10));
-          } catch (Exception e) {
-            e.printStackTrace();
-            jToggleButton.setSelected(false);
-          }
-        }
-        if (!jToggleButton.isSelected() && Objects.nonNull(_animationWriter)) {
-          synchronized (_animationWriter) {
-            try {
-              _animationWriter.close();
-            } catch (Exception e) {
-              e.printStackTrace();
-            }
-          }
-          _animationWriter = null;
-        }
-      });
-      jToolBar.add(jToggleButton);
-    }
-    jToolBar.addSeparator();
-    { // periodic task for rendering
-      TimerTask timerTask = new TimerTask() {
-        @Override
-        public void run() {
-          geometricComponent.jComponent.repaint();
-        }
-      };
-      timer.schedule(timerTask, 100, TimeUnit.MILLISECONDS.convert(period, timeUnit));
-    }
-    { // periodic task for rendering
-      TimerTask timerTask = new TimerTask() {
-        @Override
-        public void run() {
-          AnimationWriter animationWriter = _animationWriter;
-          if (Objects.nonNull(animationWriter)) {
-            synchronized (animationWriter) {
-              try {
-                BufferedImage bufferedImage = OffscreenRender.of(geometricComponent.jComponent, BufferedImage.TYPE_INT_ARGB);
-                System.out.println("record");
-                animationWriter.write(bufferedImage);
-              } catch (Exception e) {
-                e.printStackTrace();
-              }
-            }
-          }
-        }
-      };
-      timer.schedule(timerTask, 100, TimeUnit.MILLISECONDS.convert(period, timeUnit));
-    }
-    WindowClosed.runs(jFrame, timer::cancel);
+    });
+    WindowClosed.runs(jFrame, () -> {
+      timer.cancel();
+    });
   }
 }
