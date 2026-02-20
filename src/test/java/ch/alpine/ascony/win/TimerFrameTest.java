@@ -14,7 +14,7 @@ class TimerFrameTest {
     long convert = TimeUnit.MILLISECONDS.convert(1, TimeUnit.SECONDS);
     assertEquals(convert, 1000);
   }
-  
+
   @Test
   void testTimer() {
     TimerFrame timerFrame = new TimerFrame();
