@@ -8,6 +8,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
+import ch.alpine.bridge.awt.AwtUtil;
 import ch.alpine.bridge.awt.WindowClosed;
 import ch.alpine.tensor.Throw;
 
@@ -39,5 +40,6 @@ public class TimerFrame extends BaseFrame {
     WindowClosed.runs(jFrame, () -> {
       timer.cancel();
     });
+    AwtUtil.ctrlW(jFrame);
   }
 }
