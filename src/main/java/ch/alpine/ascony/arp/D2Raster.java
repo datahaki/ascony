@@ -36,6 +36,4 @@ public abstract class D2Raster {
    * @param pxy vector of the form {px, py}
    * @return point on manifold, or empty */
   public abstract Optional<Tensor> d2lift(Tensor pxy);
-  // /** @return 2-dimensional bounding box to sample within */
-  // public abstract CoordinateBoundingBox coordinateBoundingBox();
 }
