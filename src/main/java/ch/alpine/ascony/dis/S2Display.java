@@ -107,12 +107,12 @@ public class S2Display extends SnDisplay {
         Scalar z2 = RealScalar.ONE.subtract(Vector2NormSquared.of(point));
         return Optional.ofNullable(Sign.isPositive(z2) ? Append.of(point, Sqrt.FUNCTION.apply(z2)) : null);
       }
-
-      @Override
-      public final CoordinateBoundingBox coordinateBoundingBox() {
-        return Box2D.xy(Clips.absolute(1));
-      }
     };
+  }
+
+  @Override
+  public CoordinateBoundingBox d2Raster_coordinateBoundingBox() {
+    return Box2D.xy(Clips.absolute(1));
   }
 
   @Override

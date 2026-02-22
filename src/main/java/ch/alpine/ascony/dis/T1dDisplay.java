@@ -99,11 +99,11 @@ public enum T1dDisplay implements ManifoldDisplay {
       public Optional<Tensor> d2lift(Tensor pxy) {
         return Optional.of(xya2point(pxy));
       }
-
-      @Override // D2Raster
-      public CoordinateBoundingBox coordinateBoundingBox() {
-        return Box2D.xy(Clips.absolute(3));
-      }
     };
+  }
+
+  @Override
+  public CoordinateBoundingBox d2Raster_coordinateBoundingBox() {
+    return Box2D.xy(Clips.absolute(3));
   }
 }

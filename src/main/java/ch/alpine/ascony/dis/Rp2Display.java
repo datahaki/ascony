@@ -104,17 +104,17 @@ public class Rp2Display extends RpnDisplay {
   @Override
   public D2Raster d2Raster() {
     return new D2Raster() {
-      @Override
-      public CoordinateBoundingBox coordinateBoundingBox() {
-        return Box2D.xy(Clips.absolute(1));
-      }
-
       @Override // from GeodesicArrayPlot
       public Optional<Tensor> d2lift(Tensor point) {
         Scalar z2 = RealScalar.ONE.subtract(Vector2NormSquared.of(point));
         return Optional.ofNullable(Sign.isPositive(z2) ? Append.of(point, Sqrt.FUNCTION.apply(z2)) : null);
       }
     };
+  }
+
+  @Override
+  public CoordinateBoundingBox d2Raster_coordinateBoundingBox() {
+    return Box2D.xy(Clips.absolute(1));
   }
 
   @Override

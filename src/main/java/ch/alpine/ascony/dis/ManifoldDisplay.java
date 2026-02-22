@@ -13,6 +13,7 @@ import ch.alpine.sophus.math.api.GeodesicSpace;
 import ch.alpine.sophus.math.api.Manifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
 
 /** Hint: the interface is intended for use in the demo layer
@@ -90,6 +91,10 @@ public interface ManifoldDisplay {
   RenderInterface background();
 
   default D2Raster d2Raster() {
+    return null;
+  }
+
+  default CoordinateBoundingBox d2Raster_coordinateBoundingBox() {
     return null;
   }
 }

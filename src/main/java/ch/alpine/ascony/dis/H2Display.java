@@ -24,12 +24,12 @@ public class H2Display extends HnDisplay {
         // return Optional.of(HnWeierstrassCoordinate.toPoint(pxy));
         return Optional.of(pxy);
       }
-
-      @Override
-      public CoordinateBoundingBox coordinateBoundingBox() {
-        return Box2D.xy(CLIP);
-      }
     };
+  }
+
+  @Override
+  public CoordinateBoundingBox d2Raster_coordinateBoundingBox() {
+    return Box2D.xy(CLIP);
   }
 
   @Override

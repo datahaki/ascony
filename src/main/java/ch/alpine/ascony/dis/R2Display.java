@@ -27,11 +27,11 @@ public class R2Display extends RnDisplay {
       public Optional<Tensor> d2lift(Tensor pxy) {
         return Optional.of(pxy);
       }
-
-      @Override
-      public CoordinateBoundingBox coordinateBoundingBox() {
-        return CoordinateBoundingBox.of(CLIP, CLIP);
-      }
     };
+  }
+
+  @Override
+  public CoordinateBoundingBox d2Raster_coordinateBoundingBox() {
+    return CoordinateBoundingBox.of(CLIP, CLIP);
   }
 }

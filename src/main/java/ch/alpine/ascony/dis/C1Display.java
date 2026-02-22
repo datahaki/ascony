@@ -98,11 +98,11 @@ public enum C1Display implements ManifoldDisplay {
       public Optional<Tensor> d2lift(Tensor pxy) {
         return Optional.of(ComplexScalar.of(pxy.Get(0), pxy.Get(1)));
       }
-
-      @Override // from D2Raster
-      public CoordinateBoundingBox coordinateBoundingBox() {
-        return CoordinateBoundingBox.of(Stream.generate(() -> CLIP).limit(2));
-      }
     };
+  }
+  
+  @Override
+  public CoordinateBoundingBox d2Raster_coordinateBoundingBox() {
+    return CoordinateBoundingBox.of(Stream.generate(() -> CLIP).limit(2));
   }
 }
