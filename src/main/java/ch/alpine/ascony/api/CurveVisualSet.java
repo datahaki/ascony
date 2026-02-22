@@ -25,7 +25,7 @@ public class CurveVisualSet {
   public CurveVisualSet(Tensor points) {
     differences = Differences.of(points);
     differencesNorm = Tensor.of(differences.stream().map(Vector2Norm::of));
-    curvature = Curvature2D.string(points);
+    curvature = Curvature2D.INSTANCE.string(points);
     arcLength0 = Accumulate.of(differencesNorm);
     arcLength1 = FoldList.of(Tensor::add, RealScalar.ZERO, differencesNorm);
   }

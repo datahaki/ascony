@@ -7,6 +7,7 @@ import java.util.List;
 
 import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.bridge.io.ResourceLocator;
+import ch.alpine.bridge.lang.FriendlyFormat;
 import ch.alpine.bridge.pro.WindowProvider;
 import ch.alpine.bridge.ref.util.FieldsEditor;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
@@ -29,6 +30,7 @@ public abstract class AbstractDemo implements RenderInterface, WindowProvider {
         timerFrame.jToolBar.addSeparator();
     }
     timerFrame.geometricComponent.addRenderInterface(this);
+    timerFrame.jFrame.setTitle(FriendlyFormat.defaultTitle(getClass()));
   }
 
   @Override
