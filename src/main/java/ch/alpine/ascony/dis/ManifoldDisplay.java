@@ -9,6 +9,7 @@ import ch.alpine.sophis.ts.UniformTransitionSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.math.api.GeodesicSpace;
+import ch.alpine.sophus.math.api.Manifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
@@ -51,6 +52,24 @@ public interface ManifoldDisplay {
    * @see LieGroup
    * @see ClothoidBuilder */
   GeodesicSpace geodesicSpace();
+
+  default Manifold manifold() {
+    return geodesicSpace() instanceof Manifold manifold //
+        ? manifold
+        : null;
+  }
+
+  default HomogeneousSpace homogeneousSpace() {
+    return geodesicSpace() instanceof HomogeneousSpace homogeneousSpace //
+        ? homogeneousSpace
+        : null;
+  }
+
+  default LieGroup lieGroup() {
+    return geodesicSpace() instanceof LieGroup lieGroup //
+        ? lieGroup
+        : null;
+  }
 
   default TransitionSpace transitionSpace() {
     return new UniformTransitionSpace(geodesicSpace());

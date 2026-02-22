@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 import java.util.Collection;
@@ -20,6 +21,9 @@ import javax.swing.event.MouseInputListener;
 
 import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.bridge.awt.AwtUtil;
+import ch.alpine.bridge.fig.GridDrawer;
+import ch.alpine.bridge.fig.Show;
+import ch.alpine.bridge.fig.ShowableConfig;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.lang.UnicodeString;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
@@ -34,6 +38,8 @@ import ch.alpine.tensor.alg.Dot;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.re.Det;
 import ch.alpine.tensor.mat.re.LinearSolve;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
+import ch.alpine.tensor.opt.nd.CoordinateBounds;
 import ch.alpine.tensor.qty.Degree;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Round;
@@ -235,6 +241,16 @@ public final class GeometricComponent {
     renderInterfaces.forEach(renderInterface -> renderInterface.render(geometricLayer, graphics));
   }
 
+  public void renderGrid(Graphics2D graphics) {
+    setRotatable(false);
+    Dimension dimension = jComponent.getSize();
+    Rectangle rectangle = Show.defaultInsets(dimension, graphics.getFont().getSize());
+    CoordinateBoundingBox cbb = fromRectangle(rectangle);
+    ShowableConfig showableConfig = new ShowableConfig(rectangle, cbb);
+    new GridDrawer().render(showableConfig, graphics);
+    graphics.setClip(rectangle);
+  }
+
   // ---
   /** transforms point in pixel space to coordinates of model space
    * 
@@ -242,5 +258,13 @@ public final class GeometricComponent {
    * @return tensor of length 2 */
   private Tensor toModel(Point point) {
     return LinearSolve.of(model2pixel, Tensors.vector(point.x, point.y, 1)).extract(0, 2);
+  }
+
+  public CoordinateBoundingBox fromRectangle(Rectangle rectangle) {
+    if (isRotatable)
+      System.err.println("warning: rotatable");
+    Tensor p1 = toModel(rectangle.getLocation());
+    Tensor p2 = toModel(new Point(rectangle.x + rectangle.width, rectangle.y + rectangle.height));
+    return CoordinateBounds.of(Tensors.of(p1, p2));
   }
 }

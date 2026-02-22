@@ -36,7 +36,7 @@ public enum GeodesicCausalFilters {
     @Override
     public TensorUnaryOperator supply( //
         ManifoldDisplay manifoldDisplay, ScalarUnaryOperator smoothingKernel, int radius, Scalar alpha) {
-      HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+      HomogeneousSpace homogeneousSpace =  manifoldDisplay.homogeneousSpace();
       TensorUnaryOperator geodesicExtrapolation = new BiinvariantMeanExtrapolation( //
           homogeneousSpace.biinvariantMean(), MonomialExtrapolationMask.INSTANCE);
       return GeodesicFIRn.of(geodesicExtrapolation, manifoldDisplay.geodesicSpace(), radius, alpha);
@@ -46,7 +46,7 @@ public enum GeodesicCausalFilters {
     @Override
     public TensorUnaryOperator supply( //
         ManifoldDisplay manifoldDisplay, ScalarUnaryOperator smoothingKernel, int radius, Scalar alpha) {
-      HomogeneousSpace homogeneousSpace = (HomogeneousSpace) manifoldDisplay.geodesicSpace();
+      HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
       TensorUnaryOperator geodesicExtrapolation = new BiinvariantMeanExtrapolation( //
           homogeneousSpace.biinvariantMean(), MonomialExtrapolationMask.INSTANCE);
       return GeodesicIIRn.of(geodesicExtrapolation, manifoldDisplay.geodesicSpace(), radius, alpha);
