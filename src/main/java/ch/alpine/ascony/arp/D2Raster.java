@@ -13,21 +13,21 @@ import ch.alpine.tensor.io.ImageFormat;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.sca.N;
 
-public interface D2Raster {
+public abstract class D2Raster {
   /** @param d2Raster
    * @param resolution n
    * @param arrayFunction maps points from the manifold to a color
    * @return a tensor with dimensions [n, n, ?] which can be made
    * input to {@link Rescale}, and {@link ImageFormat}.
    * @see ArrayFunction */
-  static <T extends Tensor> Tensor of(D2Raster d2Raster, int resolution, ArrayFunction<T> arrayFunction) {
-    CoordinateBoundingBox coordinateBoundingBox = d2Raster.coordinateBoundingBox();
+  public final <T extends Tensor> Tensor of(int resolution, ArrayFunction<T> arrayFunction) {
+    CoordinateBoundingBox coordinateBoundingBox = coordinateBoundingBox();
     Tensor dx = Subdivide.intermediate_increasing(coordinateBoundingBox.clip(0), resolution).maps(N.DOUBLE);
     Tensor dy = Subdivide.intermediate_decreasing(coordinateBoundingBox.clip(1), resolution).maps(N.DOUBLE);
     return Tensor.of(dy.stream().map(Scalar.class::cast).parallel() //
         .map(py -> Tensor.of(dx.stream().map(Scalar.class::cast) //
             .map(px -> Unprotect.using(List.of(px, py))) //
-            .map(d2Raster::d2lift) //
+            .map(this::d2lift) //
             .map(arrayFunction))));
   }
 
@@ -36,8 +36,8 @@ public interface D2Raster {
    * 
    * @param pxy vector of the form {px, py}
    * @return point on manifold, or empty */
-  Optional<Tensor> d2lift(Tensor pxy);
+  public abstract Optional<Tensor> d2lift(Tensor pxy);
 
   /** @return 2-dimensional bounding box to sample within */
-  CoordinateBoundingBox coordinateBoundingBox();
+  public abstract CoordinateBoundingBox coordinateBoundingBox();
 }

@@ -26,7 +26,7 @@ import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
-public enum C1Display implements ManifoldDisplay, D2Raster {
+public enum C1Display implements ManifoldDisplay {
   INSTANCE;
 
   private static final Tensor SHAPE = CirclePoints.of(9).multiply(RealScalar.of(0.04));
@@ -91,13 +91,18 @@ public enum C1Display implements ManifoldDisplay, D2Raster {
     return AxesRender.INSTANCE; // EmptyRender.INSTANCE;
   }
 
-  @Override // from D2Raster
-  public Optional<Tensor> d2lift(Tensor pxy) {
-    return Optional.of(ComplexScalar.of(pxy.Get(0), pxy.Get(1)));
-  }
+  @Override
+  public D2Raster d2Raster() {
+    return new D2Raster() {
+      @Override // from D2Raster
+      public Optional<Tensor> d2lift(Tensor pxy) {
+        return Optional.of(ComplexScalar.of(pxy.Get(0), pxy.Get(1)));
+      }
 
-  @Override // from D2Raster
-  public CoordinateBoundingBox coordinateBoundingBox() {
-    return CoordinateBoundingBox.of(Stream.generate(() -> CLIP).limit(2));
+      @Override // from D2Raster
+      public CoordinateBoundingBox coordinateBoundingBox() {
+        return CoordinateBoundingBox.of(Stream.generate(() -> CLIP).limit(2));
+      }
+    };
   }
 }

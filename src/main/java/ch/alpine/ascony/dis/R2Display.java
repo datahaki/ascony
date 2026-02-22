@@ -6,8 +6,9 @@ import java.util.Optional;
 import ch.alpine.ascony.arp.D2Raster;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 
-public class R2Display extends RnDisplay implements D2Raster {
+public class R2Display extends RnDisplay {
   public static final ManifoldDisplay INSTANCE = new R2Display();
 
   private R2Display() {
@@ -19,8 +20,18 @@ public class R2Display extends RnDisplay implements D2Raster {
     return Se2Matrix.translation(p);
   }
 
-  @Override // from GeodesicArrayPlot
-  public Optional<Tensor> d2lift(Tensor pxy) {
-    return Optional.of(pxy);
+  @Override
+  public D2Raster d2Raster() {
+    return new D2Raster() {
+      @Override // from GeodesicArrayPlot
+      public Optional<Tensor> d2lift(Tensor pxy) {
+        return Optional.of(pxy);
+      }
+
+      @Override
+      public CoordinateBoundingBox coordinateBoundingBox() {
+        return CoordinateBoundingBox.of(CLIP, CLIP);
+      }
+    };
   }
 }

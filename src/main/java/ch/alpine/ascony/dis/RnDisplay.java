@@ -24,7 +24,7 @@ import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
 public abstract class RnDisplay implements ManifoldDisplay, Serializable {
-  private static final Clip CLIP = Clips.absolute(1);
+  static final Clip CLIP = Clips.absolute(1);
   private static final Tensor CIRCLE = CirclePoints.of(15).multiply(RealScalar.of(0.06)).unmodifiable();
   private static final TensorUnaryOperator LIFT = PadRight.zeros(3);
   // ---

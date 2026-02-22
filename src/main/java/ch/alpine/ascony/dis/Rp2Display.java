@@ -30,7 +30,7 @@ import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
 /** symmetric positive definite 2 x 2 matrices */
-public class Rp2Display extends RpnDisplay implements D2Raster {
+public class Rp2Display extends RpnDisplay {
   private static final TensorUnaryOperator PAD_RIGHT = PadRight.zeros(3, 3);
   private static final Tensor ID3 = IdentityMatrix.of(3);
   // ---
@@ -102,14 +102,19 @@ public class Rp2Display extends RpnDisplay implements D2Raster {
   }
 
   @Override
-  public CoordinateBoundingBox coordinateBoundingBox() {
-    return Box2D.xy(Clips.absolute(1));
-  }
+  public D2Raster d2Raster() {
+    return new D2Raster() {
+      @Override
+      public CoordinateBoundingBox coordinateBoundingBox() {
+        return Box2D.xy(Clips.absolute(1));
+      }
 
-  @Override // from GeodesicArrayPlot
-  public Optional<Tensor> d2lift(Tensor point) {
-    Scalar z2 = RealScalar.ONE.subtract(Vector2NormSquared.of(point));
-    return Optional.ofNullable(Sign.isPositive(z2) ? Append.of(point, Sqrt.FUNCTION.apply(z2)) : null);
+      @Override // from GeodesicArrayPlot
+      public Optional<Tensor> d2lift(Tensor point) {
+        Scalar z2 = RealScalar.ONE.subtract(Vector2NormSquared.of(point));
+        return Optional.ofNullable(Sign.isPositive(z2) ? Append.of(point, Sqrt.FUNCTION.apply(z2)) : null);
+      }
+    };
   }
 
   @Override

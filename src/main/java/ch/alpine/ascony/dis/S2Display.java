@@ -29,7 +29,7 @@ import ch.alpine.tensor.sca.Sign;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
 /** symmetric positive definite 2 x 2 matrices */
-public class S2Display extends SnDisplay implements D2Raster {
+public class S2Display extends SnDisplay {
   private static final TensorUnaryOperator PAD_RIGHT = PadRight.zeros(3, 3);
   // ---
   public static final ManifoldDisplay INSTANCE = new S2Display();
@@ -99,15 +99,20 @@ public class S2Display extends SnDisplay implements D2Raster {
     return Se2Matrix.translation(point2xy(xyz)).dot(skew);
   }
 
-  @Override // from GeodesicArrayPlot
-  public Optional<Tensor> d2lift(Tensor point) {
-    Scalar z2 = RealScalar.ONE.subtract(Vector2NormSquared.of(point));
-    return Optional.ofNullable(Sign.isPositive(z2) ? Append.of(point, Sqrt.FUNCTION.apply(z2)) : null);
-  }
-
   @Override
-  public final CoordinateBoundingBox coordinateBoundingBox() {
-    return Box2D.xy(Clips.absolute(1));
+  public D2Raster d2Raster() {
+    return new D2Raster() {
+      @Override // from GeodesicArrayPlot
+      public Optional<Tensor> d2lift(Tensor point) {
+        Scalar z2 = RealScalar.ONE.subtract(Vector2NormSquared.of(point));
+        return Optional.ofNullable(Sign.isPositive(z2) ? Append.of(point, Sqrt.FUNCTION.apply(z2)) : null);
+      }
+
+      @Override
+      public final CoordinateBoundingBox coordinateBoundingBox() {
+        return Box2D.xy(Clips.absolute(1));
+      }
+    };
   }
 
   @Override

@@ -9,22 +9,27 @@ import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 
-public class H2Display extends HnDisplay implements D2Raster {
+public class H2Display extends HnDisplay {
   public static final ManifoldDisplay INSTANCE = new H2Display();
 
   private H2Display() {
     super(2);
   }
 
-  @Override // from HsArrayPlot
-  public Optional<Tensor> d2lift(Tensor pxy) {
-    // return Optional.of(HnWeierstrassCoordinate.toPoint(pxy));
-    return Optional.of(pxy);
-  }
-
   @Override
-  public CoordinateBoundingBox coordinateBoundingBox() {
-    return Box2D.xy(CLIP);
+  public D2Raster d2Raster() {
+    return new D2Raster() {
+      @Override // from HsArrayPlot
+      public Optional<Tensor> d2lift(Tensor pxy) {
+        // return Optional.of(HnWeierstrassCoordinate.toPoint(pxy));
+        return Optional.of(pxy);
+      }
+
+      @Override
+      public CoordinateBoundingBox coordinateBoundingBox() {
+        return Box2D.xy(CLIP);
+      }
+    };
   }
 
   @Override

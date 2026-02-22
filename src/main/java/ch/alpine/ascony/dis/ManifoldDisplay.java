@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.ascony.dis;
 
+import ch.alpine.ascony.arp.D2Raster;
 import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.sophis.crv.clt.ClothoidBuilder;
 import ch.alpine.sophis.decim.LineDistance;
@@ -87,4 +88,8 @@ public interface ManifoldDisplay {
 
   /** @return rendering of background, for instance a shaded sphere for S^2 */
   RenderInterface background();
+
+  default D2Raster d2Raster() {
+    return null;
+  }
 }
