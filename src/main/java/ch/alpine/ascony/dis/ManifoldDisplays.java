@@ -3,6 +3,7 @@ package ch.alpine.ascony.dis;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import ch.alpine.ascony.arp.D2Raster;
 import ch.alpine.sophus.hs.HomogeneousSpace;
@@ -69,7 +70,7 @@ public enum ManifoldDisplays {
   /** implement {@link D2Raster} */
   public static List<ManifoldDisplays> d2Rasters() {
     return Arrays.stream(values()) //
-        .filter(md -> md.manifoldDisplay() instanceof D2Raster) //
+        .filter(md -> Objects.nonNull(md.manifoldDisplay().d2Raster())) //
         .toList();
   }
 
