@@ -20,7 +20,7 @@ public abstract class D2Raster {
    * @return a tensor with dimensions [n, n, ?] which can be made
    * input to {@link Rescale}, and {@link ImageFormat}.
    * @see ArrayFunction */
-  public final <T extends Tensor> Tensor of(ArrayFunction<T> arrayFunction, CoordinateBoundingBox cbb, int resolution ) {
+  public final <T extends Tensor> Tensor of(ArrayFunction<T> arrayFunction, CoordinateBoundingBox cbb, int resolution) {
     Tensor dx = Subdivide.intermediate_increasing(cbb.clip(0), resolution).maps(N.DOUBLE);
     Tensor dy = Subdivide.intermediate_decreasing(cbb.clip(1), resolution).maps(N.DOUBLE);
     return Tensor.of(dy.stream().map(Scalar.class::cast).parallel() //
@@ -36,7 +36,6 @@ public abstract class D2Raster {
    * @param pxy vector of the form {px, py}
    * @return point on manifold, or empty */
   public abstract Optional<Tensor> d2lift(Tensor pxy);
-
-//  /** @return 2-dimensional bounding box to sample within */
-//  public abstract CoordinateBoundingBox coordinateBoundingBox();
+  // /** @return 2-dimensional bounding box to sample within */
+  // public abstract CoordinateBoundingBox coordinateBoundingBox();
 }
