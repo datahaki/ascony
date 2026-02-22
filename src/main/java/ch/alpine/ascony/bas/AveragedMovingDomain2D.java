@@ -18,7 +18,7 @@ public class AveragedMovingDomain2D extends MovingDomain2D {
   /** @param origin
    * @param sedarim
    * @param domain */
-  public  AveragedMovingDomain2D(Tensor origin, Sedarim sedarim, Tensor domain) {
+  public AveragedMovingDomain2D(Tensor origin, Sedarim sedarim, Tensor domain) {
     super(origin, sedarim, domain);
   }
 
