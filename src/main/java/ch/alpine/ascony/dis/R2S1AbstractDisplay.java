@@ -4,7 +4,6 @@ package ch.alpine.ascony.dis;
 import java.io.Serializable;
 
 import ch.alpine.sophis.crv.d2.ex.Arrowhead;
-import ch.alpine.sophis.decim.LineDistance;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.tensor.Tensor;
@@ -44,11 +43,6 @@ public abstract class R2S1AbstractDisplay implements ManifoldDisplay, Serializab
   @Override // from ManifoldDisplay
   public final Tensor matrixLift(Tensor p) {
     return Se2Matrix.of(p);
-  }
-
-  @Override // from ManifoldDisplay
-  public final LineDistance lineDistance() {
-    return null;
   }
 
   @Override // from ManifoldDisplay

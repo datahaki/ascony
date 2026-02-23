@@ -5,7 +5,6 @@ import java.io.Serializable;
 
 import ch.alpine.ascony.ren.EmptyRender;
 import ch.alpine.ascony.ren.RenderInterface;
-import ch.alpine.sophis.decim.LineDistance;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.sophus.lie.so.So3Exponential;
 import ch.alpine.sophus.lie.so.So3Group;
@@ -71,11 +70,7 @@ public class So3Display implements ManifoldDisplay, Serializable {
   public GeodesicSpace geodesicSpace() {
     return So3Group.INSTANCE;
   }
-
-  @Override
-  public final LineDistance lineDistance() {
-    return null; // TODO ASCONA ALG line distance should be similar to s^3
-  }
+  // TODO ASCONA ALG line distance should be similar to s^3
 
   @Override
   public RandomSampleInterface randomSampleInterface() {

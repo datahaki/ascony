@@ -3,7 +3,6 @@ package ch.alpine.ascony.dis;
 
 import ch.alpine.ascony.ren.EmptyRender;
 import ch.alpine.ascony.ren.RenderInterface;
-import ch.alpine.sophis.decim.LineDistance;
 import ch.alpine.sophus.hs.spd.Spd0Exponential;
 import ch.alpine.sophus.hs.spd.Spd0RandomSample;
 import ch.alpine.sophus.hs.spd.SpdManifold;
@@ -79,11 +78,6 @@ public enum Spd2Display implements ManifoldDisplay {
   @Override
   public GeodesicSpace geodesicSpace() {
     return SpdManifold.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
-  public LineDistance lineDistance() {
-    return null;
   }
 
   @Override // from ManifoldDisplay

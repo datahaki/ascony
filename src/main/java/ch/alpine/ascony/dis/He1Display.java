@@ -3,7 +3,6 @@ package ch.alpine.ascony.dis;
 
 import ch.alpine.ascony.ren.EmptyRender;
 import ch.alpine.ascony.ren.RenderInterface;
-import ch.alpine.sophis.decim.LineDistance;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.he.HeNGroup;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
@@ -51,11 +50,6 @@ public enum He1Display implements ManifoldDisplay {
   @Override
   public LieGroup geodesicSpace() {
     return new HeNGroup(1);
-  }
-
-  @Override // from ManifoldDisplay
-  public LineDistance lineDistance() {
-    return null;
   }
 
   @Override // from ManifoldDisplay

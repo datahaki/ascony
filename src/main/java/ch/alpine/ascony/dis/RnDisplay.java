@@ -6,12 +6,12 @@ import java.util.stream.Stream;
 
 import ch.alpine.ascony.ren.EmptyRender;
 import ch.alpine.ascony.ren.RenderInterface;
-import ch.alpine.sophis.decim.LineDistance;
-import ch.alpine.sophis.decim.RnLineDistance;
 import ch.alpine.sophis.ts.RnTransitionSpace;
 import ch.alpine.sophis.ts.TransitionSpace;
 import ch.alpine.sophus.lie.rn.RGroup;
+import ch.alpine.sophus.lie.rn.RnLineDistance;
 import ch.alpine.sophus.math.api.GeodesicSpace;
+import ch.alpine.sophus.math.api.LineDistance;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.PadRight;

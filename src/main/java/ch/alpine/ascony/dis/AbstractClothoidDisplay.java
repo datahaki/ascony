@@ -7,7 +7,6 @@ import ch.alpine.ascony.ren.EmptyRender;
 import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.sophis.crv.clt.ClothoidBuilder;
 import ch.alpine.sophis.crv.d2.ex.Arrowhead;
-import ch.alpine.sophis.decim.LineDistance;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -46,11 +45,6 @@ public abstract class AbstractClothoidDisplay implements ManifoldDisplay, Serial
   @Override // from ManifoldDisplay
   public final Tensor matrixLift(Tensor p) {
     return Se2Matrix.of(p);
-  }
-
-  @Override // from ManifoldDisplay
-  public final LineDistance lineDistance() {
-    return null;
   }
 
   @Override // from ManifoldDisplay

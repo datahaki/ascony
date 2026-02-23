@@ -7,7 +7,6 @@ import ch.alpine.ascony.api.Box2D;
 import ch.alpine.ascony.arp.D2Raster;
 import ch.alpine.ascony.ren.AxesRender;
 import ch.alpine.ascony.ren.RenderInterface;
-import ch.alpine.sophis.decim.LineDistance;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.sophus.lie.td.TdGroup;
 import ch.alpine.sophus.lie.td.TdRandomSample;
@@ -75,11 +74,6 @@ public enum T1dDisplay implements ManifoldDisplay {
   @Override // from ManifoldDisplay
   public GeodesicSpace geodesicSpace() {
     return TdGroup.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
-  public LineDistance lineDistance() {
-    return null;
   }
 
   @Override // from ManifoldDisplay

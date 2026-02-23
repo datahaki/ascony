@@ -4,12 +4,12 @@ package ch.alpine.ascony.dis;
 import ch.alpine.ascony.arp.D2Raster;
 import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.sophis.crv.clt.ClothoidBuilder;
-import ch.alpine.sophis.decim.LineDistance;
 import ch.alpine.sophis.ts.TransitionSpace;
 import ch.alpine.sophis.ts.UniformTransitionSpace;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.math.api.GeodesicSpace;
+import ch.alpine.sophus.math.api.LineDistance;
 import ch.alpine.sophus.math.api.Manifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -81,7 +81,9 @@ public interface ManifoldDisplay {
    * @return operator that maps arbitrary dimension tangent vectors to 2d for display */
   TensorUnaryOperator tangentProjection(Tensor p);
 
-  LineDistance lineDistance();
+  default LineDistance lineDistance() {
+    return null;
+  }
 
   /** @return points in manifold that have to be {@link #point2xya(Tensor)}ed
    * in order to become control points in the form xya */

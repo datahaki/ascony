@@ -7,7 +7,6 @@ import java.util.stream.Stream;
 import ch.alpine.ascony.arp.D2Raster;
 import ch.alpine.ascony.ren.AxesRender;
 import ch.alpine.ascony.ren.RenderInterface;
-import ch.alpine.sophis.decim.LineDistance;
 import ch.alpine.sophus.lie.cn.Complex1LieGroup;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.sophus.math.api.GeodesicSpace;
@@ -69,11 +68,6 @@ public enum C1Display implements ManifoldDisplay {
 
   @Override
   public TensorUnaryOperator tangentProjection(Tensor p) {
-    return null;
-  }
-
-  @Override
-  public LineDistance lineDistance() {
     return null;
   }
 
