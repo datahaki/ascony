@@ -10,7 +10,6 @@ import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.math.api.Manifold;
 import ch.alpine.sophus.math.api.MetricManifold;
 
-// TODO ASCONA rename to SpaceDisplay(s) etc.
 public enum ManifoldDisplays {
   Se2ClA(Se2ClothoidDisplay.ANALYTIC),
   Se2ClL(Se2ClothoidDisplay.LEGENDRE),
