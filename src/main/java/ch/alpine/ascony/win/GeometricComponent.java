@@ -21,6 +21,7 @@ import javax.swing.event.MouseInputListener;
 
 import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.bridge.awt.AwtUtil;
+import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.fig.GridDrawer;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.ShowableConfig;
@@ -237,6 +238,7 @@ public final class GeometricComponent {
     graphics.fillRect(0, 0, dimension.width, dimension.height);
     // ---
     GeometricLayer geometricLayer = new GeometricLayer(model2pixel);
+    RenderQuality.setQuality(graphics);
     renderBackground.forEach(renderInterface -> renderInterface.render(geometricLayer, graphics));
     renderInterfaces.forEach(renderInterface -> renderInterface.render(geometricLayer, graphics));
   }
