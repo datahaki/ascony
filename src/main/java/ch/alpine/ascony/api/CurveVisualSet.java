@@ -8,11 +8,14 @@ import ch.alpine.sophis.crv.d2.Curvature2D;
 import ch.alpine.sophus.lie.so2.ArcTan2D;
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Accumulate;
 import ch.alpine.tensor.alg.Differences;
+import ch.alpine.tensor.alg.Drop;
 import ch.alpine.tensor.alg.FoldList;
 import ch.alpine.tensor.nrm.Vector2Norm;
+import ch.alpine.tensor.red.Times;
 
 public class CurveVisualSet {
   private final Tensor differences;
@@ -31,7 +34,12 @@ public class CurveVisualSet {
   }
 
   public void addCurvature(Show show) {
-    show.add(ListLinePlot.of(getArcLength1(), curvature)).setLabel("curvature");
+    show.add(ListLinePlot.of(getArcLength1(), curvature));
+  }
+
+  public void addCurvatureD(Show show) {
+    Tensor der = Times.of(Differences.of(curvature), differencesNorm.maps(Scalar::reciprocal));
+    show.add(ListLinePlot.of(Drop.tail(arcLength1, 1), der));
   }
 
   public void addArcTan(Show show, Tensor refined) {
