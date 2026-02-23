@@ -83,6 +83,7 @@ public enum ManifoldDisplays {
 
   public static List<ManifoldDisplays> lineDistances() {
     return Arrays.stream(values()) //
+        .filter(md -> md.manifoldDisplay().dimensions() == 2) //
         .filter(md -> Objects.nonNull(md.manifoldDisplay().lineDistance())) //
         .toList();
   }
