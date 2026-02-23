@@ -12,7 +12,7 @@ public enum RnLineTrim {
   public static final TripleReduceExtrapolation TRIPLE_REDUCE_EXTRAPOLATION = new TripleReduceExtrapolation() {
     @Override
     protected Scalar reduce(Tensor p, Tensor q, Tensor r) {
-      return RnLineDistance.INSTANCE.tensorNorm(p, r).norm(q);
+      return RnLineDistance.INSTANCE.tensorNorm(p, r).distance(q);
     }
   };
 }
