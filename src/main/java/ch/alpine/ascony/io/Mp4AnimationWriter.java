@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.Objects;
 
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.io.AnimationWriter;
 import io.humble.video.Codec;
 import io.humble.video.Encoder;
 import io.humble.video.MediaPacket;

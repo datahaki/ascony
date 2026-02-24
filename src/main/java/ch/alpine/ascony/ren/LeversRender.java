@@ -13,8 +13,10 @@ import java.awt.geom.Point2D;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import ch.alpine.ascony.dis.H2Display;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.R2Display;
+import ch.alpine.ascony.dis.Rp2Display;
 import ch.alpine.ascony.dis.S2Display;
 import ch.alpine.ascony.dis.Se2AbstractDisplay;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -22,6 +24,7 @@ import ch.alpine.sophis.dv.Biinvariant;
 import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.sophus.hs.s.TSnMemberQ;
 import ch.alpine.sophus.math.api.Exponential;
 import ch.alpine.sophus.math.api.GeodesicSpace;
 import ch.alpine.sophus.math.api.Manifold;
@@ -50,6 +53,7 @@ import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.ev.Eigensystem;
 import ch.alpine.tensor.mat.gr.InfluenceMatrix;
 import ch.alpine.tensor.mat.gr.Mahalanobis;
+import ch.alpine.tensor.mat.pi.LinearSubspace;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.red.Max;
 import ch.alpine.tensor.sca.Round;
@@ -399,14 +403,18 @@ public class LeversRender {
   private void renderEllipse(Tensor p, Tensor sigma_inverse) {
     Tensor vs = null;
     // TODO ASCONA should be part of manifoldDisplay interface
-    if (manifoldDisplay.equals(R2Display.INSTANCE))
+    if (manifoldDisplay.equals(R2Display.INSTANCE) || //
+        manifoldDisplay.equals(H2Display.INSTANCE))
       vs = CIRCLE;
     else //
-    if (manifoldDisplay.equals(S2Display.INSTANCE))
-      vs = CIRCLE; // .dot(TSnProjection.of(p));
-    else //
+    if (manifoldDisplay.equals(S2Display.INSTANCE) || //
+        manifoldDisplay.equals(Rp2Display.INSTANCE)) {
+      TSnMemberQ tSnMemberQ = new TSnMemberQ(p);
+      LinearSubspace linearSubspace = LinearSubspace.of(tSnMemberQ::defect, 3);
+      vs = linearSubspace.slash(CIRCLE);
+    } else //
     if (manifoldDisplay instanceof Se2AbstractDisplay) {
-      vs = Tensor.of(CIRCLE.stream().map(PadRight.zeros(3)));
+      vs = PadRight.zeros(3).slash(CIRCLE);
     }
     // ---
     if (Objects.nonNull(vs)) {

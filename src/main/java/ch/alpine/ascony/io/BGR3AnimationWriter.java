@@ -6,7 +6,6 @@ import java.awt.image.BufferedImage;
 import java.util.Objects;
 
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.io.AnimationWriter;
 
 /** for use MP4
  * internally converts images to 3-byte BGR since this is accepted by
