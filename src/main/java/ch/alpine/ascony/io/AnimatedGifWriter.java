@@ -101,8 +101,11 @@ public class AnimatedGifWriter implements AutoCloseable {
 
   @Override // from AutoCloseable
   public void close() throws IOException {
-    if (!isEmpty())
+    if (!isEmpty()) {
       imageWriter.endWriteSequence(); // operation invalid if no image was appended
+      imageWriter.dispose();
+      iIOMetadata = null;
+    }
     imageOutputStream.close();
   }
 }
