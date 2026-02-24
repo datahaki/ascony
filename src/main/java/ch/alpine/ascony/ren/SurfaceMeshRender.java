@@ -26,13 +26,13 @@ public record SurfaceMeshRender( //
     SurfaceMesh surfaceMesh, //
     ColorDataGradient colorDataGradient) implements RenderInterface {
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Vector2Norm::of);
-  private static final Tensor REF = NORMALIZE_UNLESS_ZERO.apply(Tensors.vector(1, 1, 2));
+  private static final Tensor REF = NORMALIZE_UNLESS_ZERO.apply(Tensors.vector(-1, 1, 2));
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D _g) {
     Graphics2D graphics = (Graphics2D) _g.create();
     for (int[] face : surfaceMesh.faces()) {
-      Tensor polygon = Tensor.of(IntStream.of(face).limit(3).mapToObj(surfaceMesh.vrt::get));
+      Tensor polygon = Tensor.of(IntStream.of(face).mapToObj(surfaceMesh.vrt::get));
       Optional<Scalar> optional = SignedCurvature2D.of( //
           polygon.get(0).extract(0, 2), //
           polygon.get(1).extract(0, 2), //
