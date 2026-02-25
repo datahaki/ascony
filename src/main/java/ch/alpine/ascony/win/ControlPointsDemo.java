@@ -66,9 +66,7 @@ public abstract class ControlPointsDemo extends AbstractDemo {
   }
 
   /** @return */
-  public List<ManifoldDisplays> getManifoldDisplays() {
-    return asconaParam.getList();
-  }
+  public abstract List<ManifoldDisplays> getManifoldDisplays();
 
   /** @param control points as matrix of dimensions N x 3 */
   public final void setControlPointsSe2(Tensor control) {

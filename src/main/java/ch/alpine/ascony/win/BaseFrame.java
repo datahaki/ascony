@@ -7,7 +7,9 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
 
 import ch.alpine.bridge.awt.OffscreenRender;
@@ -22,7 +24,9 @@ public class BaseFrame {
     jFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     jToolBar.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
     jToolBar.setFloatable(false);
-    jPanel.add(jToolBar, BorderLayout.NORTH);
+    jPanel.add(new JScrollPane(jToolBar, //
+        ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER, //
+        ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS), BorderLayout.NORTH);
     jPanel.add(geometricComponent.jComponent, BorderLayout.CENTER);
     jFrame.setContentPane(jPanel);
   }

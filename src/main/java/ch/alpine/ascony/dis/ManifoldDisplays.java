@@ -99,6 +99,8 @@ public enum ManifoldDisplays {
       H2, //
       S2, //
       Se2C);
+  public static final List<ManifoldDisplays> C1_ONLY = List.of( //
+      C1);
   // ---
   public static final List<ManifoldDisplays> SE2C_R2 = List.of( //
       Se2C, //
