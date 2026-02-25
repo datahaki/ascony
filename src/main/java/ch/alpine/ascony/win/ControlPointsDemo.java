@@ -21,10 +21,12 @@ import ch.alpine.tensor.Tensors;
 public abstract class ControlPointsDemo extends AbstractDemo {
   public final ControlPointsRender controlPointsRender;
   private final AsconaParam asconaParam;
+  private ManifoldDisplays manifoldDisplays;
 
   @SafeVarargs
   protected ControlPointsDemo(Object... objects) {
     super(objects);
+    manifoldDisplays = getManifoldDisplays().getFirst();
     this.asconaParam = (AsconaParam) objects[0];
     controlPointsRender = ControlPointsRender.create( //
         asconaParam, this::manifoldDisplay, timerFrame.geometricComponent);
@@ -57,11 +59,15 @@ public abstract class ControlPointsDemo extends AbstractDemo {
 
   /** @return */
   public final ManifoldDisplay manifoldDisplay() {
-    return asconaParam.manifoldDisplays.manifoldDisplay();
+    return manifoldDisplays.manifoldDisplay();
+  }
+
+  public final ManifoldDisplays getSelectedMD() {
+    return manifoldDisplays;
   }
 
   public final synchronized void setManifoldDisplay(ManifoldDisplays manifoldDisplays) {
-    asconaParam.manifoldDisplays = manifoldDisplays;
+    this.manifoldDisplays = manifoldDisplays;
     fieldsEditor(0).updateJComponents();
   }
 
