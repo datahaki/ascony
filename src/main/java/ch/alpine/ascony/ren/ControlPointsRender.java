@@ -12,7 +12,6 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.ref.AsconaParam;
 import ch.alpine.ascony.win.GeometricComponent;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophis.crv.d2.Extract2D;

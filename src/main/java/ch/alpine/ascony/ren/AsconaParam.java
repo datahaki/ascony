@@ -1,10 +1,8 @@
 // code by jph
-package ch.alpine.ascony.ref;
+package ch.alpine.ascony.ren;
 
-import ch.alpine.bridge.ref.ann.ReflectionMarker;
-
-@ReflectionMarker
-public class AsconaParam {
+public final class AsconaParam {
+  // TODO this class will be obsolete!!!
   public final boolean addRemoveControlPoints;
   public boolean drawControlPoints = true;
 

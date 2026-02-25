@@ -12,7 +12,7 @@ import javax.swing.JTabbedPane;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ref.AsconaParam;
+import ch.alpine.ascony.ren.AsconaParam;
 import ch.alpine.ascony.ren.ControlPointsRender;
 import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -31,7 +31,7 @@ public abstract class ControlPointsDemo extends AbstractDemo {
   private ManifoldDisplays selected_manifoldDisplays;
 
   @SafeVarargs
-  protected ControlPointsDemo(Object... objects) {
+  protected ControlPointsDemo(AsconaParam asconaParam, Object... objects) {
     super(objects);
     list = permitted_manifoldDisplays();
     selected_manifoldDisplays = list.getFirst();
@@ -49,7 +49,7 @@ public abstract class ControlPointsDemo extends AbstractDemo {
       jTabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
       timerFrame.addWest(jTabbedPane);
     }
-    this.asconaParam = (AsconaParam) objects[0];
+    this.asconaParam = asconaParam;
     controlPointsRender = ControlPointsRender.create( //
         asconaParam, this::manifoldDisplay, timerFrame.geometricComponent);
     timerFrame.jToolBar.addSeparator();

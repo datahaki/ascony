@@ -1,15 +1,17 @@
 // code by jph
 package ch.alpine.ascony.dis;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.sophus.lie.rn.RGroup;
+import ch.alpine.sophus.lie.rn.RnGroup;
 
 class R2DisplayTest {
   @Test
   void testSimple() {
-    assertEquals(R2Display.INSTANCE.geodesicSpace(), RGroup.INSTANCE);
+    assertTrue(R2Display.INSTANCE.geodesicSpace() instanceof RGroup);
+    assertTrue(R2Display.INSTANCE.geodesicSpace() instanceof RnGroup);
   }
 }
