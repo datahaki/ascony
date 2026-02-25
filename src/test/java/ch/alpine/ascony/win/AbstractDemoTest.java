@@ -11,9 +11,9 @@ import java.util.Objects;
 
 import org.junit.jupiter.api.Test;
 
-import ch.alpine.tensor.ext.ref.ClassDiscovery;
-import ch.alpine.tensor.ext.ref.ClassPaths;
-import ch.alpine.tensor.ext.ref.ClassVisitor;
+import ch.alpine.bridge.cgr.ClassDiscovery;
+import ch.alpine.bridge.cgr.ClassPaths;
+import ch.alpine.bridge.cgr.ClassVisitor;
 
 class AbstractDemoTest {
   @Test
