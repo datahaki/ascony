@@ -14,6 +14,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
 
 import ch.alpine.bridge.awt.OffscreenRender;
+import ch.alpine.tensor.Throw;
 
 public class BaseFrame {
   public final JFrame jFrame = new JFrame();
@@ -36,7 +37,11 @@ public class BaseFrame {
     return OffscreenRender.of(geometricComponent.jComponent, BufferedImage.TYPE_INT_ARGB);
   }
 
+  private boolean west_available = true;
+
   protected final void addWest(JComponent jComponent) {
+    Throw.unless(west_available);
+    west_available = false;
     jPanel.add(jComponent, BorderLayout.WEST);
   }
 

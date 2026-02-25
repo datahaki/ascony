@@ -7,9 +7,9 @@ import ch.alpine.ascony.api.Box2D;
 import ch.alpine.ascony.arp.D2Raster;
 import ch.alpine.ascony.ren.AxesRender;
 import ch.alpine.ascony.ren.RenderInterface;
-import ch.alpine.sophus.api.GeodesicSpace;
+import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
-import ch.alpine.sophus.lie.td.TdGroup;
+import ch.alpine.sophus.lie.td.TdNGroup;
 import ch.alpine.sophus.lie.td.TdRandomSample;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -25,10 +25,11 @@ import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.exp.Exp;
 import ch.alpine.tensor.sca.exp.Log;
 
-public enum T1dDisplay implements ManifoldDisplay {
+public enum Td1Display implements ManifoldDisplay {
   INSTANCE;
 
   private static final Tensor PENTAGON = CirclePoints.of(5).multiply(RealScalar.of(0.1)).unmodifiable();
+  private final LieGroup lieGroup = new TdNGroup(1);
 
   @Override // from ManifoldDisplay
   public int dimensions() {
@@ -72,8 +73,8 @@ public enum T1dDisplay implements ManifoldDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public GeodesicSpace geodesicSpace() {
-    return TdGroup.INSTANCE;
+  public LieGroup geodesicSpace() {
+    return lieGroup;
   }
 
   @Override // from ManifoldDisplay

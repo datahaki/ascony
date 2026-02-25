@@ -2,7 +2,9 @@
 package ch.alpine.ascony.win;
 
 import java.awt.Graphics2D;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -21,20 +23,26 @@ import ch.alpine.tensor.Tensors;
 /** class is used in other projects outside of owl */
 // TODO ASCONA possibly provide option for cyclic midpoint indication (see R2Bary..Coord..Demo)
 public abstract class ControlPointsDemo extends AbstractDemo {
+  private final List<ManifoldDisplays> list;
+  private final JTabbedPane jTabbedPane = new JTabbedPane(JTabbedPane.LEFT);
   public final ControlPointsRender controlPointsRender;
   private final AsconaParam asconaParam;
-  private ManifoldDisplays manifoldDisplays;
+  private final List<Consumer<ManifoldDisplays>> listeners = new LinkedList<>();
+  private ManifoldDisplays selected_manifoldDisplays;
 
   @SafeVarargs
   protected ControlPointsDemo(Object... objects) {
     super(objects);
-    List<ManifoldDisplays> list = getManifoldDisplays();
-    manifoldDisplays = getManifoldDisplays().getFirst();
-    if (!list.isEmpty() || true) {
-      JTabbedPane jTabbedPane = new JTabbedPane(JTabbedPane.LEFT);
-      for (ManifoldDisplays md : list)
-        jTabbedPane.addTab(md.toString(), new JPanel());
-      jTabbedPane.addChangeListener(_ -> setManifoldDisplay(list.get(jTabbedPane.getSelectedIndex())));
+    list = permitted_manifoldDisplays();
+    selected_manifoldDisplays = list.getFirst();
+    listeners.add(this::setManifoldDisplay);
+    if (0 < list.size()) {
+      for (ManifoldDisplays manifoldDisplays : list)
+        jTabbedPane.addTab(manifoldDisplays.manifoldDisplay().geodesicSpace().toString(), new JPanel());
+      jTabbedPane.addChangeListener(_ -> {
+        ManifoldDisplays selected = list.get(jTabbedPane.getSelectedIndex());
+        listeners.forEach(listener -> listener.accept(selected));
+      });
       jTabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
       timerFrame.addWest(jTabbedPane);
     }
@@ -60,6 +68,10 @@ public abstract class ControlPointsDemo extends AbstractDemo {
     return asconaParam;
   }
 
+  protected void addChangeListener(Consumer<ManifoldDisplays> consumer) {
+    listeners.add(consumer);
+  }
+
   // TODO ASCONA API function should not be here!
   public final void addButtonDubins() {
     JButton jButton = new JButton("dubins");
@@ -70,20 +82,19 @@ public abstract class ControlPointsDemo extends AbstractDemo {
 
   /** @return */
   public final ManifoldDisplay manifoldDisplay() {
-    return manifoldDisplays.manifoldDisplay();
+    return selected_manifoldDisplays.manifoldDisplay();
   }
 
   public final ManifoldDisplays getSelectedMD() {
-    return manifoldDisplays;
+    return selected_manifoldDisplays;
   }
 
-  public final synchronized void setManifoldDisplay(ManifoldDisplays manifoldDisplays) {
-    this.manifoldDisplays = manifoldDisplays;
-    fieldsEditor(0).updateJComponents();
+  public final void setManifoldDisplay(ManifoldDisplays manifoldDisplays) {
+    this.selected_manifoldDisplays = manifoldDisplays;
   }
 
   /** @return */
-  protected abstract List<ManifoldDisplays> getManifoldDisplays();
+  protected abstract List<ManifoldDisplays> permitted_manifoldDisplays();
 
   /** @param control points as matrix of dimensions N x 3 */
   public final void setControlPointsSe2(Tensor control) {

@@ -7,7 +7,7 @@ import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.LineDistance;
 import ch.alpine.sophus.hs.rpn.HemisphereRandomSample;
 import ch.alpine.sophus.hs.s.SnLineDistance;
-import ch.alpine.sophus.hs.s.SnManifold;
+import ch.alpine.sophus.hs.s.Sphere;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.lie.rot.CirclePoints;
@@ -18,9 +18,11 @@ public abstract class SnDisplay implements ManifoldDisplay, Serializable {
   private static final Tensor CIRCLE = CirclePoints.of(15).multiply(RealScalar.of(0.05)).unmodifiable();
   // ---
   private final int dimensions;
+  private Sphere sphere;
 
   protected SnDisplay(int dimensions) {
     this.dimensions = dimensions;
+    sphere = new Sphere(dimensions);
   }
 
   @Override // from ManifoldDisplay
@@ -35,7 +37,7 @@ public abstract class SnDisplay implements ManifoldDisplay, Serializable {
 
   @Override
   public final GeodesicSpace geodesicSpace() {
-    return SnManifold.INSTANCE;
+    return sphere;
   }
 
   @Override // from ManifoldDisplay

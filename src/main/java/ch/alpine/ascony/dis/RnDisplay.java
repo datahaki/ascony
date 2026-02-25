@@ -10,7 +10,7 @@ import ch.alpine.sophis.ts.RnTransitionSpace;
 import ch.alpine.sophis.ts.TransitionSpace;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.LineDistance;
-import ch.alpine.sophus.lie.rn.RGroup;
+import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.rn.RnLineDistance;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
@@ -29,9 +29,11 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
   private static final TensorUnaryOperator LIFT = PadRight.zeros(3);
   // ---
   private final int dimensions;
+  private final RnGroup rnGroup;
 
   protected RnDisplay(int dimensions) {
     this.dimensions = dimensions;
+    rnGroup = new RnGroup(dimensions);
   }
 
   @Override // from ManifoldDisplay
@@ -57,7 +59,7 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
 
   @Override // from ManifoldDisplay
   public final GeodesicSpace geodesicSpace() {
-    return RGroup.INSTANCE;
+    return rnGroup;
   }
 
   @Override // from ManifoldDisplay

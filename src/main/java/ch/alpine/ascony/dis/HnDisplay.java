@@ -7,7 +7,7 @@ import ch.alpine.sophis.crv.d2.ex.StarPoints;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.LineDistance;
 import ch.alpine.sophus.hs.h.HLineDistance;
-import ch.alpine.sophus.hs.h.HManifold;
+import ch.alpine.sophus.hs.h.Hyperboloid;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.PadRight;
@@ -26,14 +26,16 @@ public abstract class HnDisplay implements ManifoldDisplay, Serializable {
   private static final TensorUnaryOperator LIFT = PadRight.zeros(3);
   // ---
   private final int dimensions;
+  private final Hyperboloid hyperboloid;
 
   protected HnDisplay(int dimensions) {
     this.dimensions = dimensions;
+    hyperboloid = new Hyperboloid(dimensions);
   }
 
   @Override
   public final int dimensions() {
-    return dimensions;
+    return hyperboloid.dimensions();
   }
 
   @Override // from ManifoldDisplay
@@ -64,7 +66,7 @@ public abstract class HnDisplay implements ManifoldDisplay, Serializable {
 
   @Override
   public final GeodesicSpace geodesicSpace() {
-    return HManifold.INSTANCE;
+    return hyperboloid;
   }
 
   @Override // from ManifoldDisplay

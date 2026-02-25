@@ -8,7 +8,6 @@ import ch.alpine.ascony.arp.D2Raster;
 import ch.alpine.ascony.ren.AxesRender;
 import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.sophus.api.GeodesicSpace;
-import ch.alpine.sophus.lie.cn.Complex1LieGroup;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.ComplexScalar;
 import ch.alpine.tensor.RealScalar;

@@ -164,6 +164,7 @@ class ManifoldDisplaysTest {
   @Test
   void testRaster() {
     assertTrue(5 <= ManifoldDisplays.d2Rasters().size());
+    ManifoldDisplays.d2Rasters().forEach(IO::println);
   }
 
   @Test
