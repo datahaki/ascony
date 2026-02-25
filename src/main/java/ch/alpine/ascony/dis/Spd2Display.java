@@ -3,10 +3,9 @@ package ch.alpine.ascony.dis;
 
 import ch.alpine.ascony.ren.EmptyRender;
 import ch.alpine.ascony.ren.RenderInterface;
-import ch.alpine.sophus.api.GeodesicSpace;
+import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.spd.Spd0Exponential;
-import ch.alpine.sophus.hs.spd.Spd0RandomSample;
-import ch.alpine.sophus.hs.spd.SpdManifold;
+import ch.alpine.sophus.hs.spd.SpdNManifold;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -15,7 +14,6 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
-import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.red.Diagonal;
 
 /** symmetric positive definite 2 x 2 matrices */
@@ -26,10 +24,11 @@ public enum Spd2Display implements ManifoldDisplay {
   private static final Scalar SCALE = RealScalar.of(0.2);
   private static final Tensor CIRCLE_POINTS = CirclePoints.of(43).multiply(SCALE).unmodifiable();
   private static final TensorUnaryOperator PAD_RIGHT = PadRight.zeros(3, 3);
+  private final SpdNManifold spdNManifold = new SpdNManifold(2);
 
   @Override // from ManifoldDisplay
   public int dimensions() {
-    return 3;
+    return spdNManifold.dimensions();
   }
 
   @Override // from ManifoldDisplay
@@ -76,13 +75,13 @@ public enum Spd2Display implements ManifoldDisplay {
   }
 
   @Override
-  public GeodesicSpace geodesicSpace() {
-    return SpdManifold.INSTANCE;
+  public HomogeneousSpace geodesicSpace() {
+    return spdNManifold;
   }
 
   @Override // from ManifoldDisplay
   public RandomSampleInterface randomSampleInterface() {
-    return new Spd0RandomSample(2, UniformDistribution.of(-1, 1));
+    return spdNManifold;
   }
 
   @Override // from ManifoldDisplay

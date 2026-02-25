@@ -72,6 +72,10 @@ public abstract class ControlPointsDemo extends AbstractDemo {
     listeners.add(consumer);
   }
 
+  protected void addChangeListener(Runnable runnable) {
+    listeners.add(_ -> runnable.run());
+  }
+
   // TODO ASCONA API function should not be here!
   public final void addButtonDubins() {
     JButton jButton = new JButton("dubins");
