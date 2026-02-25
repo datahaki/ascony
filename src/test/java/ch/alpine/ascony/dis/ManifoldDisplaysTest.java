@@ -15,8 +15,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
+import ch.alpine.sophus.api.MetricManifold;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.math.api.MetricManifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;

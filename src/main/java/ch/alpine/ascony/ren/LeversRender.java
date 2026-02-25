@@ -23,12 +23,12 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophis.dv.Biinvariant;
 import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
+import ch.alpine.sophus.api.GeodesicSpace;
+import ch.alpine.sophus.api.Manifold;
+import ch.alpine.sophus.api.TangentSpace;
+import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.s.TSnMemberQ;
-import ch.alpine.sophus.math.api.Exponential;
-import ch.alpine.sophus.math.api.GeodesicSpace;
-import ch.alpine.sophus.math.api.Manifold;
-import ch.alpine.sophus.math.api.TensorMetric;
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -421,7 +421,7 @@ public class LeversRender {
       vs = Tensor.of(vs.stream().map(sigma_inverse::dot));
       if (form_shadow) {
         HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
-        Exponential exponential = homogeneousSpace.exponential(p);
+        TangentSpace exponential = homogeneousSpace.exponential(p);
         Tensor ms = Tensor.of(vs.stream().map(exponential::exp).map(manifoldDisplay::point2xy));
         Path2D path2d = geometricLayer.toPath2D(ms, true);
         graphics.setStroke(new BasicStroke());

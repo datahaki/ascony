@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Objects;
 
 import ch.alpine.ascony.arp.D2Raster;
+import ch.alpine.sophus.api.Manifold;
+import ch.alpine.sophus.api.MetricManifold;
 import ch.alpine.sophus.hs.HomogeneousSpace;
-import ch.alpine.sophus.math.api.Manifold;
-import ch.alpine.sophus.math.api.MetricManifold;
 
 public enum ManifoldDisplays {
   Se2ClA(Se2ClothoidDisplay.ANALYTIC),

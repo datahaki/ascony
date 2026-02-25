@@ -5,10 +5,10 @@ import java.io.Serializable;
 
 import ch.alpine.ascony.ren.EmptyRender;
 import ch.alpine.ascony.ren.RenderInterface;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.sophus.lie.so.So3Exponential;
 import ch.alpine.sophus.lie.so.So3Group;
-import ch.alpine.sophus.math.api.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;

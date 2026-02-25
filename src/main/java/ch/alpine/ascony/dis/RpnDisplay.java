@@ -3,10 +3,10 @@ package ch.alpine.ascony.dis;
 
 import java.io.Serializable;
 
+import ch.alpine.sophus.api.GeodesicSpace;
+import ch.alpine.sophus.api.LineDistance;
 import ch.alpine.sophus.hs.rpn.RpnManifold;
 import ch.alpine.sophus.hs.s.SnLineDistance;
-import ch.alpine.sophus.math.api.GeodesicSpace;
-import ch.alpine.sophus.math.api.LineDistance;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.lie.rot.CirclePoints;

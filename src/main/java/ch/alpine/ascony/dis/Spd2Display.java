@@ -3,10 +3,10 @@ package ch.alpine.ascony.dis;
 
 import ch.alpine.ascony.ren.EmptyRender;
 import ch.alpine.ascony.ren.RenderInterface;
+import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.hs.spd.Spd0Exponential;
 import ch.alpine.sophus.hs.spd.Spd0RandomSample;
 import ch.alpine.sophus.hs.spd.SpdManifold;
-import ch.alpine.sophus.math.api.GeodesicSpace;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
