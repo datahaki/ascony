@@ -31,7 +31,7 @@ public abstract class AbstractBaseTest {
 
   @ParameterizedTest
   @MethodSource("objectStream")
-  void test(@SuppressWarnings("unused") Object object) {
+  void test(Object object) {
     // changes happen via random fields assignment
     // System.out.println("---");
     // ObjectProperties.list(holder).forEach(System.out::println);
