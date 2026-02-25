@@ -1,5 +1,5 @@
 // code by ynager, found on github
-package ch.alpine.owl.util.img;
+package ch.alpine.ascony.img;
 
 import java.awt.Rectangle;
 import java.awt.geom.Area;

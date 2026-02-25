@@ -38,7 +38,10 @@ public abstract class ControlPointsDemo extends AbstractDemo {
     listeners.add(this::setManifoldDisplay);
     if (0 < list.size()) {
       for (ManifoldDisplays manifoldDisplays : list)
+        // {
+        // Icon icon = RandomIconFactory.create(manifoldDisplays.hashCode(), 24);
         jTabbedPane.addTab(manifoldDisplays.manifoldDisplay().geodesicSpace().toString(), new JPanel());
+      // }
       jTabbedPane.addChangeListener(_ -> {
         ManifoldDisplays selected = list.get(jTabbedPane.getSelectedIndex());
         listeners.forEach(listener -> listener.accept(selected));
@@ -80,7 +83,8 @@ public abstract class ControlPointsDemo extends AbstractDemo {
   public final void addButtonDubins() {
     JButton jButton = new JButton("dubins");
     jButton.setToolTipText("project control points to dubins path");
-    jButton.addActionListener(_ -> controlPointsRender.setControlPointsSe2(DubinsGenerator.project(controlPointsRender.control)));
+    jButton.addActionListener(_ -> controlPointsRender.setControlPointsSe2( //
+        DubinsGenerator.project(controlPointsRender.getControlPointsSe2())));
     timerFrame.jToolBar.add(jButton);
   }
 

@@ -3,11 +3,11 @@ package ch.alpine.ascony.api;
 
 import java.util.Objects;
 
+import ch.alpine.sophis.api.Genesis;
 import ch.alpine.sophis.dv.Biinvariant;
 import ch.alpine.sophis.dv.HsCoordinates;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophis.gbc.d2.InsideConvexHullCoordinate;
-import ch.alpine.sophis.math.api.Genesis;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;

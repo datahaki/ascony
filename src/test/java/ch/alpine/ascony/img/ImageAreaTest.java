@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.owl.util.img;
+package ch.alpine.ascony.img;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

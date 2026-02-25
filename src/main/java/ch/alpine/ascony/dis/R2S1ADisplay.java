@@ -4,7 +4,7 @@ package ch.alpine.ascony.dis;
 import ch.alpine.ascony.ren.EmptyRender;
 import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.sophus.api.GeodesicSpace;
-import ch.alpine.sophus.hs.rs.Se2inR2S;
+import ch.alpine.sophus.gs.rs.Se2inR2S;
 
 public class R2S1ADisplay extends R2S1AbstractDisplay {
   public static final ManifoldDisplay INSTANCE = new R2S1ADisplay();

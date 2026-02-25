@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.owl.util.img;
+package ch.alpine.ascony.img;
 
 import java.util.HashSet;
 import java.util.List;

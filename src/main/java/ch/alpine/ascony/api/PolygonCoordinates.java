@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import ch.alpine.sophis.api.Genesis;
 import ch.alpine.sophis.dv.AffineCoordinate;
 import ch.alpine.sophis.dv.Biinvariant;
 import ch.alpine.sophis.dv.HsCoordinates;
@@ -22,7 +23,6 @@ import ch.alpine.sophis.gbc.d2.ThreePointCoordinate;
 import ch.alpine.sophis.gbc.d2.ThreePointScalings;
 import ch.alpine.sophis.gbc.it.IterativeAffineCoordinate;
 import ch.alpine.sophis.gbc.it.IterativeTargetCoordinate;
-import ch.alpine.sophis.math.api.Genesis;
 import ch.alpine.sophus.lie.rn.RGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
