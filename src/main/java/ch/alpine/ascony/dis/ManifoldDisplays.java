@@ -11,12 +11,12 @@ import ch.alpine.sophus.api.MetricManifold;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 
 public enum ManifoldDisplays {
-  Se2ClA(Se2ClothoidDisplay.ANALYTIC),
-  Se2ClL(Se2ClothoidDisplay.LEGENDRE),
-  Se2CCl(Se2CoveringClothoidDisplay.INSTANCE),
-  Se2C(Se2CoveringDisplay.INSTANCE),
+  ClC(Se2CoveringClothoidDisplay.INSTANCE),
+  ClA(Se2ClothoidDisplay.ANALYTIC),
+  ClL(Se2ClothoidDisplay.LEGENDRE),
   R2S1A(R2S1ADisplay.INSTANCE),
   R2S1B(R2S1BDisplay.INSTANCE),
+  Se2C(Se2CoveringDisplay.INSTANCE),
   Se2(Se2Display.INSTANCE),
   Spd2(Spd2Display.INSTANCE),
   R2(R2Display.INSTANCE),
@@ -89,8 +89,7 @@ public enum ManifoldDisplays {
   }
 
   // ---
-  public static final List<ManifoldDisplays> R2_ONLY = List.of( //
-      R2);
+  public static final List<ManifoldDisplays> R2_ONLY = List.of(R2);
   public static final List<ManifoldDisplays> R2_S2 = List.of( //
       R2, //
       S2);
@@ -99,17 +98,14 @@ public enum ManifoldDisplays {
       H2, //
       S2, //
       Se2C);
-  public static final List<ManifoldDisplays> C1_ONLY = List.of( //
-      C1);
+  public static final List<ManifoldDisplays> C1_ONLY = List.of(C1);
   // ---
   public static final List<ManifoldDisplays> SE2C_R2 = List.of( //
       Se2C, //
       R2);
   // ---
-  public static final List<ManifoldDisplays> SE2_ONLY = List.of( //
-      Se2);
-  public static final List<ManifoldDisplays> SE2C_ONLY = List.of( //
-      Se2C);
+  public static final List<ManifoldDisplays> SE2_ONLY = List.of(Se2);
+  public static final List<ManifoldDisplays> SE2C_ONLY = List.of(Se2C);
   // ---
   public static final List<ManifoldDisplays> SE2_R2 = List.of( //
       Se2, //
@@ -124,15 +120,8 @@ public enum ManifoldDisplays {
       Se2C, //
       Se2);
   // ---
-  public static final List<ManifoldDisplays> S2_ONLY = List.of( //
-      S2);
-  public static final List<ManifoldDisplays> H2_ONLY = List.of( //
-      H2);
-  public static final List<ManifoldDisplays> CL_ONLY = List.of( //
-      Se2ClA, //
-      Se2ClL);
-  public static final List<ManifoldDisplays> CLC_ONLY = List.of( //
-      Se2C, //
-      Se2ClA, //
-      Se2ClL);
+  public static final List<ManifoldDisplays> S2_ONLY = List.of(S2);
+  public static final List<ManifoldDisplays> H2_ONLY = List.of(H2);
+  public static final List<ManifoldDisplays> CL_ONLY = List.of(ClA);
+  public static final List<ManifoldDisplays> CLC_ONLY = List.of(ClC);
 }

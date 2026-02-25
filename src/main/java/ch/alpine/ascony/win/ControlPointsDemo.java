@@ -5,6 +5,8 @@ import java.awt.Graphics2D;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -26,7 +28,16 @@ public abstract class ControlPointsDemo extends AbstractDemo {
   @SafeVarargs
   protected ControlPointsDemo(Object... objects) {
     super(objects);
+    List<ManifoldDisplays> list = getManifoldDisplays();
     manifoldDisplays = getManifoldDisplays().getFirst();
+    if (!list.isEmpty() || true) {
+      JTabbedPane jTabbedPane = new JTabbedPane(JTabbedPane.LEFT);
+      for (ManifoldDisplays md : list)
+        jTabbedPane.addTab(md.toString(), new JPanel());
+      jTabbedPane.addChangeListener(_ -> setManifoldDisplay(list.get(jTabbedPane.getSelectedIndex())));
+      jTabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+      timerFrame.addWest(jTabbedPane);
+    }
     this.asconaParam = (AsconaParam) objects[0];
     controlPointsRender = ControlPointsRender.create( //
         asconaParam, this::manifoldDisplay, timerFrame.geometricComponent);
@@ -72,7 +83,7 @@ public abstract class ControlPointsDemo extends AbstractDemo {
   }
 
   /** @return */
-  public abstract List<ManifoldDisplays> getManifoldDisplays();
+  protected abstract List<ManifoldDisplays> getManifoldDisplays();
 
   /** @param control points as matrix of dimensions N x 3 */
   public final void setControlPointsSe2(Tensor control) {

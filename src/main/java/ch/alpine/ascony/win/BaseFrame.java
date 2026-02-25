@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -33,6 +34,10 @@ public class BaseFrame {
 
   public final BufferedImage offscreen() {
     return OffscreenRender.of(geometricComponent.jComponent, BufferedImage.TYPE_INT_ARGB);
+  }
+
+  protected final void addWest(JComponent jComponent) {
+    jPanel.add(jComponent, BorderLayout.WEST);
   }
 
   public final void close() {
