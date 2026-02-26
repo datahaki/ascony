@@ -1,7 +1,7 @@
 // code by jph
-package ch.alpine.ascony.ren;
+package ch.alpine.ascony.win;
 
-public final class AsconaParam {
+class AsconaParam {
   // TODO this class will be obsolete!!!
   public final boolean addRemoveControlPoints;
   public boolean drawControlPoints = true;

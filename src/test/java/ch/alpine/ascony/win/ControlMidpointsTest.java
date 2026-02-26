@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascony.ren;
+package ch.alpine.ascony.win;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

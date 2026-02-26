@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascony.ren;
+package ch.alpine.ascony.win;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -12,7 +12,9 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
-import ch.alpine.ascony.win.GeometricComponent;
+import ch.alpine.ascony.ren.ArgMinValue;
+import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophis.crv.d2.Extract2D;
 import ch.alpine.sophis.ref.d1.CurveSubdivision;
