@@ -88,4 +88,9 @@ public enum Spd2Display implements ManifoldDisplay {
   public RenderInterface background() {
     return EmptyRender.INSTANCE;
   }
+
+  @Override
+  public String toString() {
+    return spdNManifold.toString();
+  }
 }

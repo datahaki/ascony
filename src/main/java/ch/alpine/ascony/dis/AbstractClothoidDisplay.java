@@ -7,6 +7,7 @@ import ch.alpine.ascony.ren.EmptyRender;
 import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.sophis.crv.clt.ClothoidBuilder;
 import ch.alpine.sophis.crv.d2.ex.Arrowhead;
+import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
@@ -49,7 +50,7 @@ public abstract class AbstractClothoidDisplay implements ManifoldDisplay, Serial
 
   @Override // from ManifoldDisplay
   public final RandomSampleInterface randomSampleInterface() {
-    return null;
+    return Se2CoveringGroup.INSTANCE;
   }
 
   @Override // from ManifoldDisplay

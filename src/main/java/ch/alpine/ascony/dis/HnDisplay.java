@@ -7,6 +7,7 @@ import ch.alpine.sophis.crv.d2.ex.StarPoints;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.LineDistance;
 import ch.alpine.sophus.hs.h.HLineDistance;
+import ch.alpine.sophus.hs.h.HWeierstrassCoordinate;
 import ch.alpine.sophus.hs.h.Hyperboloid;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.Tensor;
@@ -40,13 +41,12 @@ public abstract class HnDisplay implements ManifoldDisplay, Serializable {
 
   @Override // from ManifoldDisplay
   public final Tensor xya2point(Tensor xya) {
-    // return HnWeierstrassCoordinate.toPoint(xya.extract(0, dimensions));
     return xya.extract(0, dimensions);
   }
 
   @Override
   public final Tensor point2xya(Tensor p) {
-    return LIFT.apply(p.extract(0, dimensions));
+    return LIFT.apply(new HWeierstrassCoordinate(p).toPoint());
   }
 
   @Override // from ManifoldDisplay
@@ -56,7 +56,7 @@ public abstract class HnDisplay implements ManifoldDisplay, Serializable {
 
   @Override // from ManifoldDisplay
   public final Tensor matrixLift(Tensor p) {
-    return Se2Matrix.translation(p);
+    return Se2Matrix.of(point2xya(p));
   }
 
   @Override // from ManifoldDisplay
@@ -82,5 +82,10 @@ public abstract class HnDisplay implements ManifoldDisplay, Serializable {
       // return HnWeierstrassCoordinate.toPoint(RandomVariate.of(distribution, randomGenerator, dimensions));
       return RandomVariate.of(distribution, randomGenerator, dimensions);
     };
+  }
+
+  @Override
+  public final String toString() {
+    return manifold().toString();
   }
 }

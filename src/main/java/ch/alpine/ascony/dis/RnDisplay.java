@@ -12,6 +12,7 @@ import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.LineDistance;
 import ch.alpine.sophus.lie.rn.RnGroup;
 import ch.alpine.sophus.lie.rn.RnLineDistance;
+import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.PadRight;
@@ -47,8 +48,18 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
   }
 
   @Override // from ManifoldDisplay
+  public final Tensor point2xya(Tensor p) {
+    return LIFT.apply(p);
+  }
+
+  @Override // from ManifoldDisplay
   public final Tensor xya2point(Tensor xya) {
     return xya.extract(0, dimensions);
+  }
+
+  @Override // from ManifoldDisplay
+  public final Tensor matrixLift(Tensor p) {
+    return Se2Matrix.translation(point2xy(p));
   }
 
   @Override // from ManifoldDisplay
@@ -87,8 +98,8 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
     return new BoxRandomSample(coordinateBoundingBox());
   }
 
-  @Override // from ManifoldDisplay
-  public final Tensor point2xya(Tensor p) {
-    return LIFT.apply(p);
+  @Override
+  public final String toString() {
+    return manifold().toString();
   }
 }

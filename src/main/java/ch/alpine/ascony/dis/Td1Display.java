@@ -101,4 +101,9 @@ public enum Td1Display implements ManifoldDisplay {
   public CoordinateBoundingBox d2Raster_coordinateBoundingBox() {
     return Box2D.xy(Clips.absolute(3));
   }
+
+  @Override
+  public String toString() {
+    return lieGroup.toString();
+  }
 }

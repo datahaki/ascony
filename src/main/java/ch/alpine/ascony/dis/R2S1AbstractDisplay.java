@@ -4,6 +4,7 @@ package ch.alpine.ascony.dis;
 import java.io.Serializable;
 
 import ch.alpine.sophis.crv.d2.ex.Arrowhead;
+import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.tensor.Tensor;
@@ -47,6 +48,6 @@ public abstract class R2S1AbstractDisplay implements ManifoldDisplay, Serializab
 
   @Override // from ManifoldDisplay
   public final RandomSampleInterface randomSampleInterface() {
-    return null;
+    return Se2CoveringGroup.INSTANCE;
   }
 }

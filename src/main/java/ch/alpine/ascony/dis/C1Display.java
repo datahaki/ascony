@@ -98,4 +98,9 @@ public enum C1Display implements ManifoldDisplay {
   public CoordinateBoundingBox d2Raster_coordinateBoundingBox() {
     return CoordinateBoundingBox.of(Stream.generate(() -> CLIP).limit(2));
   }
+
+  @Override
+  public String toString() {
+    return "C1";
+  }
 }

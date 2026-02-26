@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 import ch.alpine.ascony.ren.EmptyRender;
 import ch.alpine.ascony.ren.RenderInterface;
-import ch.alpine.sophus.api.GeodesicSpace;
+import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.sophus.lie.so.So3Exponential;
 import ch.alpine.sophus.lie.so.So3Group;
@@ -67,7 +67,7 @@ public class So3Display implements ManifoldDisplay, Serializable {
   }
 
   @Override
-  public GeodesicSpace geodesicSpace() {
+  public LieGroup geodesicSpace() {
     return So3Group.INSTANCE;
   }
   // TODO ASCONA ALG line distance should be similar to s^3
@@ -80,5 +80,10 @@ public class So3Display implements ManifoldDisplay, Serializable {
   @Override // from ManifoldDisplay
   public RenderInterface background() {
     return EmptyRender.INSTANCE;
+  }
+
+  @Override
+  public final String toString() {
+    return manifold().toString();
   }
 }

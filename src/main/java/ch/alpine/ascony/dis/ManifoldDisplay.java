@@ -17,7 +17,9 @@ import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
 
 /** Hint: the interface is intended for use in the demo layer
- * but not in the library functions. */
+ * but not in the library functions.
+ * 
+ * a parameter denoted p is always a pointQ in the manifold */
 public interface ManifoldDisplay {
   /** @return dimensions of the manifold, strictly positive */
   int dimensions();

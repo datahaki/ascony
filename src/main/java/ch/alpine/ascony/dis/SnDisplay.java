@@ -49,4 +49,9 @@ public abstract class SnDisplay implements ManifoldDisplay, Serializable {
   public final RandomSampleInterface randomSampleInterface() {
     return HemisphereRandomSample.of(dimensions);
   }
+
+  @Override
+  public final String toString() {
+    return manifold().toString();
+  }
 }

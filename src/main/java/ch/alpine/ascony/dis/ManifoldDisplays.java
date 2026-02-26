@@ -19,6 +19,7 @@ public enum ManifoldDisplays {
   Se2C(Se2CoveringDisplay.INSTANCE),
   Se2(Se2Display.INSTANCE),
   Spd2(Spd2Display.INSTANCE),
+  R1(R1Display.INSTANCE),
   R2(R2Display.INSTANCE),
   C1(C1Display.INSTANCE),
   S1(S1Display.INSTANCE),
