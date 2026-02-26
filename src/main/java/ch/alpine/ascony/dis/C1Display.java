@@ -2,7 +2,6 @@
 package ch.alpine.ascony.dis;
 
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import ch.alpine.ascony.arp.D2Raster;
 import ch.alpine.ascony.ren.AxesRender;
@@ -62,7 +61,7 @@ public enum C1Display implements ManifoldDisplay {
 
   @Override
   public GeodesicSpace geodesicSpace() {
-    return Complex1LieGroup.INSTANCE;
+    return CnSpace.INSTANCE;
   }
 
   @Override
@@ -96,7 +95,7 @@ public enum C1Display implements ManifoldDisplay {
 
   @Override
   public CoordinateBoundingBox d2Raster_coordinateBoundingBox() {
-    return CoordinateBoundingBox.of(Stream.generate(() -> CLIP).limit(2));
+    return CoordinateBoundingBox.of(CLIP, CLIP);
   }
 
   @Override

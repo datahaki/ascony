@@ -75,9 +75,17 @@ public enum ManifoldDisplays {
   }
 
   /** implement {@link D2Raster} */
+  public static List<ManifoldDisplays> manifoldD2Rasters() {
+    return Arrays.stream(values()) //
+        .filter(md -> Objects.nonNull(md.manifoldDisplay().d2Raster())) //
+        .filter(md -> md.manifoldDisplay().geodesicSpace() instanceof Manifold) //
+        .toList();
+  }
+
+  /** implement {@link D2Raster} */
   public static List<ManifoldDisplays> metricD2Rasters() {
     return Arrays.stream(values()) //
-        .filter(md -> md.manifoldDisplay() instanceof D2Raster) //
+        .filter(md -> Objects.nonNull(md.manifoldDisplay().d2Raster())) //
         .filter(md -> md.manifoldDisplay().geodesicSpace() instanceof MetricManifold) //
         .toList();
   }

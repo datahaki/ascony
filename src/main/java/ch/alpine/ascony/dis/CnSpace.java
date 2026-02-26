@@ -6,7 +6,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 
 // TODO SOPHUS review: the 1 in the name is not warranted
-enum Complex1LieGroup implements GeodesicSpace {
+enum CnSpace implements GeodesicSpace {
   INSTANCE;
 
   @Override
