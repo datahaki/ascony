@@ -123,7 +123,6 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
     /** min_index is non-null while the user drags a control points */
     private Integer min_index = null;
     private boolean mousePositioning = true;
-    private boolean midpointIndicated = addRemoveControlPoints();
 
     @Override
     public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
@@ -157,7 +156,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
           graphics.fill(geometricLayer.toPath2D(manifoldDisplay.shape()));
           geometricLayer.popMatrix();
         }
-        if (!hold && Tensors.nonEmpty(control) && midpointIndicated) {
+        if (!hold && Tensors.nonEmpty(control) && isMidpointIndicated()) {
           graphics.setColor(Color.RED);
           graphics.setStroke(STROKE);
           graphics.draw(geometricLayer.toLine2D(mouse, new Midpoints().closestXY()));
@@ -188,18 +187,6 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
     /** @return whether user is currently dragging a control point */
     public final boolean isPositioningOngoing() {
       return Objects.nonNull(min_index);
-    }
-
-    /** curve control points, or
-     * scattered set mode
-     * 
-     * @param enabled */
-    public final void setMidpointIndicated(boolean enabled) {
-      midpointIndicated = enabled;
-    }
-
-    public final boolean isMidpointIndicated() {
-      return midpointIndicated;
     }
 
     public final Scalar getPositioningThreshold() {
@@ -267,6 +254,10 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
 
   private boolean drawControlPoints() {
     return controlPointType().draw();
+  }
+
+  private final boolean isMidpointIndicated() {
+    return controlPointType().indicateMidpoint();
   }
 
   public final boolean isPositioningOngoing() {
