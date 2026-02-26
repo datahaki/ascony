@@ -11,6 +11,7 @@ import ch.alpine.bridge.lang.FriendlyFormat;
 import ch.alpine.bridge.pro.WindowProvider;
 import ch.alpine.bridge.ref.util.FieldsEditor;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
+import ch.alpine.tensor.ext.PackageTestAccess;
 
 public abstract class AbstractDemo implements RenderInterface, WindowProvider {
   protected final ResourceLocator resourceLocator = ResourceLocator.of(getClass());
@@ -38,7 +39,8 @@ public abstract class AbstractDemo implements RenderInterface, WindowProvider {
     return timerFrame.jFrame;
   }
 
-  public Object[] objects() {
+  @PackageTestAccess
+  Object[] objects() {
     return objects;
   }
 
