@@ -27,12 +27,10 @@ public abstract class ManifoldDisplayDemo extends AbstractDemo {
     listeners.add(this::setManifoldDisplay);
     if (0 < list.size()) {
       for (ManifoldDisplays manifoldDisplays : list)
-        // {
-        // Icon icon = RandomIconFactory.create(manifoldDisplays.hashCode(), 24);
         jTabbedPane.addTab(manifoldDisplays.manifoldDisplay().geodesicSpace().toString(), new JPanel());
-      // }
       jTabbedPane.addChangeListener(_ -> {
         ManifoldDisplays selected = list.get(jTabbedPane.getSelectedIndex());
+        // IO.println("INVOKED");
         listeners.forEach(listener -> listener.accept(selected));
       });
       jTabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
@@ -58,6 +56,7 @@ public abstract class ManifoldDisplayDemo extends AbstractDemo {
   }
 
   public final void setManifoldDisplay(ManifoldDisplays manifoldDisplays) {
+    jTabbedPane.setSelectedIndex(list.indexOf(manifoldDisplays)); // invokes listeners!
     this.selected_manifoldDisplays = manifoldDisplays;
   }
 
