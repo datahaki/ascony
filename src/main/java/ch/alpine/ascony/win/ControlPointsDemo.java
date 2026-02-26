@@ -37,20 +37,20 @@ import ch.alpine.tensor.sca.pow.Sqrt;
 /** class is used in other projects outside of owl */
 // TODO ASCONA possibly provide option for cyclic midpoint indication (see R2Bary..Coord..Demo)
 public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
-  class ControlPointsRender implements RenderInterface {
+  private class ControlPointsRender implements RenderInterface {
     /** mouse snaps 20 pixel to control points */
     private static final Scalar PIXEL_THRESHOLD = RealScalar.of(20.0);
     /** refined points */
     private static final Stroke STROKE = new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
-    private final static Color ORANGE = new Color(255, 200, 0, 192);
-    private final static Color GREEN = new Color(0, 255, 0, 192);
+    private static final Color ORANGE = new Color(255, 200, 0, 192);
+    private static final Color GREEN = new Color(0, 255, 0, 192);
 
     private class Midpoints {
       private final ManifoldDisplay manifoldDisplay = manifoldDisplay();
       private final Tensor midpoints;
       private final int index;
 
-      public Midpoints() {
+      Midpoints() {
         CurveSubdivision curveSubdivision = new ControlMidpoints(manifoldDisplay.geodesicSpace());
         midpoints = curveSubdivision.string(getGeodesicControlPoints());
         Tensor mouse_dist = Tensor.of(midpoints.stream() //
@@ -173,47 +173,47 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
     /** when positioning is disabled, the mouse position is not indicated graphically
      * 
      * @param enabled */
-    public final void setPositioningEnabled(boolean enabled) {
+    void setPositioningEnabled(boolean enabled) {
       if (!enabled)
         min_index = null;
       mousePositioning = enabled;
     }
 
     /** @return */
-    public final boolean isPositioningEnabled() {
+    boolean isPositioningEnabled() {
       return mousePositioning;
     }
 
     /** @return whether user is currently dragging a control point */
-    public final boolean isPositioningOngoing() {
+    boolean isPositioningOngoing() {
       return Objects.nonNull(min_index);
     }
 
-    public final Scalar getPositioningThreshold() {
+    Scalar getPositioningThreshold() {
       return PIXEL_THRESHOLD.divide(Sqrt.FUNCTION.apply(Abs.FUNCTION.apply(Det.of(model2Pixel()))));
     }
 
     /** @param control points as matrix of dimensions N x 3 */
-    public final void setControlPointsSe2(Tensor control) {
+    void setControlPointsSe2(Tensor control) {
       min_index = null;
       this.control = Tensor.of(control.stream() //
           .map(row -> VectorQ.requireLength(row, 3).maps(Tensor::copy)));
     }
 
     /** @return control points as matrix of dimensions N x 3 */
-    public final Tensor getControlPointsSe2() {
+    Tensor getControlPointsSe2() {
       return control.unmodifiable(); // TODO ASCONA API should return copy!?
     }
 
     /** @return control points for selected {@link ManifoldDisplay} */
-    public final Tensor getGeodesicControlPoints() {
+    Tensor getGeodesicControlPoints() {
       return getGeodesicControlPoints(0, Integer.MAX_VALUE);
     }
 
     /** @param skip
      * @param maxSize
      * @return */
-    public final Tensor getGeodesicControlPoints(int skip, int maxSize) {
+    Tensor getGeodesicControlPoints(int skip, int maxSize) {
       return Tensor.of(control.stream() //
           .skip(skip) //
           .limit(maxSize) //
@@ -222,7 +222,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
     }
   }
 
-  public final ControlPointsRender controlPointsRender = new ControlPointsRender();
+  private final ControlPointsRender controlPointsRender = new ControlPointsRender();
 
   @SafeVarargs
   protected ControlPointsDemo(Object... objects) {

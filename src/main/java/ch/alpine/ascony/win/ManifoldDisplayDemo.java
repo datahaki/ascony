@@ -1,8 +1,8 @@
 // code by jph, gjoel
 package ch.alpine.ascony.win;
 
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
 
 import javax.swing.JPanel;
@@ -10,13 +10,15 @@ import javax.swing.JTabbedPane;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.bridge.util.CopyOnWriteLinkedSet;
 
 /** class is used in other projects outside of owl */
 // TODO ASCONA possibly provide option for cyclic midpoint indication (see R2Bary..Coord..Demo)
 public abstract class ManifoldDisplayDemo extends AbstractDemo {
   private final List<ManifoldDisplays> list;
   private final JTabbedPane jTabbedPane = new JTabbedPane(JTabbedPane.LEFT);
-  private final List<Consumer<ManifoldDisplays>> listeners = new LinkedList<>();
+  private final Set<Consumer<ManifoldDisplays>> listeners = new CopyOnWriteLinkedSet<>();
+  // ---
   private ManifoldDisplays selected_manifoldDisplays;
 
   @SafeVarargs
