@@ -5,11 +5,7 @@ import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.num.Pi;
-import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
-import ch.alpine.tensor.pdf.RandomVariate;
-import ch.alpine.tensor.pdf.c.UniformDistribution;
 
 public class Se2Display extends Se2AbstractDisplay {
   public static final ManifoldDisplay INSTANCE = new Se2Display();
@@ -33,10 +29,7 @@ public class Se2Display extends Se2AbstractDisplay {
 
   @Override // from ManifoldDisplay
   public RandomSampleInterface randomSampleInterface() {
-    double lim = 3;
-    Distribution distribution = UniformDistribution.of(-lim, lim);
-    return randomGenerator -> RandomVariate.of(distribution, randomGenerator, 2).append( //
-        RandomVariate.of(UniformDistribution.of(Pi.VALUE.negate(), Pi.VALUE), randomGenerator));
+    return Se2Group.INSTANCE;
   }
 
   @Override // from Object

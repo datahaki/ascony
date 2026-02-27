@@ -37,6 +37,10 @@ public interface ManifoldDisplay {
    * @return xya */
   Tensor point2xya(Tensor p);
 
+  default TensorUnaryOperator point2xya() {
+    return this::point2xya;
+  }
+
   /** function is for drawing paths
    * 
    * @param p control point

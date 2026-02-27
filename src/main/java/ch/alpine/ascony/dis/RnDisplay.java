@@ -18,7 +18,6 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.PadRight;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.rot.CirclePoints;
-import ch.alpine.tensor.opt.nd.BoxRandomSample;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.sca.Clip;
@@ -86,7 +85,6 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
   @Override // from ManifoldDisplay
   public final RenderInterface background() {
     return EmptyRender.INSTANCE;
-    // return AxesRender.INSTANCE;
   }
 
   public final CoordinateBoundingBox coordinateBoundingBox() {
@@ -95,7 +93,7 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
 
   @Override // from ManifoldDisplay
   public final RandomSampleInterface randomSampleInterface() {
-    return new BoxRandomSample(coordinateBoundingBox());
+    return rnGroup;
   }
 
   @Override

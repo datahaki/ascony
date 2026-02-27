@@ -42,7 +42,6 @@ public enum ManifoldDisplays {
 
   public static final List<ManifoldDisplays> ALL = List.of(values());
 
-  // ---
   /** requires biinvariant() */
   public static List<ManifoldDisplays> metricManifolds() {
     return Arrays.stream(values()) //
@@ -50,11 +49,17 @@ public enum ManifoldDisplays {
         .toList();
   }
 
-  // ---
   /** manifolds */
   public static List<ManifoldDisplays> manifolds() {
     return Arrays.stream(values()) //
         .filter(md -> md.manifoldDisplay().geodesicSpace() instanceof Manifold) //
+        .toList();
+  }
+
+  public static List<ManifoldDisplays> manifolds2DimOrMore() {
+    return Arrays.stream(values()) //
+        .filter(md -> md.manifoldDisplay().geodesicSpace() instanceof Manifold) //
+        .filter(md -> 2 <= md.manifoldDisplay().dimensions()) //
         .toList();
   }
 

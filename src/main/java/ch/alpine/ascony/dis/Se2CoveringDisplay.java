@@ -4,11 +4,7 @@ package ch.alpine.ascony.dis;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.num.Pi;
-import ch.alpine.tensor.pdf.Distribution;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
-import ch.alpine.tensor.pdf.RandomVariate;
-import ch.alpine.tensor.pdf.c.UniformDistribution;
 
 public class Se2CoveringDisplay extends Se2AbstractDisplay {
   public static final ManifoldDisplay INSTANCE = new Se2CoveringDisplay();
@@ -30,10 +26,7 @@ public class Se2CoveringDisplay extends Se2AbstractDisplay {
 
   @Override // from ManifoldDisplay
   public RandomSampleInterface randomSampleInterface() {
-    double lim = 3;
-    Distribution distribution = UniformDistribution.of(-lim, lim);
-    return randomGenerator -> RandomVariate.of(distribution, randomGenerator, 2).append( //
-        RandomVariate.of(UniformDistribution.of(Pi.TWO.negate(), Pi.TWO), randomGenerator));
+    return Se2CoveringGroup.INSTANCE;
   }
 
   @Override // from Object

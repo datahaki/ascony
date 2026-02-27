@@ -17,9 +17,11 @@ public abstract class RpnDisplay implements ManifoldDisplay, Serializable {
   private static final Tensor CIRCLE = CirclePoints.of(15).multiply(RealScalar.of(0.05)).unmodifiable();
   // ---
   private final int dimensions;
+  private final RpnManifold rpnManifold;
 
   protected RpnDisplay(int dimensions) {
     this.dimensions = dimensions;
+    rpnManifold = new RpnManifold(dimensions);
   }
 
   @Override // from ManifoldDisplay
@@ -34,7 +36,7 @@ public abstract class RpnDisplay implements ManifoldDisplay, Serializable {
 
   @Override // from ManifoldDisplay
   public final GeodesicSpace geodesicSpace() {
-    return new RpnManifold(dimensions);
+    return rpnManifold;
   }
 
   @Override // from ManifoldDisplay
@@ -44,7 +46,7 @@ public abstract class RpnDisplay implements ManifoldDisplay, Serializable {
 
   @Override // from ManifoldDisplay
   public final RandomSampleInterface randomSampleInterface() {
-    return new RpnManifold(dimensions);
+    return rpnManifold;
   }
 
   @Override

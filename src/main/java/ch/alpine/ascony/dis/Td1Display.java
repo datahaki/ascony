@@ -10,7 +10,6 @@ import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.sophus.lie.td.TdNGroup;
-import ch.alpine.sophus.lie.td.TdRandomSample;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Append;
@@ -19,8 +18,6 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
-import ch.alpine.tensor.pdf.c.ExponentialDistribution;
-import ch.alpine.tensor.pdf.c.UniformDistribution;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.exp.Exp;
 import ch.alpine.tensor.sca.exp.Log;
@@ -29,7 +26,7 @@ public enum Td1Display implements ManifoldDisplay {
   INSTANCE;
 
   private static final Tensor PENTAGON = CirclePoints.of(5).multiply(RealScalar.of(0.1)).unmodifiable();
-  private final LieGroup lieGroup = new TdNGroup(1);
+  private final TdNGroup td1Group = new TdNGroup(1);
 
   @Override // from ManifoldDisplay
   public int dimensions() {
@@ -74,12 +71,12 @@ public enum Td1Display implements ManifoldDisplay {
 
   @Override // from ManifoldDisplay
   public LieGroup geodesicSpace() {
-    return lieGroup;
+    return td1Group;
   }
 
   @Override // from ManifoldDisplay
   public RandomSampleInterface randomSampleInterface() {
-    return new TdRandomSample(UniformDistribution.of(-3, 3), 1, ExponentialDistribution.standard());
+    return td1Group;
   }
 
   @Override // from ManifoldDisplay
@@ -104,6 +101,6 @@ public enum Td1Display implements ManifoldDisplay {
 
   @Override
   public String toString() {
-    return lieGroup.toString();
+    return td1Group.toString();
   }
 }
