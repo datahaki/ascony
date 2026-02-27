@@ -3,7 +3,6 @@ package ch.alpine.ascony.dis;
 
 import java.io.Serializable;
 
-import ch.alpine.ascony.ren.EmptyRender;
 import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
@@ -20,16 +19,12 @@ import ch.alpine.tensor.pdf.RandomSampleInterface;
 
 /** orthogonal 3 x 3 matrices */
 public class So3Display implements ManifoldDisplay, Serializable {
-  private static final Tensor TRIANGLE = CirclePoints.of(3).multiply(RealScalar.of(0.4)).unmodifiable();
-  // TODO ASCONA radius == 1
-  private static final Scalar RADIUS = RealScalar.of(7);
+  private static final Tensor TRIANGLE = CirclePoints.of(3).multiply(RealScalar.of(0.04)).unmodifiable();
   // ---
-  public static final ManifoldDisplay INSTANCE = new So3Display(RADIUS);
+  public static final ManifoldDisplay INSTANCE = new So3Display();
   // ---
-  private final Scalar radius;
 
-  public So3Display(Scalar radius) {
-    this.radius = radius;
+  private So3Display() {
   }
 
   @Override // from ManifoldDisplay
@@ -44,7 +39,7 @@ public class So3Display implements ManifoldDisplay, Serializable {
 
   @Override // from ManifoldDisplay
   public Tensor xya2point(Tensor xya) {
-    Tensor axis = xya.divide(radius);
+    Tensor axis = xya;
     Scalar norm = Vector2Norm.of(axis);
     if (Scalars.lessThan(RealScalar.ONE, norm))
       axis = axis.divide(norm);
@@ -53,7 +48,7 @@ public class So3Display implements ManifoldDisplay, Serializable {
 
   @Override // from ManifoldDisplay
   public Tensor point2xya(Tensor p) {
-    return So3Exponential.vector_log(p).multiply(radius);
+    return So3Exponential.vector_log(p);
   }
 
   @Override // from ManifoldDisplay
@@ -79,7 +74,7 @@ public class So3Display implements ManifoldDisplay, Serializable {
 
   @Override // from ManifoldDisplay
   public RenderInterface background() {
-    return EmptyRender.INSTANCE;
+    return S2Background.INSTANCE;
   }
 
   @Override

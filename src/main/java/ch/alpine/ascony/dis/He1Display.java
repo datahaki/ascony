@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.ascony.dis;
 
-import ch.alpine.ascony.ren.EmptyRender;
+import ch.alpine.ascony.ren.AxesRender;
 import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.he.HeNGroup;
@@ -59,7 +59,7 @@ public enum He1Display implements ManifoldDisplay {
 
   @Override // from ManifoldDisplay
   public RenderInterface background() {
-    return EmptyRender.INSTANCE;
+    return AxesRender.ONLYNULL;
   }
 
   @Override // from Object

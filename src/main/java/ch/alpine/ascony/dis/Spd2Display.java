@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.ascony.dis;
 
-import ch.alpine.ascony.ren.EmptyRender;
+import ch.alpine.ascony.ren.AxesRender;
 import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.spd.Spd0Exponential;
@@ -86,7 +86,7 @@ public enum Spd2Display implements ManifoldDisplay {
 
   @Override // from ManifoldDisplay
   public RenderInterface background() {
-    return EmptyRender.INSTANCE;
+    return AxesRender.ONLYNULL;
   }
 
   @Override
