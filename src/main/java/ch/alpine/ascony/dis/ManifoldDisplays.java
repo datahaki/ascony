@@ -30,6 +30,10 @@ public enum ManifoldDisplays {
   He1(He1Display.INSTANCE),
   Td1(Td1Display.INSTANCE);
 
+  public boolean isXY_Angle() {
+    return ordinal() <= Se2.ordinal();
+  }
+
   private final ManifoldDisplay manifoldDisplay;
 
   ManifoldDisplays(ManifoldDisplay manifoldDisplay) {

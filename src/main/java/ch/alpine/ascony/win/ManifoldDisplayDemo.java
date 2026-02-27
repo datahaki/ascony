@@ -57,8 +57,11 @@ public abstract class ManifoldDisplayDemo extends AbstractDemo {
     return selected_manifoldDisplays;
   }
 
+  /** invokes listeners
+   * 
+   * @param manifoldDisplays */
   public final void setManifoldDisplay(ManifoldDisplays manifoldDisplays) {
-    jTabbedPane.setSelectedIndex(list.indexOf(manifoldDisplays)); // invokes listeners!
+    jTabbedPane.setSelectedIndex(list.indexOf(manifoldDisplays));
     this.selected_manifoldDisplays = manifoldDisplays;
   }
 

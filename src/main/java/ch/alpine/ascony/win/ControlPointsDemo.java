@@ -13,6 +13,7 @@ import java.util.Optional;
 import javax.swing.JButton;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ArgMinValue;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.ascony.ren.RenderInterface;
@@ -275,8 +276,12 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
   public final void addButtonDubins() {
     JButton jButton = new JButton("dubins");
     jButton.setToolTipText("project control points to dubins path");
-    jButton.addActionListener(_ -> controlPointsRender.setControlPointsSe2( //
-        DubinsGenerator.project(controlPointsRender.getControlPointsSe2())));
+    jButton.addActionListener(_ -> {
+      ManifoldDisplays manifoldDisplays = getSelectedMD();
+      if (manifoldDisplays.isXY_Angle())
+        controlPointsRender.setControlPointsSe2( //
+            DubinsGenerator.project(controlPointsRender.getControlPointsSe2()));
+    });
     timerFrame.jToolBar.add(jButton);
   }
 
