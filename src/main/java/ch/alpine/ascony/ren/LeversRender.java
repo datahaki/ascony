@@ -292,7 +292,7 @@ public class LeversRender {
     graphics.setStroke(STROKE_TANGENT);
     for (Tensor p : sequence) { // draw tangent at p
       geometricLayer.pushMatrix(manifoldDisplay.matrixLift(p));
-      Tensor v = homogeneousSpace.exponential(p).log(origin);
+      Tensor v = homogeneousSpace.tangentSpace(p).log(origin);
       graphics.setColor(COLOR_TANGENT);
       TensorUnaryOperator tangentProjection = manifoldDisplay.tangentProjection(p);
       if (Objects.nonNull(tangentProjection))
@@ -312,7 +312,7 @@ public class LeversRender {
 
   public void renderTangentsXtoP(boolean tangentPlane) {
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
-    Tensor vs = Tensor.of(sequence.stream().map(homogeneousSpace.exponential(origin)::log));
+    Tensor vs = Tensor.of(sequence.stream().map(homogeneousSpace.tangentSpace(origin)::log));
     geometricLayer.pushMatrix(manifoldDisplay.matrixLift(origin));
     graphics.setStroke(STROKE_TANGENT);
     graphics.setColor(COLOR_TANGENT);
@@ -333,7 +333,7 @@ public class LeversRender {
 
   public void renderPolygonXtoP() {
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
-    Tensor vs = Tensor.of(sequence.stream().map(homogeneousSpace.exponential(origin)::log));
+    Tensor vs = Tensor.of(sequence.stream().map(homogeneousSpace.tangentSpace(origin)::log));
     geometricLayer.pushMatrix(manifoldDisplay.matrixLift(origin));
     graphics.setStroke(STROKE_TANGENT);
     TensorUnaryOperator tangentProjection = manifoldDisplay.tangentProjection(origin);
@@ -421,7 +421,7 @@ public class LeversRender {
       vs = Tensor.of(vs.stream().map(sigma_inverse::dot));
       if (form_shadow) {
         HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
-        TangentSpace exponential = homogeneousSpace.exponential(p);
+        TangentSpace exponential = homogeneousSpace.tangentSpace(p);
         Tensor ms = Tensor.of(vs.stream().map(exponential::exp).map(manifoldDisplay::point2xy));
         Path2D path2d = geometricLayer.toPath2D(ms, true);
         graphics.setStroke(new BasicStroke());
@@ -445,7 +445,7 @@ public class LeversRender {
   public void renderEllipseMahalanobis() {
     if (Tensors.nonEmpty(sequence)) {
       Manifold manifold = manifoldDisplay.manifold();
-      Tensor levers = manifold.exponential(origin).log().slash(sequence);
+      Tensor levers = manifold.tangentSpace(origin).log().slash(sequence);
       Mahalanobis mahalanobis = new Mahalanobis(levers);
       renderEllipse(origin, mahalanobis.sigma_inverse());
     }
@@ -466,7 +466,7 @@ public class LeversRender {
   public void renderMahalanobisFormXEV(ColorDataGradient colorDataGradient) {
     if (Tensors.nonEmpty(sequence)) {
       Manifold manifold = manifoldDisplay.manifold();
-      Tensor levers = manifold.exponential(origin).log().slash(sequence);
+      Tensor levers = manifold.tangentSpace(origin).log().slash(sequence);
       Mahalanobis mahalanobis = new Mahalanobis(levers);
       renderMahalanobisMatrix(origin, mahalanobis, colorDataGradient);
     }
@@ -475,7 +475,7 @@ public class LeversRender {
   public void renderEllipseMahalanobisP() {
     Manifold manifold = manifoldDisplay.manifold();
     for (Tensor point : sequence) {
-      Tensor levers = manifold.exponential(point).log().slash(sequence);
+      Tensor levers = manifold.tangentSpace(point).log().slash(sequence);
       Mahalanobis mahalanobis = new Mahalanobis(levers);
       renderEllipse(point, mahalanobis.sigma_inverse());
     }
@@ -486,7 +486,7 @@ public class LeversRender {
   public void renderInfluenceX(ColorDataGradient colorDataGradient) {
     if (Tensors.nonEmpty(sequence)) {
       Manifold manifold = manifoldDisplay.manifold();
-      Tensor levers = manifold.exponential(origin).log().slash(sequence);
+      Tensor levers = manifold.tangentSpace(origin).log().slash(sequence);
       Tensor matrix = InfluenceMatrix.of(levers).matrix();
       // ---
       graphics.setFont(FONT_MATRIX);
@@ -503,7 +503,7 @@ public class LeversRender {
       // Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, origin);
       Tensor projections = Tensor.of(sequence.stream() //
           .map(point -> InfluenceMatrix.of( //
-              manifold.exponential(point).log().slash(sequence)).matrix()));
+              manifold.tangentSpace(point).log().slash(sequence)).matrix()));
       // ---
       graphics.setFont(FONT_MATRIX);
       int index = 0;

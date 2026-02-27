@@ -31,7 +31,7 @@ public enum IterativeGenesis {
   public static TensorUnaryOperator counts(Manifold manifold, Tensor sequence, int max) {
     TensorScalarFunction[] array = Arrays.stream(values()).map(ig -> ig.with(max)).toArray(TensorScalarFunction[]::new);
     return point -> {
-      Tensor matrix = manifold.exponential(point).log().slash(sequence);
+      Tensor matrix = manifold.tangentSpace(point).log().slash(sequence);
       return Tensor.of(Arrays.stream(array).map(ig -> ig.apply(matrix)));
     };
   }

@@ -227,6 +227,9 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
   @SafeVarargs
   protected ControlPointsDemo(Object... objects) {
     super(objects);
+    // Stream.of(objects).forEach(obj -> {
+    // IO.println(obj.getClass());
+    // });
     GeometricComponent geometricComponent = timerFrame.geometricComponent;
     geometricComponent.jComponent.addMouseListener(controlPointsRender.mouseAdapter);
     geometricComponent.jComponent.addMouseMotionListener(controlPointsRender.mouseAdapter);
