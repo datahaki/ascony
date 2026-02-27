@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.ascony.dis;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import ch.alpine.ascony.arp.D2Raster;
 import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.sophis.crv.clt.ClothoidBuilder;
@@ -11,6 +13,7 @@ import ch.alpine.sophus.api.LineDistance;
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.LieGroup;
+import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
@@ -47,6 +50,10 @@ public interface ManifoldDisplay {
    * @return vector of length 2 with grid coordinates {x, y} */
   default Tensor point2xy(Tensor p) {
     return point2xya(p).extract(0, 2);
+  }
+
+  default TensorUnaryOperator point2xy() {
+    return this::point2xy;
   }
 
   /** function is for drawing control points with proper orientation
@@ -104,5 +111,10 @@ public interface ManifoldDisplay {
 
   default CoordinateBoundingBox d2Raster_coordinateBoundingBox() {
     return null;
+  }
+
+  default Tensor indetPoint() {
+    return randomSampleInterface().randomSample(ThreadLocalRandom.current()) //
+        .maps(s -> DoubleScalar.INDETERMINATE);
   }
 }

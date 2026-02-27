@@ -5,21 +5,22 @@ import java.util.stream.IntStream;
 
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.bm.BiinvariantMean;
-import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;
-import ch.alpine.tensor.alg.ConstantArray;
-import ch.alpine.tensor.chq.FiniteTensorQ;
 
 /** Reference:
  * "Weighted Averages on Surfaces"
  * by Daniele Panozzo, Ilya Baran, Olga Diamanti, Olga Sorkine-Hornung */
 public class AveragedMovingDomain2D extends MovingDomain2D {
+  private final Tensor fallback;
+
   /** @param origin
    * @param sedarim
-   * @param domain */
-  public AveragedMovingDomain2D(Tensor origin, Sedarim sedarim, Tensor domain) {
+   * @param domain
+   * @param ConstantArray.of(DoubleScalar.INDETERMINATE, 3) */
+  public AveragedMovingDomain2D(Tensor origin, Sedarim sedarim, Tensor domain, Tensor fallback) {
     super(origin, sedarim, domain);
+    this.fallback = fallback;
   }
 
   @Override // from MovingDomain2D
@@ -28,13 +29,12 @@ public class AveragedMovingDomain2D extends MovingDomain2D {
     int cols = Unprotect.dimension1(domain);
     Tensor[][] array = new Tensor[rows][cols];
     IntStream.range(0, rows).parallel().forEach(cx -> {
-      for (int cy = 0; cy < cols; ++cy) {
-        if (FiniteTensorQ.of(weights[cx][cy])) {
+      for (int cy = 0; cy < cols; ++cy)
+        try {
           array[cx][cy] = biinvariantMean.mean(target, weights[cx][cy]);
-        } else {
-          array[cx][cy] = ConstantArray.of(DoubleScalar.INDETERMINATE, 3);
+        } catch (Exception e) {
+          array[cx][cy] = fallback;
         }
-      }
     });
     return array;
   }

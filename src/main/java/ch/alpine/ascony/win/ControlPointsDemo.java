@@ -235,8 +235,8 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
     geometricComponent.jComponent.addMouseListener(controlPointsRender.mouseAdapter);
     geometricComponent.jComponent.addMouseMotionListener(controlPointsRender.mouseAdapter);
     geometricComponent.addRenderInterface(controlPointsRender);
-    timerFrame.jToolBar.addSeparator();
     if (addRemoveControlPoints()) {
+      timerFrame.jToolBar.addSeparator();
       JButton jButton = new JButton("clear");
       jButton.addActionListener(_ -> controlPointsRender.setControlPointsSe2(Tensors.empty()));
       timerFrame.jToolBar.add(jButton);
