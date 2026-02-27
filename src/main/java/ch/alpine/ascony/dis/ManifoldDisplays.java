@@ -21,7 +21,6 @@ public enum ManifoldDisplays {
   Spd2(Spd2Display.INSTANCE),
   R1(R1Display.INSTANCE),
   R2(R2Display.INSTANCE),
-  C1(C1Display.INSTANCE),
   S1(S1Display.INSTANCE),
   S2(S2Display.INSTANCE),
   Rp2(Rp2Display.INSTANCE),
@@ -107,7 +106,6 @@ public enum ManifoldDisplays {
       H2, //
       S2, //
       Se2C);
-  public static final List<ManifoldDisplays> C1_ONLY = List.of(C1);
   // ---
   public static final List<ManifoldDisplays> SE2C_R2 = List.of( //
       Se2C, //
