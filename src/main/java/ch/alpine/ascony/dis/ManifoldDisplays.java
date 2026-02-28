@@ -26,7 +26,7 @@ public enum ManifoldDisplays {
   Rp2(Rp2Display.INSTANCE),
   H1(H1Display.INSTANCE),
   H2(H2Display.INSTANCE),
-  Sl2(Sl2Display.INSTANCE),
+  // Sl2(Sl2Display.INSTANCE),
   So3(So3Display.INSTANCE),
   He1(He1Display.INSTANCE),
   Td1(Td1Display.INSTANCE);

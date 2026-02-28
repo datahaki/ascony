@@ -285,19 +285,24 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
     timerFrame.jToolBar.add(jButton);
   }
 
-  /** @param control points as matrix of dimensions N x 3 */
-  public final void setControlPointsSe2(Tensor control) {
-    controlPointsRender.setControlPointsSe2(control);
-  }
-
   /** @return control points as matrix of dimensions N x 3 */
   public final Tensor getControlPointsSe2() {
     return controlPointsRender.getControlPointsSe2();
   }
 
+  /** @param control points as matrix of dimensions N x 3 */
+  public final void setControlPointsSe2(Tensor control) {
+    controlPointsRender.setControlPointsSe2(control);
+  }
+
   /** @return control points for selected {@link ManifoldDisplay} */
   public final Tensor getGeodesicControlPoints() {
     return controlPointsRender.getGeodesicControlPoints();
+  }
+
+  /** @param points */
+  public final void setGeodesicControlPoints(Tensor points) {
+    setControlPointsSe2(manifoldDisplay().point2xya().slash(points));
   }
 
   public final Tensor mouseSe2CState() {
