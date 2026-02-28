@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.util.function.Consumer;
 
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.tensor.Throw;
 
 /** DO NOT USE IN THE APPLICATION LAYER */
 public enum SanityCheckAbstractDemo implements Consumer<AbstractDemo> {
@@ -22,13 +23,19 @@ public enum SanityCheckAbstractDemo implements Consumer<AbstractDemo> {
   }
 
   private void check(ManifoldDisplayDemo manifoldDisplayDemo) {
+    BufferedImage bufferedImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
+    Graphics2D graphics = bufferedImage.createGraphics();
     manifoldDisplayDemo.timerFrame.jFrame.setSize(WIDTH, HEIGHT);
-    for (ManifoldDisplays md : manifoldDisplayDemo.permitted_manifoldDisplays()) {
-      manifoldDisplayDemo.setManifoldDisplay(md);
-      BufferedImage bufferedImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
-      Graphics2D graphics = bufferedImage.createGraphics();
-      manifoldDisplayDemo.timerFrame.geometricComponent.jComponent.printAll(graphics);
-      graphics.dispose();
+    boolean status = true;
+    try {
+      for (ManifoldDisplays manifoldDisplays : manifoldDisplayDemo.permitted_manifoldDisplays()) {
+        manifoldDisplayDemo.setManifoldDisplay(manifoldDisplays);
+        manifoldDisplayDemo.timerFrame.geometricComponent.jComponent.printAll(graphics);
+      }
+    } catch (Exception e) {
+      status = false;
     }
+    graphics.dispose();
+    Throw.unless(status);
   }
 }
