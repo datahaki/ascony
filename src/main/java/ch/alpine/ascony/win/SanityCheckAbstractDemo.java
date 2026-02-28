@@ -30,7 +30,7 @@ public enum SanityCheckAbstractDemo implements Consumer<AbstractDemo> {
     try {
       for (ManifoldDisplays manifoldDisplays : manifoldDisplayDemo.permitted_manifoldDisplays()) {
         manifoldDisplayDemo.setManifoldDisplay(manifoldDisplays);
-        manifoldDisplayDemo.timerFrame.geometricComponent.jComponent.printAll(graphics);
+        manifoldDisplayDemo.geometricComponent().jComponent.printAll(graphics);
       }
     } catch (Exception e) {
       status = false;

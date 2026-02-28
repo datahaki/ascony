@@ -306,10 +306,10 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
   }
 
   public final Tensor mouseSe2CState() {
-    return timerFrame.geometricComponent.getMouseSe2CState();
+    return geometricComponent().getMouseSe2CState();
   }
 
   public final Tensor model2Pixel() {
-    return timerFrame.geometricComponent.getModel2Pixel();
+    return geometricComponent().getModel2Pixel();
   }
 }

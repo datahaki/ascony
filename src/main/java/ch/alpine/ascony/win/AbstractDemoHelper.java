@@ -51,7 +51,7 @@ public class AbstractDemoHelper {
   private AbstractDemoHelper(AbstractDemo abstractDemo) {
     this.abstractDemo = abstractDemo;
     holder = new Holder(abstractDemo.objects());
-    geometricLayer = new GeometricLayer(abstractDemo.timerFrame.geometricComponent.getModel2Pixel());
+    geometricLayer = new GeometricLayer(abstractDemo.geometricComponent().getModel2Pixel());
     bufferedImage = new BufferedImage(1280, 960, BufferedImage.TYPE_INT_ARGB);
     try_wrap(this::render);
     fieldsAssignment = RandomFieldsAssignment.of(holder);
