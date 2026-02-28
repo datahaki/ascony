@@ -111,6 +111,7 @@ public enum ManifoldDisplays {
   public static final List<ManifoldDisplays> R2_S2 = List.of(R2, S2);
   public static final List<ManifoldDisplays> R2_S2_H2 = List.of(R2, S2, H2);
   public static final List<ManifoldDisplays> R2_H2_S2_SE2C = List.of(R2, H2, S2, Se2C);
+  public static final List<ManifoldDisplays> DEFORM_2D = List.of(R2, H2, S2, Se2C, Se2);
   public static final List<ManifoldDisplays> SE2C_R2 = List.of(Se2C, R2);
   // ---
   public static final List<ManifoldDisplays> SE2_ONLY = List.of(Se2);
