@@ -24,7 +24,9 @@ import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
 public abstract class RnDisplay implements ManifoldDisplay, Serializable {
-  static final Clip CLIP = Clips.absolute(1);
+  /** the random samples function uses normal distribution, therefore
+   * a clip of [-2.5, 2.5] captures the points typically generated */
+  static final Clip CLIP = Clips.absolute(2.5);
   private static final Tensor CIRCLE = CirclePoints.of(15).multiply(RealScalar.of(0.06)).unmodifiable();
   private static final TensorUnaryOperator LIFT = PadRight.zeros(3);
   // ---
