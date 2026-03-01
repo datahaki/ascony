@@ -241,7 +241,8 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
     {
       boolean hasSe2 = permitted_manifoldDisplays().stream().filter(ManifoldDisplays::isXY_Angle).findAny().isPresent();
       boolean curvyc = controlPointType().equals(ControlPointTypes.CURVYCURV) //
-          || controlPointType().equals(ControlPointTypes.HEAD_TAIL);
+      // || controlPointType().equals(ControlPointTypes.HEAD_TAIL)
+      ;
       if (hasSe2 && curvyc) {
         JButton jButton = new JButton("dubins");
         jButton.setToolTipText("project control points to dubins path");

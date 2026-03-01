@@ -25,7 +25,7 @@ import ch.alpine.tensor.lie.rot.CirclePoints;
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     Point2D center = geometricLayer.toPoint2D(Array.zeros(2));
-    Scalar radius = geometricLayer.model2pixelWidth(RealScalar.ONE);
+    Scalar radius = geometricLayer.model2pixelFactor(RealScalar.ONE);
     float[] dist = { 0.0f, 0.70f, 1.0f };
     Color[] colors = { CENTER, new Color(224, 224, 224, 128), BORDER };
     Paint paint = new RadialGradientPaint(center, radius.number().floatValue(), dist, colors);
