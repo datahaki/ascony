@@ -1,8 +1,11 @@
 // code by jph
 package ch.alpine.ascony.win;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -10,17 +13,30 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JToolBar;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.WindowConstants;
+
 import ch.alpine.bridge.awt.AwtUtil;
+import ch.alpine.bridge.awt.OffscreenRender;
 import ch.alpine.bridge.awt.WindowClosed;
 import ch.alpine.tensor.Throw;
 
-public class TimerFrame extends BaseFrame {
+public class TimerFrame {
   record TTWrap(TimerTask task, long delay, long period) {
     public void schedule(Timer timer) {
       timer.schedule(task, delay, period);
     }
   }
 
+  public final JFrame jFrame = new JFrame();
+  private final JPanel jPanel = new JPanel(new BorderLayout());
+  public final JToolBar jToolBar = new JToolBar();
+  public final GeometricComponent geometricComponent = new GeometricComponent();
   private Timer timer = null;
   private final List<TTWrap> list = new LinkedList<>();
 
@@ -31,6 +47,14 @@ public class TimerFrame extends BaseFrame {
 
   /** @param period between repaint invocations */
   public TimerFrame(int period, TimeUnit timeUnit) {
+    jFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+    jToolBar.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+    jToolBar.setFloatable(false);
+    jPanel.add(new JScrollPane(jToolBar, //
+        ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER, //
+        ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS), BorderLayout.NORTH);
+    jPanel.add(geometricComponent.jComponent, BorderLayout.CENTER);
+    jFrame.setContentPane(jPanel);
     jFrame.addWindowListener(new WindowAdapter() {
       @Override
       public void windowOpened(WindowEvent e) {
@@ -52,6 +76,23 @@ public class TimerFrame extends BaseFrame {
     // the object "timer" is a mutable field !
     WindowClosed.runs(jFrame, () -> timer.cancel());
     AwtUtil.ctrlW(jFrame);
+  }
+
+  public final BufferedImage offscreen() {
+    return OffscreenRender.of(geometricComponent.jComponent, BufferedImage.TYPE_INT_ARGB);
+  }
+
+  private boolean west_available = true;
+
+  protected final void addWest(JComponent jComponent) {
+    Throw.unless(west_available);
+    west_available = false;
+    jPanel.add(jComponent, BorderLayout.WEST);
+  }
+
+  public final void close() {
+    jFrame.setVisible(false);
+    jFrame.dispose();
   }
 
   public void timer_schedule(TimerTask task, long delay, long period) {
