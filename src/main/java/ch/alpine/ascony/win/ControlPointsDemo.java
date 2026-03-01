@@ -228,9 +228,6 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
   @SafeVarargs
   protected ControlPointsDemo(Object... objects) {
     super(objects);
-    // Stream.of(objects).forEach(obj -> {
-    // IO.println(obj.getClass());
-    // });
     GeometricComponent geometricComponent = timerFrame.geometricComponent;
     geometricComponent.jComponent.addMouseListener(controlPointsRender.mouseAdapter);
     geometricComponent.jComponent.addMouseMotionListener(controlPointsRender.mouseAdapter);
@@ -240,6 +237,21 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
       JButton jButton = new JButton("clear");
       jButton.addActionListener(_ -> controlPointsRender.setControlPointsSe2(Tensors.empty()));
       timerFrame.jToolBar.add(jButton);
+    }
+    {
+      boolean hasSe2 = permitted_manifoldDisplays().stream().filter(ManifoldDisplays::isXY_Angle).findAny().isPresent();
+      boolean curvyc = controlPointType().equals(ControlPointTypes.CURVYCURV) //
+          || controlPointType().equals(ControlPointTypes.HEAD_TAIL);
+      if (hasSe2 && curvyc) {
+        JButton jButton = new JButton("dubins");
+        jButton.setToolTipText("project control points to dubins path");
+        jButton.addActionListener(_ -> {
+          if (getSelectedMD().isXY_Angle())
+            controlPointsRender.setControlPointsSe2( //
+                DubinsGenerator.project(controlPointsRender.getControlPointsSe2()));
+        });
+        timerFrame.jToolBar.add(jButton);
+      }
     }
     geometricComponent.addRenderInterfaceBackground(new RenderInterface() {
       @Override
@@ -270,19 +282,6 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
 
   public final void setPositioningEnabled(boolean enabled) {
     controlPointsRender.setPositioningEnabled(enabled);
-  }
-
-  // TODO ASCONA API function should not be here!
-  public final void addButtonDubins() {
-    JButton jButton = new JButton("dubins");
-    jButton.setToolTipText("project control points to dubins path");
-    jButton.addActionListener(_ -> {
-      ManifoldDisplays manifoldDisplays = getSelectedMD();
-      if (manifoldDisplays.isXY_Angle())
-        controlPointsRender.setControlPointsSe2( //
-            DubinsGenerator.project(controlPointsRender.getControlPointsSe2()));
-    });
-    timerFrame.jToolBar.add(jButton);
   }
 
   /** @return control points as matrix of dimensions N x 3 */
