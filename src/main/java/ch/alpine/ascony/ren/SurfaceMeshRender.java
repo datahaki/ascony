@@ -27,6 +27,7 @@ public record SurfaceMeshRender( //
     ColorDataGradient colorDataGradient) implements RenderInterface {
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Vector2Norm::of);
   private static final Tensor REF = NORMALIZE_UNLESS_ZERO.apply(Tensors.vector(-1, 1, 2));
+  private static final Color COLOR_EDGE = new Color(128, 128, 128, 32);
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D _g) {
@@ -51,7 +52,7 @@ public record SurfaceMeshRender( //
         Color color = ColorFormat.toColor(rgba);
         graphics.setColor(color);
         graphics.fill(path2d);
-        graphics.setColor(Color.BLACK);
+        graphics.setColor(COLOR_EDGE);
         graphics.draw(path2d);
       }
     }
