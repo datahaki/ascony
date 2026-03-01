@@ -59,7 +59,7 @@ class RootScalarTest {
 
   @Test
   void testEquations() {
-    Distribution distribution = DiscreteUniformDistribution.of(-3000, 3000);
+    Distribution distribution = DiscreteUniformDistribution.of(-10000, 10000);
     Scalar ba = RealScalar.of(2);
     Tensor matrix = //
         Tensors.matrix((_, _) -> new RootScalar(RandomVariate.of(distribution), RandomVariate.of(distribution), ba), 7, 7);

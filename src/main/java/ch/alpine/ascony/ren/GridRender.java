@@ -20,12 +20,13 @@ import ch.alpine.tensor.opt.nd.CoordinateBounds;
 public record GridRender(Supplier<Dimension> supplier) implements RenderInterface {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    Dimension dimension = supplier.get(); // jComponent.getSize();
-    Rectangle rectangle = Show.defaultInsets(dimension, graphics.getFont().getSize());
-    CoordinateBoundingBox cbb = fromRectangle(geometricLayer, rectangle);
-    ShowableConfig showableConfig = new ShowableConfig(rectangle, cbb);
-    new GridDrawer().render(showableConfig, graphics);
-    graphics.setClip(rectangle);
+    if (geometricLayer.isAxisAligned()) {
+      Dimension dimension = supplier.get(); // jComponent.getSize();
+      Rectangle rectangle = Show.defaultInsets(dimension, graphics.getFont().getSize());
+      CoordinateBoundingBox cbb = fromRectangle(geometricLayer, rectangle);
+      ShowableConfig showableConfig = new ShowableConfig(rectangle, cbb);
+      new GridDrawer().render(showableConfig, graphics);
+    }
   }
 
   // ---

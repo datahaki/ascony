@@ -64,7 +64,6 @@ public final class GeometricComponent {
       Graphics graphics = _g.create();
       graphics.setFont(FONT_DEFAULT);
       graphics.setColor(Color.LIGHT_GRAY);
-      graphics.setClip(null);
       graphics.drawString(UnicodeString.of(Round._1.apply(intervalClock.hertz())), 0, 10);
       graphics.dispose();
     }

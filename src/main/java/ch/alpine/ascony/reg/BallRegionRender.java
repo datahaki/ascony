@@ -1,11 +1,12 @@
 // code by jph
-package ch.alpine.ascony.ren;
+package ch.alpine.ascony.reg;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RadialGradientPaint;
 import java.awt.geom.Point2D;
 
+import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophis.reg.BallRegion;
 import ch.alpine.sophus.lie.se2.Se2Matrix;

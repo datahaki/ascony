@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascony.ren;
+package ch.alpine.ascony.reg;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
@@ -7,6 +7,8 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
 
+import ch.alpine.ascony.ren.ImageRender;
+import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.bridge.gfx.AffineFrame2D;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophis.reg.RegionBounds;
