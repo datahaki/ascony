@@ -52,11 +52,6 @@ public final class GeometricComponent {
       { 0, -60, 300 }, //
       { 0, 0, 1 }, //
   }).unmodifiable();
-
-  private static Tensor toTensor(Point point) {
-    return Tensors.vector(point.x, point.y);
-  }
-
   // ---
   /** public access to final JComponent: attach mouse listeners, get/set properties, ... */
   public final JComponent jComponent = new JComponent() {
@@ -119,9 +114,9 @@ public final class GeometricComponent {
         @Override
         public void mousePressed(MouseEvent mouseEvent) {
           if (mouseEvent.getButton() == buttonDrag) {
-            down = toTensor(mouseEvent.getPoint());
+            down = toPixel(mouseEvent.getPoint());
             Dimension dimension = jComponent.getSize();
-            center = toModel(AwtUtil.center(dimension)).unmodifiable();
+            center = toModel(AwtUtil.center(dimension));
           }
         }
 
@@ -129,24 +124,24 @@ public final class GeometricComponent {
         public void mouseDragged(MouseEvent mouseEvent) {
           mouseLocation = toModel(mouseEvent.getPoint());
           if (Objects.nonNull(down)) {
-            Tensor now = toTensor(mouseEvent.getPoint());
+            Tensor now = toPixel(mouseEvent.getPoint());
             // ---
-            Dimension dimension = jComponent.getSize();
-            Tensor mid = toTensor(AwtUtil.center(dimension));
-            Scalar ang = ArcTan2D.of(down.subtract(mid)).subtract(ArcTan2D.of(now.subtract(mid)));
-            // ---
-            Tensor diff = now.subtract(down);
-            down = now;
             final int mods = mouseEvent.getModifiersEx();
             final int mask = InputEvent.CTRL_DOWN_MASK; // 128 = 2^7
             if ((mods & mask) == 0 || !isRotatable) {
+              Tensor diff = now.subtract(down);
               model2pixel.set(diff.get(0)::add, 0, 2);
               model2pixel.set(diff.get(1)::add, 1, 2);
-            } else
+            } else {
+              Dimension dimension = jComponent.getSize();
+              Tensor mid = toPixel(AwtUtil.center(dimension));
+              Scalar ang = ArcTan2D.of(down.subtract(mid)).subtract(ArcTan2D.of(now.subtract(mid)));
               model2pixel = Dot.of( //
                   model2pixel, //
                   Se2Matrix.of(Append.of(center, ang)), //
                   Se2Matrix.translation(center.negate()));
+            }
+            down = now;
             jComponent.repaint();
           }
         }
@@ -237,31 +232,11 @@ public final class GeometricComponent {
     renderInterfaces.forEach(renderInterface -> renderInterface.render(geometricLayer, graphics));
   }
 
-  // public void renderGrid(GeometricLayer geometricLayer, Graphics2D graphics) {
-  // geometricLayer.getMatrix();
-  // setRotatable(false);
-  // Dimension dimension = jComponent.getSize();
-  // Rectangle rectangle = Show.defaultInsets(dimension, graphics.getFont().getSize());
-  // CoordinateBoundingBox cbb = fromRectangle(rectangle);
-  // ShowableConfig showableConfig = new ShowableConfig(rectangle, cbb);
-  // new GridDrawer().render(showableConfig, graphics);
-  // graphics.setClip(rectangle);
-  // }
-  //
-  // // ---
-  // /** transforms point in pixel space to coordinates of model space
-  // *
-  // * @param point
-  // * @return tensor of length 2 */
   private Tensor toModel(Point point) {
     return LinearSolve.of(model2pixel, Tensors.vector(point.x, point.y, 1)).extract(0, 2);
   }
-  //
-  // private CoordinateBoundingBox fromRectangle(GeometricLayer geometricLayer, Rectangle rectangle) {
-  // if (isRotatable)
-  // System.err.println("warning: rotatable");
-  // Tensor p1 = toModel(rectangle.getLocation());
-  // Tensor p2 = toModel(new Point(rectangle.x + rectangle.width, rectangle.y + rectangle.height));
-  // return CoordinateBounds.of(Tensors.of(p1, p2));
-  // }
+
+  private static Tensor toPixel(Point point) {
+    return Tensors.vector(point.x, point.y);
+  }
 }
