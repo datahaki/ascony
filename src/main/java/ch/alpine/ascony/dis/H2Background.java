@@ -12,6 +12,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.lie.rot.CirclePoints;
 
 /* package */ enum H2Background implements RenderInterface {
@@ -24,11 +25,11 @@ import ch.alpine.tensor.lie.rot.CirclePoints;
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     Scalar modelWidth = RealScalar.of(5);
-    Point2D center = geometricLayer.toPoint2D(0, 0);
-    float fradius = geometricLayer.model2pixelWidth(modelWidth);
+    Point2D center = geometricLayer.toPoint2D(Array.zeros(2));
+    Scalar radius = geometricLayer.model2pixelWidth(modelWidth);
     float[] dist = { 0.0f, 0.30f, 1.0f };
     Color[] colors = { BORDER, new Color(224, 224, 224, 128), CENTER };
-    Paint paint = new RadialGradientPaint(center, fradius, dist, colors);
+    Paint paint = new RadialGradientPaint(center, radius.number().floatValue(), dist, colors);
     graphics.setPaint(paint);
     graphics.fill(geometricLayer.toPath2D(CIRCLE.multiply(modelWidth)));
   }

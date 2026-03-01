@@ -4,7 +4,7 @@ package ch.alpine.ascony.dis;
 import java.io.Serializable;
 
 import ch.alpine.ascony.api.Spearhead;
-import ch.alpine.ascony.ren.GridRender;
+import ch.alpine.ascony.ren.FixGridRender;
 import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.sophis.crv.d2.PolygonNormalize;
 import ch.alpine.sophus.lie.LieGroup;
@@ -71,6 +71,6 @@ public class Sl2Display implements ManifoldDisplay, Serializable {
 
   @Override
   public RenderInterface background() {
-    return new GridRender(Subdivide.of(-10, 10, 20), Subdivide.of(-10, 10, 20));
+    return new FixGridRender(Subdivide.of(-10, 10, 20), Subdivide.of(-10, 10, 20));
   }
 }

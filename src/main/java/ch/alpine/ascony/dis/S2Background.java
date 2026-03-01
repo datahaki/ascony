@@ -10,7 +10,9 @@ import java.awt.geom.Point2D;
 import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.lie.rot.CirclePoints;
 
 /* package */ enum S2Background implements RenderInterface {
@@ -22,11 +24,11 @@ import ch.alpine.tensor.lie.rot.CirclePoints;
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    Point2D center = geometricLayer.toPoint2D(0, 0);
-    float fradius = geometricLayer.model2pixelWidth(RealScalar.ONE);
+    Point2D center = geometricLayer.toPoint2D(Array.zeros(2));
+    Scalar radius = geometricLayer.model2pixelWidth(RealScalar.ONE);
     float[] dist = { 0.0f, 0.70f, 1.0f };
     Color[] colors = { CENTER, new Color(224, 224, 224, 128), BORDER };
-    Paint paint = new RadialGradientPaint(center, fradius, dist, colors);
+    Paint paint = new RadialGradientPaint(center, radius.number().floatValue(), dist, colors);
     graphics.setPaint(paint);
     graphics.fill(geometricLayer.toPath2D(CIRCLE));
   }
