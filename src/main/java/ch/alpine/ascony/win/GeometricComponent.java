@@ -29,13 +29,16 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.Throw;
 import ch.alpine.tensor.alg.Append;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Dot;
+import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.re.Det;
 import ch.alpine.tensor.mat.re.LinearSolve;
 import ch.alpine.tensor.qty.Degree;
+import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Round;
 import ch.alpine.tensor.sca.Sign;
@@ -48,8 +51,8 @@ public final class GeometricComponent {
   private static final Scalar WHEEL_ANGLE = Degree.of(15);
   /** initial model to pixel matrix */
   private static final Tensor MODEL2PIXEL_INITIAL = Tensors.matrix(new Number[][] { //
-      { 60, 0, 300 }, //
-      { 0, -60, 300 }, //
+      { 1, 0, 300 }, //
+      { 0, -1, 300 }, //
       { 0, 0, 1 }, //
   }).unmodifiable();
   // ---
@@ -217,11 +220,19 @@ public final class GeometricComponent {
   /** @param pix
    * @param piy */
   public void setOffset(int pix, int piy) {
+    Throw.unless(model2pixel.Get(0, 2) instanceof RealScalar);
+    Throw.unless(model2pixel.Get(1, 2) instanceof RealScalar);
     model2pixel.set(RealScalar.of(pix), 0, 2);
     model2pixel.set(RealScalar.of(piy), 1, 2);
   }
 
-  void render(Graphics2D graphics, Dimension dimension) {
+  /** @param f for instance 60[m^-1] results in 60 pixels when multiplied by 1[m] */
+  public void setPerPixel(Scalar f) {
+    Sign.requirePositive(f);
+    model2pixel = Transpose.of(Times.of(Tensors.of(f, f, f.one()), Transpose.of(model2pixel)));
+  }
+
+  private void render(Graphics2D graphics, Dimension dimension) {
     graphics.setColor(Color.WHITE);
     graphics.fillRect(0, 0, dimension.width, dimension.height);
     // ---

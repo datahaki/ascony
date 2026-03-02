@@ -11,6 +11,7 @@ import javax.swing.JTabbedPane;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.bridge.util.CopyOnWriteLinkedSet;
+import ch.alpine.tensor.RealScalar;
 
 /** class is used in other projects outside of owl */
 // TODO ASCONA possibly provide option for cyclic midpoint indication (see R2Bary..Coord..Demo)
@@ -38,6 +39,7 @@ public abstract class ManifoldDisplayDemo extends AbstractDemo {
       jTabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
       timerFrame.addWest(jTabbedPane);
     }
+    timerFrame.geometricComponent.setPerPixel(RealScalar.of(100));
   }
 
   protected final void addChangeListener(Consumer<ManifoldDisplays> consumer) {
