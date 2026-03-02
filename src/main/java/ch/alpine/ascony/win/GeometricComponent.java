@@ -38,6 +38,7 @@ import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.mat.re.Det;
 import ch.alpine.tensor.mat.re.LinearSolve;
 import ch.alpine.tensor.qty.Degree;
+import ch.alpine.tensor.red.EqualsReduce;
 import ch.alpine.tensor.red.Times;
 import ch.alpine.tensor.sca.Chop;
 import ch.alpine.tensor.sca.Round;
@@ -130,7 +131,7 @@ public final class GeometricComponent {
             // ---
             final int mods = mouseEvent.getModifiersEx();
             final int mask = InputEvent.CTRL_DOWN_MASK; // 128 = 2^7
-            if ((mods & mask) == 0 || !isRotatable) {
+            if ((mods & mask) == 0 || !isRotatable()) {
               Tensor diff = now.subtract(down);
               model2pixel.set(diff.get(0)::add, 0, 2);
               model2pixel.set(diff.get(1)::add, 1, 2);
@@ -157,6 +158,13 @@ public final class GeometricComponent {
       jComponent.addMouseMotionListener(mouseInputListener);
       jComponent.addMouseListener(mouseInputListener);
     }
+  }
+
+  protected boolean isRotatable() {
+    Scalar rx = model2pixel.Get(0, 0);
+    Scalar ry = model2pixel.Get(0, 1);
+    return isRotatable //
+        && rx.zero().equals(ry.zero());
   }
 
   /** determines if mouseDragged + ctrl allows rotation
@@ -227,9 +235,15 @@ public final class GeometricComponent {
   }
 
   /** @param f for instance 60[m^-1] results in 60 pixels when multiplied by 1[m] */
+  public void setPerPixel(Scalar fx, Scalar fy) {
+    Sign.requirePositive(fx);
+    Sign.requirePositive(fy);
+    Scalar one = EqualsReduce.one(Tensors.of(fx, fy));
+    model2pixel = Transpose.of(Times.of(Tensors.of(fx, fy, one), Transpose.of(model2pixel)));
+  }
+
   public void setPerPixel(Scalar f) {
-    Sign.requirePositive(f);
-    model2pixel = Transpose.of(Times.of(Tensors.of(f, f, f.one()), Transpose.of(model2pixel)));
+    setPerPixel(f, f);
   }
 
   private void render(Graphics2D graphics, Dimension dimension) {

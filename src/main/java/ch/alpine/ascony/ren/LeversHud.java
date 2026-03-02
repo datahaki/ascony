@@ -32,7 +32,7 @@ public enum LeversHud {
     // leversRender.renderEllipseIdentityP();
     // leversRender.renderWeightsLength();
     // break;
-    case LEVERAGES:
+    case USANCE:
       leversRender.renderTangentsXtoP(false); // boolean: no tangent plane
       if (leversRender.getSequence().length() <= 2)
         leversRender.renderMahalanobisFormXEV(colorDataGradient);

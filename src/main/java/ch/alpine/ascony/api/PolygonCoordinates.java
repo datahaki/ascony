@@ -11,9 +11,9 @@ import ch.alpine.sophis.dv.AffineCoordinate;
 import ch.alpine.sophis.dv.Biinvariant;
 import ch.alpine.sophis.dv.HsCoordinates;
 import ch.alpine.sophis.dv.LagrangeCoordinate;
-import ch.alpine.sophis.dv.LeveragesGenesis;
 import ch.alpine.sophis.dv.MetricBiinvariant;
 import ch.alpine.sophis.dv.Sedarim;
+import ch.alpine.sophis.dv.UsanceGenesis;
 import ch.alpine.sophis.gbc.amp.Amplifiers;
 import ch.alpine.sophis.gbc.d2.InsideConvexHullCoordinate;
 import ch.alpine.sophis.gbc.d2.InsidePolygonCoordinate;
@@ -53,12 +53,12 @@ public enum PolygonCoordinates implements LogWeighting {
   ITERATIVE_EX_20(new IterativeAffineCoordinate(Amplifiers.EXP.supply(5), 20)),
   ITERATIVE_EX_30(new IterativeAffineCoordinate(Amplifiers.EXP.supply(5), 30)),
   ITERATIVE_EX_50(new IterativeAffineCoordinate(Amplifiers.EXP.supply(5), 50)),
-  TARGET(new LeveragesGenesis(InversePowerVariogram.of(2))),
-  ITERATIVE_IL_0(new IterativeCoordinate(new LeveragesGenesis(InversePowerVariogram.of(2)), 0)),
-  ITERATIVE_IL_1(new IterativeCoordinate(new LeveragesGenesis(InversePowerVariogram.of(2)), 1)),
-  ITERATIVE_IL_2(new IterativeCoordinate(new LeveragesGenesis(InversePowerVariogram.of(2)), 2)),
-  ITERATIVE_IL_3(new IterativeCoordinate(new LeveragesGenesis(InversePowerVariogram.of(2)), 3)),
-  ITERATIVE_IL_5(new IterativeCoordinate(new LeveragesGenesis(InversePowerVariogram.of(2)), 5));
+  TARGET(new UsanceGenesis(InversePowerVariogram.of(2))),
+  ITERATIVE_IL_0(new IterativeCoordinate(new UsanceGenesis(InversePowerVariogram.of(2)), 0)),
+  ITERATIVE_IL_1(new IterativeCoordinate(new UsanceGenesis(InversePowerVariogram.of(2)), 1)),
+  ITERATIVE_IL_2(new IterativeCoordinate(new UsanceGenesis(InversePowerVariogram.of(2)), 2)),
+  ITERATIVE_IL_3(new IterativeCoordinate(new UsanceGenesis(InversePowerVariogram.of(2)), 3)),
+  ITERATIVE_IL_5(new IterativeCoordinate(new UsanceGenesis(InversePowerVariogram.of(2)), 5));
 
   private static final Set<PolygonCoordinates> CONVEX = //
       EnumSet.of(INVERSE_DISTANCE, LAGRANG_DISTANCE, ITER_TARGET, TARGET);

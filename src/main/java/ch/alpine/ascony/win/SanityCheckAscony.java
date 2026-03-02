@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.bridge.awt.RenderQuality;
 import ch.alpine.bridge.pro.SanityCheckRunProvider;
 import ch.alpine.bridge.pro.WindowProvider;
 import ch.alpine.tensor.Throw;
@@ -23,9 +24,9 @@ public class SanityCheckAscony extends SanityCheckRunProvider {
   }
 
   private void check(ManifoldDisplayDemo manifoldDisplayDemo) {
-    IO.println("CORRECT ENTER");
     BufferedImage bufferedImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
     Graphics2D graphics = bufferedImage.createGraphics();
+    RenderQuality.setQuality(graphics);
     manifoldDisplayDemo.timerFrame.jFrame.setSize(WIDTH, HEIGHT);
     boolean status = true;
     try {
