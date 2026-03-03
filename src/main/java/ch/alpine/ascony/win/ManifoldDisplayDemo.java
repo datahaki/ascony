@@ -1,6 +1,7 @@
 // code by jph, gjoel
 package ch.alpine.ascony.win;
 
+import java.awt.Graphics2D;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -10,6 +11,8 @@ import javax.swing.JTabbedPane;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.RenderInterface;
+import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.util.CopyOnWriteLinkedSet;
 import ch.alpine.tensor.RealScalar;
 
@@ -27,6 +30,13 @@ public abstract class ManifoldDisplayDemo extends AbstractDemo {
     super(objects);
     list = permitted_manifoldDisplays();
     selected_manifoldDisplays = list.getFirst();
+    final GeometricComponent geometricComponent = timerFrame.geometricComponent;
+    geometricComponent.addRenderInterfaceBackground(new RenderInterface() {
+      @Override
+      public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+        manifoldDisplay().background().render(geometricLayer, graphics);
+      }
+    });
     listeners.add(this::setManifoldDisplay);
     if (0 < list.size()) {
       for (ManifoldDisplays manifoldDisplays : list)
@@ -39,7 +49,7 @@ public abstract class ManifoldDisplayDemo extends AbstractDemo {
       jTabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
       timerFrame.addWest(jTabbedPane);
     }
-    timerFrame.geometricComponent.setPerPixel(RealScalar.of(100));
+    geometricComponent.setPerPixel(RealScalar.of(100));
   }
 
   protected final void addChangeListener(Consumer<ManifoldDisplays> consumer) {

@@ -228,7 +228,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
   @SafeVarargs
   protected ControlPointsDemo(Object... objects) {
     super(objects);
-    GeometricComponent geometricComponent = timerFrame.geometricComponent;
+    final GeometricComponent geometricComponent = timerFrame.geometricComponent;
     geometricComponent.jComponent.addMouseListener(controlPointsRender.mouseAdapter);
     geometricComponent.jComponent.addMouseMotionListener(controlPointsRender.mouseAdapter);
     geometricComponent.addRenderInterface(controlPointsRender);
@@ -254,12 +254,6 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
         timerFrame.jToolBar.add(jButton);
       }
     }
-    geometricComponent.addRenderInterfaceBackground(new RenderInterface() {
-      @Override
-      public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-        manifoldDisplay().background().render(geometricLayer, graphics);
-      }
-    });
     geometricComponent.addRenderInterface(controlPointsRender);
   }
 
