@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
+import ch.alpine.bridge.io.AnimationWriter;
 import ch.alpine.tensor.Tensor;
 import io.humble.video.Codec;
 import io.humble.video.Encoder;

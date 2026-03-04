@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
+import ch.alpine.bridge.io.AnimationWriter;
 import ch.alpine.tensor.Tensor;
 
 /** for use MP4
