@@ -4,8 +4,8 @@ package ch.alpine.ascony.reg;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
-import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.sophis.crv.d2.alg.PolygonRegion;
 import ch.alpine.tensor.Tensor;
 

@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.stream.Stream;
 
 import ch.alpine.ascony.ren.EmptyRender;
-import ch.alpine.ascony.ren.RenderInterface;
+import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.sophis.ts.RnTransitionSpace;
 import ch.alpine.sophis.ts.TransitionSpace;
 import ch.alpine.sophus.api.GeodesicSpace;

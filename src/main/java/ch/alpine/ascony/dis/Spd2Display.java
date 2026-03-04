@@ -2,7 +2,7 @@
 package ch.alpine.ascony.dis;
 
 import ch.alpine.ascony.ren.AxesRender;
-import ch.alpine.ascony.ren.RenderInterface;
+import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.spd.Spd0Exponential;
 import ch.alpine.sophus.hs.spd.SpdNManifold;

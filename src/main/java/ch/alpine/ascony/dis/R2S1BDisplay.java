@@ -2,7 +2,7 @@
 package ch.alpine.ascony.dis;
 
 import ch.alpine.ascony.ren.EmptyRender;
-import ch.alpine.ascony.ren.RenderInterface;
+import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.gs.rs.Se2inR2S;
 

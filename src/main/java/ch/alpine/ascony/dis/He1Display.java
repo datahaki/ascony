@@ -2,7 +2,7 @@
 package ch.alpine.ascony.dis;
 
 import ch.alpine.ascony.ren.AxesRender;
-import ch.alpine.ascony.ren.RenderInterface;
+import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.he.HeNGroup;
 import ch.alpine.sophus.lie.se2.Se2Matrix;

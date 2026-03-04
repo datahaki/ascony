@@ -11,6 +11,7 @@ import ch.alpine.bridge.fig.GridDrawer;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.ShowableConfig;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.mat.re.LinearSolve;

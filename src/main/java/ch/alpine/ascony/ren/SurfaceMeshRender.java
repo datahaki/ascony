@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.sophis.crv.d2.SignedCurvature2D;
 import ch.alpine.sophis.srf.SurfaceMesh;
 import ch.alpine.tensor.Scalar;

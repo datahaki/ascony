@@ -7,9 +7,9 @@ import java.awt.Rectangle;
 import ch.alpine.ascony.api.CurveVisualSet;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.ren.EmptyRender;
-import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
 import ch.alpine.tensor.Tensor;
 

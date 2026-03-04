@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import ch.alpine.ascony.api.Box2D;
 import ch.alpine.ascony.arp.D2Raster;
-import ch.alpine.ascony.ren.RenderInterface;
+import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 

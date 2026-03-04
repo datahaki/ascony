@@ -5,7 +5,8 @@ import java.awt.Window;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.alpine.ascony.ren.RenderInterface;
+import ch.alpine.bridge.gfx.GeometricComponent;
+import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.bridge.lang.FriendlyFormat;
 import ch.alpine.bridge.pro.WindowProvider;
 import ch.alpine.bridge.ref.util.FieldsEditor;

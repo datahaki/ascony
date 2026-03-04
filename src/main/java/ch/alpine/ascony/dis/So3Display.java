@@ -3,7 +3,7 @@ package ch.alpine.ascony.dis;
 
 import java.io.Serializable;
 
-import ch.alpine.ascony.ren.RenderInterface;
+import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.sophus.lie.so.So3Exponential;

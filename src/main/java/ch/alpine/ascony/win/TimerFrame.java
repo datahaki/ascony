@@ -24,6 +24,7 @@ import javax.swing.WindowConstants;
 import ch.alpine.bridge.awt.AwtUtil;
 import ch.alpine.bridge.awt.OffscreenRender;
 import ch.alpine.bridge.awt.WindowClosed;
+import ch.alpine.bridge.gfx.GeometricComponent;
 import ch.alpine.tensor.Throw;
 
 public class TimerFrame {

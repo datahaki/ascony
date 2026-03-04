@@ -4,8 +4,8 @@ package ch.alpine.ascony.dis;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import ch.alpine.ascony.ren.RenderInterface;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.sophus.hs.h.HWeierstrassCoordinate;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;

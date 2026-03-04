@@ -11,8 +11,9 @@ import javax.swing.JTabbedPane;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.RenderInterface;
+import ch.alpine.bridge.gfx.GeometricComponent;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.bridge.util.CopyOnWriteLinkedSet;
 import ch.alpine.tensor.RealScalar;
 

@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.ascony.dis;
 
-import ch.alpine.ascony.ren.RenderInterface;
+import ch.alpine.bridge.gfx.RenderInterface;
 
 public class H1Display extends HnDisplay {
   public static final ManifoldDisplay INSTANCE = new H1Display();

@@ -4,7 +4,7 @@ package ch.alpine.ascony.dis;
 import java.util.concurrent.ThreadLocalRandom;
 
 import ch.alpine.ascony.arp.D2Raster;
-import ch.alpine.ascony.ren.RenderInterface;
+import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.sophis.crv.clt.ClothoidBuilder;
 import ch.alpine.sophis.ts.TransitionSpace;
 import ch.alpine.sophis.ts.UniformTransitionSpace;

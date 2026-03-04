@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 import ch.alpine.ascony.api.Spearhead;
 import ch.alpine.ascony.ren.FixGridRender;
-import ch.alpine.ascony.ren.RenderInterface;
+import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.sophis.crv.d2.PolygonNormalize;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.se2.Se2Matrix;

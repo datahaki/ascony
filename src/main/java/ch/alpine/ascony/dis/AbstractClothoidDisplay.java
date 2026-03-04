@@ -4,7 +4,7 @@ package ch.alpine.ascony.dis;
 import java.io.Serializable;
 
 import ch.alpine.ascony.ren.EmptyRender;
-import ch.alpine.ascony.ren.RenderInterface;
+import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.sophis.crv.clt.ClothoidBuilder;
 import ch.alpine.sophis.crv.d2.ex.Arrowhead;
 import ch.alpine.sophus.lie.se2.Se2CoveringGroup;

@@ -4,7 +4,7 @@ package ch.alpine.ascony.reg;
 import java.awt.Color;
 
 import ch.alpine.ascony.api.Box2D;
-import ch.alpine.ascony.ren.RenderInterface;
+import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.sophis.crv.d2.Extract2D;
 import ch.alpine.sophis.crv.d2.ex.EllipsePoints;
 import ch.alpine.sophis.reg.BallRegion;

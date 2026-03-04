@@ -4,6 +4,7 @@ package ch.alpine.ascony.ren;
 import java.awt.Color;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
+import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.tensor.Tensor;
 
 public enum ControlPointsStatic {
