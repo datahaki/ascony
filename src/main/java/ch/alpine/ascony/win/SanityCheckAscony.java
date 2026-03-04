@@ -32,7 +32,7 @@ public class SanityCheckAscony extends SanityCheckRunProvider {
     try {
       for (ManifoldDisplays manifoldDisplays : manifoldDisplayDemo.permitted_manifoldDisplays()) {
         manifoldDisplayDemo.setManifoldDisplay(manifoldDisplays);
-        manifoldDisplayDemo.geometricComponent().jComponent.printAll(graphics);
+        manifoldDisplayDemo.geometricComponent().printAll(graphics);
       }
     } catch (Exception e) {
       status = false;

@@ -54,7 +54,7 @@ public class TimerFrame {
     jPanel.add(new JScrollPane(jToolBar, //
         ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER, //
         ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS), BorderLayout.NORTH);
-    jPanel.add(geometricComponent.jComponent, BorderLayout.CENTER);
+    jPanel.add(geometricComponent, BorderLayout.CENTER);
     jFrame.setContentPane(jPanel);
     jFrame.addWindowListener(new WindowAdapter() {
       @Override
@@ -67,7 +67,7 @@ public class TimerFrame {
         TimerTask timerTask = new TimerTask() {
           @Override
           public void run() {
-            geometricComponent.jComponent.repaint();
+            geometricComponent.repaint();
           }
         };
         timer.schedule(timerTask, 100, TimeUnit.MILLISECONDS.convert(period, timeUnit));
@@ -80,7 +80,7 @@ public class TimerFrame {
   }
 
   public final BufferedImage offscreen() {
-    return OffscreenRender.of(geometricComponent.jComponent, BufferedImage.TYPE_INT_ARGB);
+    return OffscreenRender.of(geometricComponent, BufferedImage.TYPE_INT_ARGB);
   }
 
   private boolean west_available = true;

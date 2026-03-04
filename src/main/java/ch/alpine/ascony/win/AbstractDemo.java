@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.ascony.win;
 
+import java.awt.Dimension;
 import java.awt.Window;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,10 @@ public abstract class AbstractDemo implements RenderInterface, WindowProvider {
 
   protected final GeometricComponent geometricComponent() {
     return timerFrame.geometricComponent;
+  }
+
+  protected final Dimension getSize() {
+    return timerFrame.geometricComponent.getSize();
   }
 
   @Override

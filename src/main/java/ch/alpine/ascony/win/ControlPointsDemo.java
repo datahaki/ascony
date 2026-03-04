@@ -230,8 +230,8 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
   protected ControlPointsDemo(Object... objects) {
     super(objects);
     final GeometricComponent geometricComponent = timerFrame.geometricComponent;
-    geometricComponent.jComponent.addMouseListener(controlPointsRender.mouseAdapter);
-    geometricComponent.jComponent.addMouseMotionListener(controlPointsRender.mouseAdapter);
+    geometricComponent.addMouseListener(controlPointsRender.mouseAdapter);
+    geometricComponent.addMouseMotionListener(controlPointsRender.mouseAdapter);
     geometricComponent.addRenderInterface(controlPointsRender);
     if (addRemoveControlPoints()) {
       timerFrame.jToolBar.addSeparator();
