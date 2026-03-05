@@ -1,7 +1,9 @@
 // code by jph
 package ch.alpine.ascony.ren;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -27,6 +29,10 @@ public record GridRender(Supplier<Dimension> supplier) implements RenderInterfac
       CoordinateBoundingBox cbb = fromRectangle(geometricLayer, rectangle);
       ShowableConfig showableConfig = new ShowableConfig(rectangle, cbb);
       new GridDrawer().render(showableConfig, graphics);
+    } else {
+      graphics.setColor(Color.RED);
+      graphics.setFont(new Font(Font.DIALOG, Font.PLAIN, 11));
+      graphics.drawString("no grid because axes not aligned", 0, 30);
     }
   }
 
