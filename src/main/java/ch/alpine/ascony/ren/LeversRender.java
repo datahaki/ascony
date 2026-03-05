@@ -446,7 +446,7 @@ public class LeversRender {
   public void renderEllipseMahalanobis() {
     if (Tensors.nonEmpty(sequence)) {
       Manifold manifold = manifoldDisplay.manifold();
-      Tensor levers = manifold.tangentSpace(origin).log().slash(sequence);
+      Tensor levers = manifold.tangentSpace(origin).vectorLog().slash(sequence);
       Mahalanobis mahalanobis = new Mahalanobis(levers);
       renderEllipse(origin, mahalanobis.sigma_inverse());
     }
@@ -467,7 +467,7 @@ public class LeversRender {
   public void renderMahalanobisFormXEV(ColorDataGradient colorDataGradient) {
     if (Tensors.nonEmpty(sequence)) {
       Manifold manifold = manifoldDisplay.manifold();
-      Tensor levers = manifold.tangentSpace(origin).log().slash(sequence);
+      Tensor levers = manifold.tangentSpace(origin).vectorLog().slash(sequence);
       Mahalanobis mahalanobis = new Mahalanobis(levers);
       renderMahalanobisMatrix(origin, mahalanobis, colorDataGradient);
     }
@@ -476,7 +476,7 @@ public class LeversRender {
   public void renderEllipseMahalanobisP() {
     Manifold manifold = manifoldDisplay.manifold();
     for (Tensor point : sequence) {
-      Tensor levers = manifold.tangentSpace(point).log().slash(sequence);
+      Tensor levers = manifold.tangentSpace(point).vectorLog().slash(sequence);
       Mahalanobis mahalanobis = new Mahalanobis(levers);
       renderEllipse(point, mahalanobis.sigma_inverse());
     }
@@ -487,7 +487,7 @@ public class LeversRender {
   public void renderInfluenceX(ColorDataGradient colorDataGradient) {
     if (Tensors.nonEmpty(sequence)) {
       Manifold manifold = manifoldDisplay.manifold();
-      Tensor levers = manifold.tangentSpace(origin).log().slash(sequence);
+      Tensor levers = manifold.tangentSpace(origin).vectorLog().slash(sequence);
       Tensor matrix = InfluenceMatrix.of(levers).matrix();
       // ---
       graphics.setFont(FONT_MATRIX);
@@ -504,7 +504,7 @@ public class LeversRender {
       // Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, origin);
       Tensor projections = Tensor.of(sequence.stream() //
           .map(point -> InfluenceMatrix.of( //
-              manifold.tangentSpace(point).log().slash(sequence)).matrix()));
+              manifold.tangentSpace(point).vectorLog().slash(sequence)).matrix()));
       // ---
       graphics.setFont(FONT_MATRIX);
       int index = 0;

@@ -6,6 +6,7 @@ import java.awt.Window;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.alpine.bridge.awt.AwtUtil;
 import ch.alpine.bridge.gfx.GeometricComponent;
 import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.bridge.lang.FriendlyFormat;
@@ -27,7 +28,7 @@ public abstract class AbstractDemo implements RenderInterface, WindowProvider {
       FieldsEditor fieldsEditor = ToolbarFieldsEditor.addToComponent(object, timerFrame.jToolBar);
       fieldsEditors.add(fieldsEditor);
       if (++index < objects.length)
-        timerFrame.jToolBar.addSeparator();
+        AwtUtil.addSeparator(timerFrame.jToolBar);
     }
     geometricComponent().addRenderInterface(this);
     timerFrame.jFrame.setTitle(FriendlyFormat.defaultTitle(getClass()));

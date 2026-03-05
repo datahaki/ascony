@@ -7,7 +7,6 @@ import ch.alpine.sophis.crv.d2.ex.StarPoints;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.LineDistance;
 import ch.alpine.sophus.hs.h.HLineDistance;
-import ch.alpine.sophus.hs.h.HWeierstrassCoordinate;
 import ch.alpine.sophus.hs.h.Hyperboloid;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.Tensor;
@@ -21,7 +20,7 @@ import ch.alpine.tensor.sca.Clips;
 public abstract class HnDisplay implements ManifoldDisplay, Serializable {
   private static final Tensor STAR_POINTS = StarPoints.of(6, 0.12, 0.04).unmodifiable();
   protected static final Clip CLIP = Clips.absolute(2.5);
-  private static final TensorUnaryOperator LIFT = PadRight.zeros(3);
+  static final TensorUnaryOperator LIFT = PadRight.zeros(3);
   // ---
   private final int dimensions;
   private final Hyperboloid hyperboloid;
@@ -39,16 +38,6 @@ public abstract class HnDisplay implements ManifoldDisplay, Serializable {
   @Override // from ManifoldDisplay
   public final Tensor xya2point(Tensor xya) {
     return xya.extract(0, dimensions);
-  }
-
-  @Override
-  public final Tensor point2xya(Tensor p) {
-    return LIFT.apply(new HWeierstrassCoordinate(p).toPoint());
-  }
-
-  @Override // from ManifoldDisplay
-  public final TensorUnaryOperator tangentProjection(Tensor xyz) {
-    return v -> v;
   }
 
   @Override // from ManifoldDisplay

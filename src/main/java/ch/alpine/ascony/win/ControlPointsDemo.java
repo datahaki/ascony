@@ -16,6 +16,7 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ArgMinValue;
 import ch.alpine.ascony.ren.LeversRender;
+import ch.alpine.bridge.awt.AwtUtil;
 import ch.alpine.bridge.gfx.GeometricComponent;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.RenderInterface;
@@ -234,7 +235,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
     geometricComponent.addMouseMotionListener(controlPointsRender.mouseAdapter);
     geometricComponent.addRenderInterface(controlPointsRender);
     if (addRemoveControlPoints()) {
-      timerFrame.jToolBar.addSeparator();
+      AwtUtil.addSeparator(timerFrame.jToolBar);
       JButton jButton = new JButton("clear");
       jButton.addActionListener(_ -> controlPointsRender.setControlPointsSe2(Tensors.empty()));
       timerFrame.jToolBar.add(jButton);
