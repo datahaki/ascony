@@ -46,8 +46,6 @@ public record GridRender(Supplier<Dimension> supplier) implements RenderInterfac
   }
 
   private CoordinateBoundingBox fromRectangle(GeometricLayer geometricLayer, Rectangle rectangle) {
-    // if (isRotatable)
-    // System.err.println("warning: rotatable");
     Tensor matrix = geometricLayer.getMatrix();
     Tensor p1 = toModel(matrix, rectangle.getLocation());
     Tensor p2 = toModel(matrix, new Point(rectangle.x + rectangle.width, rectangle.y + rectangle.height));
