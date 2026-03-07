@@ -21,12 +21,11 @@ public class H1Display extends HnDisplay {
     return LIFT.apply(new HWeierstrassCoordinate(p).toPoint());
     // return LIFT.apply(p);
   }
-  
-  @Override // from ManifoldDisplay
-  public  TensorUnaryOperator tangentProjection(Tensor xyz) {
-    return v -> Append.of(v, RealScalar.ZERO);  // TODO can be better
-  }
 
+  @Override // from ManifoldDisplay
+  public TensorUnaryOperator tangentProjection(Tensor xyz) {
+    return v -> Append.of(v, RealScalar.ZERO); // TODO can be better
+  }
 
   @Override
   public RenderInterface background() {

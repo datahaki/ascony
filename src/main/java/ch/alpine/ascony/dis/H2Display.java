@@ -22,12 +22,11 @@ public class H2Display extends HnDisplay {
     // return LIFT.apply(new HWeierstrassCoordinate(p).toPoint());
     return LIFT.apply(p);
   }
-  
+
   @Override // from ManifoldDisplay
-  public  TensorUnaryOperator tangentProjection(Tensor xyz) {
+  public TensorUnaryOperator tangentProjection(Tensor xyz) {
     return v -> v;
   }
-
 
   @Override
   public D2Raster d2Raster() {
