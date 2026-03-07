@@ -1,8 +1,6 @@
 // code by jph
 package ch.alpine.ascony.api;
 
-import java.util.Arrays;
-
 import ch.alpine.sophis.api.Genesis;
 import ch.alpine.sophis.dv.AffineCoordinate;
 import ch.alpine.sophis.gbc.d2.IterativeCoordinateLevel;
@@ -11,7 +9,6 @@ import ch.alpine.sophis.gbc.d2.ThreePointWeighting;
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorScalarFunction;
-import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.sca.Chop;
 
 public enum IterativeGenesis {
@@ -28,11 +25,8 @@ public enum IterativeGenesis {
     return new IterativeCoordinateLevel(genesis, Chop._08, max);
   }
 
-  public static TensorUnaryOperator counts(Manifold manifold, Tensor sequence, int max) {
-    TensorScalarFunction[] array = Arrays.stream(values()).map(ig -> ig.with(max)).toArray(TensorScalarFunction[]::new);
-    return point -> {
-      Tensor matrix = manifold.tangentSpace(point).log().slash(sequence);
-      return Tensor.of(Arrays.stream(array).map(ig -> ig.apply(matrix)));
-    };
+  public TensorScalarFunction counts(Manifold manifold, Tensor sequence, int max) {
+    TensorScalarFunction tsf = with(max);
+    return point -> tsf.apply(manifold.tangentSpace(point).log().slash(sequence));
   }
 }
