@@ -49,7 +49,7 @@ public class TimerFrame {
   /** @param period between repaint invocations */
   public TimerFrame(int period, TimeUnit timeUnit) {
     jFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-    jToolBar.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 5));
+    jToolBar.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 0));
     jToolBar.setFloatable(false);
     jPanel.add(new JScrollPane(jToolBar, //
         ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER, //

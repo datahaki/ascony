@@ -53,7 +53,7 @@ public class AbstractDemo implements WindowProvider {
   public final FieldsEditor fieldsEditor(int index) {
     if (index < fieldsEditors.size())
       return fieldsEditors.get(index);
-    System.err.println("no can do");
+    System.err.println("no can do: " + index + " vs. " + fieldsEditors.size());
     return null;
   }
 }
