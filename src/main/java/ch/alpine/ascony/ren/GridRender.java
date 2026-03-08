@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import ch.alpine.bridge.fig.GridDrawer;
@@ -24,11 +25,14 @@ public record GridRender(Supplier<Dimension> supplier) implements RenderInterfac
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     if (geometricLayer.isAxisAligned()) {
-      Dimension dimension = supplier.get(); // jComponent.getSize();
-      Rectangle rectangle = Show.defaultInsets(dimension, graphics.getFont().getSize());
-      CoordinateBoundingBox cbb = fromRectangle(geometricLayer, rectangle);
-      ShowableConfig showableConfig = new ShowableConfig(rectangle, cbb);
-      new GridDrawer().render(showableConfig, graphics);
+      Dimension dimension = supplier.get();
+      Optional<Rectangle> optional = Show.optionalDefaultInsets(dimension, graphics.getFont().getSize());
+      if (optional.isPresent()) {
+        Rectangle rectangle = optional.orElseThrow();
+        CoordinateBoundingBox cbb = fromRectangle(geometricLayer, rectangle);
+        ShowableConfig showableConfig = new ShowableConfig(rectangle, cbb);
+        new GridDrawer().render(showableConfig, graphics);
+      }
     } else {
       graphics.setColor(Color.RED);
       graphics.setFont(new Font(Font.DIALOG, Font.PLAIN, 11));
