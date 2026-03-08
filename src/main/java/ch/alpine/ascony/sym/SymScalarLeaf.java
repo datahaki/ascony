@@ -7,7 +7,7 @@ import java.util.function.UnaryOperator;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 
-/* package */ final class SymScalarLeaf extends SymScalar {
+final class SymScalarLeaf extends SymScalar {
   /** @param index
    * @return */
   public static Scalar of(int index) {
@@ -39,17 +39,6 @@ import ch.alpine.tensor.Scalar;
   @Override
   public boolean allMatch(Predicate<Scalar> predicate) {
     return predicate.test(scalar);
-  }
-
-  @Override
-  public int hashCode() {
-    return scalar.hashCode();
-  }
-
-  @Override
-  public boolean equals(Object object) {
-    return object instanceof SymScalarLeaf symScalar //
-        && symScalar.scalar.equals(scalar);
   }
 
   @Override

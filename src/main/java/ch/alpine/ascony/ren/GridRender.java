@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -15,11 +14,7 @@ import ch.alpine.bridge.fig.Show;
 import ch.alpine.bridge.fig.ShowableConfig;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.RenderInterface;
-import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.mat.re.LinearSolve;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
-import ch.alpine.tensor.opt.nd.CoordinateBounds;
 
 public record GridRender(Supplier<Dimension> supplier) implements RenderInterface {
   @Override
@@ -29,7 +24,7 @@ public record GridRender(Supplier<Dimension> supplier) implements RenderInterfac
       Optional<Rectangle> optional = Show.optionalDefaultInsets(dimension, graphics.getFont().getSize());
       if (optional.isPresent()) {
         Rectangle rectangle = optional.orElseThrow();
-        CoordinateBoundingBox cbb = fromRectangle(geometricLayer, rectangle);
+        CoordinateBoundingBox cbb = geometricLayer.fromRectangle(rectangle).orElseThrow();
         ShowableConfig showableConfig = new ShowableConfig(rectangle, cbb);
         new GridDrawer().render(showableConfig, graphics);
       }
@@ -38,21 +33,5 @@ public record GridRender(Supplier<Dimension> supplier) implements RenderInterfac
       graphics.setFont(new Font(Font.DIALOG, Font.PLAIN, 11));
       graphics.drawString("no grid because axes not aligned", 0, 30);
     }
-  }
-
-  // ---
-  /** transforms point in pixel space to coordinates of model space
-   * 
-   * @param point
-   * @return tensor of length 2 */
-  private Tensor toModel(Tensor model2pixel, Point point) {
-    return LinearSolve.of(model2pixel, Tensors.vector(point.x, point.y, 1)).extract(0, 2);
-  }
-
-  private CoordinateBoundingBox fromRectangle(GeometricLayer geometricLayer, Rectangle rectangle) {
-    Tensor matrix = geometricLayer.getMatrix();
-    Tensor p1 = toModel(matrix, rectangle.getLocation());
-    Tensor p2 = toModel(matrix, new Point(rectangle.x + rectangle.width, rectangle.y + rectangle.height));
-    return CoordinateBounds.of(Tensors.of(p1, p2));
   }
 }

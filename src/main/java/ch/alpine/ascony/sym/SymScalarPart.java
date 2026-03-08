@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.ascony.sym;
 
-import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 
@@ -9,7 +8,7 @@ import ch.alpine.sophus.lie.rn.RGroup;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensors;
 
-/* package */ final class SymScalarPart extends SymScalar {
+final class SymScalarPart extends SymScalar {
   private final SymScalar p;
   private final SymScalar q;
   private final Scalar ratio;
@@ -53,19 +52,6 @@ import ch.alpine.tensor.Tensors;
   @Override
   public boolean allMatch(Predicate<Scalar> predicate) {
     return predicate.test(ratio);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(p, q, ratio);
-  }
-
-  @Override
-  public boolean equals(Object object) {
-    return object instanceof SymScalarPart symScalar //
-        && symScalar.p.equals(p) //
-        && symScalar.q.equals(q) //
-        && symScalar.ratio.equals(ratio);
   }
 
   @Override
