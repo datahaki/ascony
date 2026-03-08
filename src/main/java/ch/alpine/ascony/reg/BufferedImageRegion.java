@@ -13,7 +13,6 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.sophis.reg.RegionBounds;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.chq.MemberQ;
 import ch.alpine.tensor.mat.re.Inverse;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
@@ -31,7 +30,7 @@ public class BufferedImageRegion implements MemberQ, RegionBounds, RenderInterfa
   private final boolean outside;
 
   /** @param bufferedImage of type BufferedImage.TYPE_BYTE_GRAY
-   * @param pixel2model with dimension 3 x 3
+   * @param coordinateBoundingBox
    * @param outside membership */
   public BufferedImageRegion(BufferedImage bufferedImage, CoordinateBoundingBox coordinateBoundingBox, boolean outside) {
     if (bufferedImage.getType() != BufferedImage.TYPE_BYTE_GRAY)
@@ -41,7 +40,9 @@ public class BufferedImageRegion implements MemberQ, RegionBounds, RenderInterfa
     imageRender = new ImageRender(bufferedImage, coordinateBoundingBox);
     width = bufferedImage.getWidth();
     height = bufferedImage.getHeight();
-    this.pixel2model = ImageRender.pixel2model(coordinateBoundingBox, width, height);
+    pixel2model = ImageRender.pixel2model(coordinateBoundingBox, width, height);
+    // IO.println(Pretty.of(pixel2model.maps(Round._4)));
+    // IO.println(Pretty.of(Inverse.of(pixel2model).maps(Round._4)));
     affineFrame = new AffineFrame2D(Inverse.of(pixel2model));
     WritableRaster writableRaster = bufferedImage.getRaster();
     DataBufferByte dataBufferByte = (DataBufferByte) writableRaster.getDataBuffer();
@@ -50,14 +51,7 @@ public class BufferedImageRegion implements MemberQ, RegionBounds, RenderInterfa
   }
 
   @Override // from Region
-  public final boolean test(Tensor vector) {
-    return isMember( //
-        vector.Get(0).number().doubleValue(), //
-        vector.Get(1).number().doubleValue());
-  }
-
-  public boolean isMember(double px, double py) {
-    Tensor v = Tensors.vector(px, py);
+  public final boolean test(Tensor v) {
     Point2D point2d = affineFrame.toPoint2D(v);
     int x = (int) point2d.getX();
     if (0 <= x && x < width) {

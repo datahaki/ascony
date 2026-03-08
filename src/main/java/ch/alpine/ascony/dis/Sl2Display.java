@@ -23,6 +23,7 @@ public class Sl2Display implements ManifoldDisplay, Serializable {
   public static final ManifoldDisplay INSTANCE = new Sl2Display();
   private final SlNGroup slNGroup = new SlNGroup(2);
   private static final Scalar SCALE = RealScalar.of(0.1);
+  private final FixGridRender fixGridRender = new FixGridRender(Subdivide.of(-10, 10, 20), Subdivide.of(-10, 10, 20));
 
   private Sl2Display() {
   }
@@ -71,6 +72,6 @@ public class Sl2Display implements ManifoldDisplay, Serializable {
 
   @Override
   public RenderInterface background() {
-    return new FixGridRender(Subdivide.of(-10, 10, 20), Subdivide.of(-10, 10, 20));
+    return fixGridRender;
   }
 }
