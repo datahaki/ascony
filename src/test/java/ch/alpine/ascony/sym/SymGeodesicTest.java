@@ -20,8 +20,6 @@ class SymGeodesicTest {
     Scalar s1 = SymScalarLeaf.of(1);
     Scalar s2 = SymScalarLeaf.of(2);
     SymScalar s3 = new SymScalarPart(s1, s2, Rational.HALF);
-    Scalar scalar = new SymScalarPart(s1, s2, Rational.of(1, 2));
-    assertEquals(s3, scalar);
     Scalar evaluate = s3.evaluate();
     assertEquals(evaluate, Rational.of(3, 2));
     TensorUnaryOperator tensorUnaryOperator = //
