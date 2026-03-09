@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.ascony.res;
 
+import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collections;
@@ -9,19 +11,23 @@ import java.util.List;
 
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;
+import ch.alpine.tensor.ext.HomeDirectory;
 import ch.alpine.tensor.io.StringScalar;
 
 public class ResourceIndexBuilder {
   public static final String FILENAME = "resource_index.vector";
 
-  public static void of(Path folder) {
-    ResourceIndexBuilder resourceIndexBuilder = new ResourceIndexBuilder(folder);
+  public static void of(Path root) {
+    new ResourceIndexBuilder(root);
   }
 
+  // ---
+  private final Path root;
   private final int length;
   private final List<String> list = new LinkedList<>();
 
   private ResourceIndexBuilder(Path root) {
+    this.root = root;
     length = root.toString().length() + 1;
     check(root);
     Collections.sort(list);
@@ -35,19 +41,24 @@ public class ResourceIndexBuilder {
         if (Files.isDirectory(file))
           check(file);
         else {
-          if (file.getFileName().toString().equals(FILENAME))
-            System.err.println("skip " + file);
-          else
-            list.add(file.toString().substring(length));
+          if (file.getFileName().toString().equals(FILENAME)) {
+            // System.err.println("skip " + file);
+          } else {
+            String suffix = file.toString().substring(length);
+            Path path = root.resolve(suffix);
+            if (!Files.isRegularFile(path))
+              System.err.println(path);
+            list.add(suffix);
+          }
         }
       }
-    } catch (Exception e) {
-      e.printStackTrace();
+    } catch (IOException ioException) {
+      throw new UncheckedIOException(ioException);
     }
   }
 
   static void main() {
-    String path = "/home/datahaki/Projects/ascona/src/main/resources/ch/alpine/ascona/gokart/tpq/";
-    ResourceIndexBuilder.of(Path.of(path));
+    Path path = HomeDirectory.Projects.resolve("ascona/src/main/resources/ch/alpine/ascona/gokart");
+    ResourceIndexBuilder.of(path);
   }
 }
