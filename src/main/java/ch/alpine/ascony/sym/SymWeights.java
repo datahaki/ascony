@@ -3,6 +3,7 @@ package ch.alpine.ascony.sym;
 
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
 
@@ -25,7 +26,7 @@ import ch.alpine.tensor.alg.Array;
       visit(weight.multiply(symScalarPart.ratio()), symScalarPart.getQ());
     } else {
       Scalar scalar = root.evaluate();
-      int index = scalar.number().intValue();
+      int index = Scalars.intValueExact(scalar);
       max = Math.max(max, index);
       while (sum.length() <= index)
         sum.append(RealScalar.ZERO);

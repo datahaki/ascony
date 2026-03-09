@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.ascony.sym;
 
-import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 
 public record SymLinkBuilder(Tensor control) {
@@ -22,7 +22,7 @@ public record SymLinkBuilder(Tensor control) {
           build(symScalarPart.getP()), //
           build(symScalarPart.getQ()), //
           symScalarPart.ratio());
-    Scalar evaluate = symScalar.evaluate();
-    return new SymLinkLeaf(symScalar, control.get(evaluate.number().intValue()));
+    int index = Scalars.intValueExact(symScalar.evaluate());
+    return new SymLinkLeaf(symScalar, control.get(index));
   }
 }
