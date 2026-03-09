@@ -9,7 +9,7 @@ import ch.alpine.tensor.ext.ResourceData;
 import ch.alpine.tensor.io.Import;
 
 public class ResourceMapper {
-  /** @param index for instance "/ch/alpine/ascona/resource_index.vector"
+  /** @param index for instance "ch/alpine/ascona/resource_index.vector"
    * @return */
   public static final ResourceMapper of(String string) {
     return new ResourceMapper(string);
