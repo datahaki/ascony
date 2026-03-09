@@ -1,9 +1,11 @@
 // code by jph
 package ch.alpine.ascony.dis;
 
+import java.awt.Color;
 import java.util.concurrent.ThreadLocalRandom;
 
 import ch.alpine.ascony.arp.D2Raster;
+import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.sophis.crv.clt.ClothoidBuilder;
 import ch.alpine.sophis.ts.TransitionSpace;
@@ -14,6 +16,7 @@ import ch.alpine.sophus.api.Manifold;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.DoubleScalar;
+import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
@@ -105,6 +108,11 @@ public interface ManifoldDisplay {
   /** @return rendering of background, for instance a shaded sphere for S^2 */
   RenderInterface background();
 
+  default RenderInterface showPoints(Color color_fill, Color color_draw, Scalar scale, Tensor points) {
+    return new PointsRender(color_fill, color_draw) //
+        .show(this::matrixLift, shape().multiply(scale), points);
+  }
+
   default D2Raster d2Raster() {
     return null;
   }
@@ -115,6 +123,6 @@ public interface ManifoldDisplay {
 
   default Tensor indetPoint() {
     return randomSampleInterface().randomSample(ThreadLocalRandom.current()) //
-        .maps(s -> DoubleScalar.INDETERMINATE);
+        .maps(_ -> DoubleScalar.INDETERMINATE);
   }
 }
