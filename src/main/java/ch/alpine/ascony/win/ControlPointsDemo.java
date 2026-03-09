@@ -28,13 +28,12 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
+import ch.alpine.tensor.alg.Drop;
 import ch.alpine.tensor.alg.Insert;
-import ch.alpine.tensor.alg.Join;
 import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.mat.re.Det;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.sca.Abs;
-import ch.alpine.tensor.sca.N;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
 /** class is used in other projects outside of owl */
@@ -81,7 +80,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
             // released();
           } else {
             {
-              Tensor mouse_dist = Tensor.of(control.stream() //
+              Tensor mouse_dist = Tensor.of(control.points_se2().stream() //
                   .map(mouse::subtract) //
                   .map(Extract2D.FUNCTION) //
                   .map(Vector2Norm::of));
@@ -91,11 +90,11 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
             if (!isPositioningOngoing() && addRemoveControlPoints()) {
               // insert
               if (control.length() < 2 || !isMidpointIndicated()) {
-                control = control.append(mouse);
+                control.points_se2().append(mouse);
                 min_index = control.length() - 1;
               } else {
                 Midpoints midpoints = new Midpoints();
-                control = Insert.of(control, mouse, midpoints.index);
+                control = new ControlPointsSe2(Insert.of(control.points_se2(), mouse, midpoints.index));
                 min_index = midpoints.index;
               }
             }
@@ -104,7 +103,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
         case MouseEvent.BUTTON3: // remove point
           if (addRemoveControlPoints()) {
             if (!isPositioningOngoing()) {
-              Tensor mouse_dist = Tensor.of(control.stream() //
+              Tensor mouse_dist = Tensor.of(control.points_se2().stream() //
                   .map(mouse::subtract) //
                   .map(Extract2D.FUNCTION) //
                   .map(Vector2Norm::of));
@@ -112,7 +111,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
               min_index = argMinValue.map(ArgMinValue::index).orElse(null);
             }
             if (isPositioningOngoing()) {
-              control = Join.of(control.extract(0, min_index), control.extract(min_index + 1, control.length()));
+              control = new ControlPointsSe2(Drop.index(control.points_se2(), min_index));
               min_index = null;
             }
           }
@@ -121,7 +120,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
         }
       }
     };
-    private Tensor control = Tensors.empty();
+    private ControlPointsSe2 control = new ControlPointsSe2(Tensors.empty());
     private Tensor mouse = Array.zeros(3);
     /** min_index is non-null while the user drags a control points */
     private Integer min_index = null;
@@ -134,11 +133,11 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
         return;
       mouse = mouseSe2CState();
       if (isPositioningOngoing())
-        control.set(mouse, min_index);
+        control.points_se2().set(mouse, min_index);
       else {
         final boolean hold;
         {
-          Tensor mouse_dist = Tensor.of(control.stream() //
+          Tensor mouse_dist = Tensor.of(control.points_se2().stream() //
               .map(mouse::subtract) //
               .map(Extract2D.FUNCTION) //
               .map(Vector2Norm::of));
@@ -149,7 +148,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
           Tensor posit = mouse;
           if (hold) {
             graphics.setStroke(new BasicStroke(2f));
-            Tensor closest = control.get(argMinValue.map(ArgMinValue::index).orElseThrow());
+            Tensor closest = control.points_se2().get(argMinValue.map(ArgMinValue::index).orElseThrow());
             graphics.draw(geometricLayer.toPath2D(Tensors.of(mouse, closest)));
             graphics.setStroke(new BasicStroke());
             posit.set(closest.get(0), 0);
@@ -159,7 +158,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
           graphics.fill(geometricLayer.toPath2D(manifoldDisplay.shape()));
           geometricLayer.popMatrix();
         }
-        if (!hold && Tensors.nonEmpty(control) && isMidpointIndicated()) {
+        if (!hold && Tensors.nonEmpty(control.points_se2()) && isMidpointIndicated()) {
           graphics.setColor(Color.RED);
           graphics.setStroke(STROKE);
           graphics.draw(geometricLayer.toLine2D(mouse, new Midpoints().closestXY()));
@@ -199,13 +198,13 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
     /** @param control points as matrix of dimensions N x 3 */
     void setControlPointsSe2(Tensor control) {
       min_index = null;
-      this.control = Tensor.of(control.stream() //
-          .map(row -> VectorQ.requireLength(row, 3).maps(Tensor::copy)));
+      this.control = new ControlPointsSe2(Tensor.of(control.stream() //
+          .map(row -> VectorQ.requireLength(row, 3).maps(Tensor::copy))));
     }
 
     /** @return control points as matrix of dimensions N x 3 */
     Tensor getControlPointsSe2() {
-      return control.unmodifiable(); // TODO ASCONA API should return copy!?
+      return control.points_se2().unmodifiable(); // TODO ASCONA API should return copy!?
     }
 
     /** @return control points for selected {@link ManifoldDisplay} */
@@ -217,11 +216,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
      * @param maxSize
      * @return */
     Tensor getGeodesicControlPoints(int skip, int maxSize) {
-      return Tensor.of(control.stream() //
-          .skip(skip) //
-          .limit(maxSize) //
-          .map(manifoldDisplay()::xya2point) //
-          .map(tensor -> tensor.maps(N.DOUBLE)));
+      return control.getGeodesicControlPoints(manifoldDisplay(), skip, maxSize);
     }
   }
 
