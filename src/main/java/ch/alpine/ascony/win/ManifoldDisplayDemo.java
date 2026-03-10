@@ -33,7 +33,7 @@ public abstract class ManifoldDisplayDemo extends AbstractDemo implements Render
     super(objects);
     list = permitted_manifoldDisplays();
     selected_manifoldDisplays = list.getFirst();
-    final GeometricComponent geometricComponent = timerFrame.geometricComponent;
+    final GeometricComponent geometricComponent = geometricComponent();
     geometricComponent.addRenderInterfaceBackground(new RenderInterface() {
       @Override
       public void render(GeometricLayer geometricLayer, Graphics2D graphics) {

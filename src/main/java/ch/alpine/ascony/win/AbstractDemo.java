@@ -6,30 +6,44 @@ import java.awt.Window;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JToolBar;
+
 import ch.alpine.bridge.awt.AwtUtil;
+import ch.alpine.bridge.awt.WindowClosed;
 import ch.alpine.bridge.gfx.GeometricComponent;
+import ch.alpine.bridge.io.ResourceLocator;
 import ch.alpine.bridge.lang.FriendlyFormat;
 import ch.alpine.bridge.pro.WindowProvider;
 import ch.alpine.bridge.ref.util.FieldsEditor;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
-import ch.alpine.tensor.ext.PackageTestAccess;
 
 public class AbstractDemo implements WindowProvider {
   public final TimerFrame timerFrame = new TimerFrame();
-  private final Object[] objects;
   private final List<FieldsEditor> fieldsEditors = new ArrayList<>();
+  private final ObjectsParam objectsParam;
 
   /** @param objects may be null */
   protected AbstractDemo(Object... objects) {
-    this.objects = objects;
-    int index = 0;
-    for (Object object : objects) {
-      FieldsEditor fieldsEditor = ToolbarFieldsEditor.addToComponent(object, timerFrame.jToolBar);
-      fieldsEditors.add(fieldsEditor);
-      if (++index < objects.length)
-        AwtUtil.addSeparator(timerFrame.jToolBar);
+    objectsParam = new ObjectsParam(objects);
+    {
+      ResourceLocator resourceLocator = ResourceLocator.of(getClass());
+      resourceLocator.tryLoad(objectsParam);
+      WindowClosed.runs(timerFrame, () -> resourceLocator.trySave(objectsParam));
+    }
+    {
+      int index = 0;
+      for (Object object : objects) {
+        FieldsEditor fieldsEditor = ToolbarFieldsEditor.addToComponent(object, timerFrame.jToolBar);
+        fieldsEditors.add(fieldsEditor);
+        if (++index < objects.length)
+          AwtUtil.addSeparator(timerFrame.jToolBar);
+      }
     }
     timerFrame.setTitle(FriendlyFormat.defaultTitle(getClass()));
+  }
+
+  protected final JToolBar jToolBar() {
+    return timerFrame.jToolBar;
   }
 
   protected final GeometricComponent geometricComponent() {
@@ -43,11 +57,6 @@ public class AbstractDemo implements WindowProvider {
   @Override
   public final Window getWindow() {
     return timerFrame;
-  }
-
-  @PackageTestAccess
-  final Object[] objects() {
-    return objects;
   }
 
   public final FieldsEditor fieldsEditor(int index) {

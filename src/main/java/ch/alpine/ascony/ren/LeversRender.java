@@ -9,7 +9,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Stroke;
 import java.awt.geom.Path2D;
-import java.awt.geom.Point2D;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -29,7 +28,6 @@ import ch.alpine.sophus.api.TangentSpace;
 import ch.alpine.sophus.api.TensorMetric;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.s.TSnMemberQ;
-import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -191,36 +189,13 @@ public class LeversRender {
     for (Tensor p : sequence) {
       ScalarTensorFunction scalarTensorFunction = geodesicSpace.curve(origin, p);
       Tensor domain = Subdivide.of(0, 1, 21);
-      Tensor ms = Tensor.of(domain.maps(scalarTensorFunction).stream().map(manifoldDisplay::point2xy));
+      Tensor ms = manifoldDisplay.point2xy().slash(domain.maps(scalarTensorFunction));
       Tensor rgba = COLOR_DATA_GRADIENT.apply(rescale.Get(index));
       graphics.setColor(ColorFormat.toColor(rgba));
       graphics.draw(geometricLayer.toPath2D(ms));
       ++index;
     }
     graphics.setStroke(new BasicStroke());
-  }
-
-  public void renderLeverLength() {
-    GeodesicSpace geodesicSpace = manifoldDisplay.geodesicSpace();
-    if (geodesicSpace instanceof TensorMetric tensorMetric) {
-      graphics.setFont(FONT_MATRIX);
-      FontMetrics fontMetrics = graphics.getFontMetrics();
-      int fheight = fontMetrics.getAscent();
-      for (Tensor point : sequence) {
-        Scalar d = tensorMetric.distance(origin, point);
-        ScalarTensorFunction scalarTensorFunction = geodesicSpace.curve(origin, point);
-        Tensor ms = manifoldDisplay.point2xy(scalarTensorFunction.apply(Rational.HALF));
-        Point2D point2d = geometricLayer.toPoint2D(ms);
-        String string = "" + d.maps(Round._3);
-        int width = fontMetrics.stringWidth(string);
-        int pix = (int) point2d.getX() - width / 2;
-        int piy = (int) point2d.getY() + fheight / 2;
-        graphics.setColor(COLOR_TEXT_FILL);
-        graphics.fillRect(pix, piy - fheight, width, fheight);
-        graphics.setColor(COLOR_TEXT_DRAW);
-        graphics.drawString(string, pix, piy);
-      }
-    }
   }
 
   // ---
@@ -238,8 +213,6 @@ public class LeversRender {
       Biinvariant biinvariant = Biinvariants.USANCE.ofSafe(homogeneousSpace);
       Sedarim sedarim = biinvariant.coordinate(InversePowerVariogram.of(2), sequence);
       Tensor weights = sedarim.sunder(origin);
-      // Tensor matrix = new HsDesign(homogeneousSpace).matrix(sequence, origin);
-      // weights = new Mahalanobis(matrix).leverages_sqrt();
       renderWeights(weights);
     }
   }

@@ -225,15 +225,15 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
   @SafeVarargs
   protected ControlPointsDemo(Object... objects) {
     super(objects);
-    final GeometricComponent geometricComponent = timerFrame.geometricComponent;
+    final GeometricComponent geometricComponent = geometricComponent();
     geometricComponent.addMouseListener(controlPointsRender.mouseAdapter);
     geometricComponent.addMouseMotionListener(controlPointsRender.mouseAdapter);
     geometricComponent.addRenderInterface(controlPointsRender);
     if (addRemoveControlPoints()) {
-      AwtUtil.addSeparator(timerFrame.jToolBar);
+      AwtUtil.addSeparator(jToolBar());
       JButton jButton = new JButton("clear");
       jButton.addActionListener(_ -> controlPointsRender.setControlPointsSe2(Tensors.empty()));
-      timerFrame.jToolBar.add(jButton);
+      jToolBar().add(jButton);
     }
     {
       boolean hasSe2 = permitted_manifoldDisplays().stream().filter(ManifoldDisplays::isXY_Angle).findAny().isPresent();
@@ -248,7 +248,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
             controlPointsRender.setControlPointsSe2( //
                 DubinsGenerator.project(controlPointsRender.getControlPointsSe2()));
         });
-        timerFrame.jToolBar.add(jButton);
+        jToolBar().add(jButton);
       }
     }
     geometricComponent.addRenderInterface(controlPointsRender);
