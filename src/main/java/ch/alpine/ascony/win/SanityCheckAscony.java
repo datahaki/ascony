@@ -35,15 +35,16 @@ public class SanityCheckAscony extends SanityCheckRunProvider {
     RenderQuality.setQuality(graphics);
     manifoldDisplayDemo.timerFrame.jFrame.setSize(WIDTH, HEIGHT);
     boolean status = true;
-    try {
-      for (ManifoldDisplays manifoldDisplays : manifoldDisplayDemo.permitted_manifoldDisplays()) {
+    for (ManifoldDisplays manifoldDisplays : manifoldDisplayDemo.permitted_manifoldDisplays())
+      try {
         manifoldDisplayDemo.setManifoldDisplay(manifoldDisplays);
         geometricComponent.printAll(graphics);
+      } catch (Exception exception) {
+        IO.println(manifoldDisplayDemo);
+        IO.println(manifoldDisplays);
+        exception.printStackTrace();
+        status = false;
       }
-    } catch (Exception e) {
-      e.printStackTrace();
-      status = false;
-    }
     graphics.dispose();
     Throw.unless(status);
   }
