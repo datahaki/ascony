@@ -29,7 +29,7 @@ public class AbstractDemo implements WindowProvider {
       if (++index < objects.length)
         AwtUtil.addSeparator(timerFrame.jToolBar);
     }
-    timerFrame.jFrame.setTitle(FriendlyFormat.defaultTitle(getClass()));
+    timerFrame.setTitle(FriendlyFormat.defaultTitle(getClass()));
   }
 
   protected final GeometricComponent geometricComponent() {
@@ -42,7 +42,7 @@ public class AbstractDemo implements WindowProvider {
 
   @Override
   public final Window getWindow() {
-    return timerFrame.jFrame;
+    return timerFrame;
   }
 
   @PackageTestAccess

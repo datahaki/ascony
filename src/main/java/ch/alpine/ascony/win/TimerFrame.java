@@ -27,14 +27,13 @@ import ch.alpine.bridge.awt.WindowClosed;
 import ch.alpine.bridge.gfx.GeometricComponent;
 import ch.alpine.tensor.Throw;
 
-public class TimerFrame {
+public class TimerFrame extends JFrame {
   record TTWrap(TimerTask task, long delay, long period) {
     public void schedule(Timer timer) {
       timer.schedule(task, delay, period);
     }
   }
 
-  public final JFrame jFrame = new JFrame();
   private final JPanel jPanel = new JPanel(new BorderLayout());
   public final JToolBar jToolBar = new JToolBar();
   public final GeometricComponent geometricComponent = new GeometricComponent();
@@ -48,15 +47,15 @@ public class TimerFrame {
 
   /** @param period between repaint invocations */
   public TimerFrame(int period, TimeUnit timeUnit) {
-    jFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+    setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     jToolBar.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 0));
     jToolBar.setFloatable(false);
     jPanel.add(new JScrollPane(jToolBar, //
         ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER, //
         ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS), BorderLayout.NORTH);
     jPanel.add(geometricComponent, BorderLayout.CENTER);
-    jFrame.setContentPane(jPanel);
-    jFrame.addWindowListener(new WindowAdapter() {
+    setContentPane(jPanel);
+    addWindowListener(new WindowAdapter() {
       @Override
       public void windowOpened(WindowEvent e) {
         Throw.unless(Objects.isNull(timer));
@@ -75,8 +74,8 @@ public class TimerFrame {
     });
     // DO NOT SIMPLIFY THIS LINE !!!
     // the object "timer" is a mutable field !
-    WindowClosed.runs(jFrame, () -> timer.cancel());
-    AwtUtil.ctrlW(jFrame);
+    WindowClosed.runs(this, () -> timer.cancel());
+    AwtUtil.ctrlW(this);
   }
 
   public final BufferedImage offscreen() {
@@ -92,8 +91,8 @@ public class TimerFrame {
   }
 
   public final void close() {
-    jFrame.setVisible(false);
-    jFrame.dispose();
+    setVisible(false);
+    dispose();
   }
 
   /** allows to schedule tasks before the window is opened, and before the timer is started

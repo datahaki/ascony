@@ -33,7 +33,7 @@ public class SanityCheckAscony extends SanityCheckRunProvider {
     BufferedImage bufferedImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
     Graphics2D graphics = bufferedImage.createGraphics();
     RenderQuality.setQuality(graphics);
-    manifoldDisplayDemo.timerFrame.jFrame.setSize(WIDTH, HEIGHT);
+    manifoldDisplayDemo.timerFrame.setSize(WIDTH, HEIGHT);
     boolean status = true;
     for (ManifoldDisplays manifoldDisplays : manifoldDisplayDemo.permitted_manifoldDisplays())
       try {
