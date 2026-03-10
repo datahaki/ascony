@@ -13,9 +13,11 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.bridge.gfx.GeometricComponent;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.PvmBuilder;
 import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.bridge.util.CopyOnWriteLinkedSet;
 import ch.alpine.tensor.RealScalar;
+import ch.alpine.tensor.Tensor;
 
 /** class is used in other projects outside of owl */
 // TODO ASCONA possibly provide option for cyclic midpoint indication (see R2Bary..Coord..Demo)
@@ -51,7 +53,8 @@ public abstract class ManifoldDisplayDemo extends AbstractDemo implements Render
       timerFrame.addWest(jTabbedPane);
     }
     geometricComponent.addRenderInterface(this);
-    geometricComponent.setPerPixel(RealScalar.of(100));
+    Tensor pvm = PvmBuilder.rhs().setOffset(300, 300).setPerPixel(RealScalar.of(100)).digest();
+    geometricComponent.setModel2Pixel(pvm);
   }
 
   protected final void addChangeListener(Consumer<ManifoldDisplays> consumer) {
