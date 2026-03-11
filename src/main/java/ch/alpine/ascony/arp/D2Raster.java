@@ -1,17 +1,12 @@
 // code by jph
 package ch.alpine.ascony.arp;
 
-import java.util.List;
 import java.util.Optional;
 
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.alg.Rescale;
-import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.io.ImageFormat;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
-import ch.alpine.tensor.sca.N;
 
 public abstract class D2Raster {
   /** @param d2Raster
@@ -21,13 +16,7 @@ public abstract class D2Raster {
    * input to {@link Rescale}, and {@link ImageFormat}.
    * @see ArrayFunction */
   public final <T extends Tensor> Tensor of(ArrayFunction<T> arrayFunction, CoordinateBoundingBox cbb, int resolution) {
-    Tensor dx = Subdivide.intermediate_increasing(cbb.clip(0), resolution).maps(N.DOUBLE);
-    Tensor dy = Subdivide.intermediate_decreasing(cbb.clip(1), resolution).maps(N.DOUBLE);
-    return Tensor.of(dy.stream().map(Scalar.class::cast).parallel() //
-        .map(py -> Tensor.of(dx.stream().map(Scalar.class::cast) //
-            .map(px -> Unprotect.using(List.of(px, py))) //
-            .map(this::d2lift) //
-            .map(arrayFunction))));
+    return new Meshgrid(cbb, resolution).image(xy -> arrayFunction.apply(d2lift(xy)));
   }
 
   /** in some simple cases the implementation is just
