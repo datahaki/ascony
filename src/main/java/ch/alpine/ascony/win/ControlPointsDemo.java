@@ -20,9 +20,9 @@ import ch.alpine.bridge.awt.AwtUtil;
 import ch.alpine.bridge.gfx.GeometricComponent;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.RenderInterface;
+import ch.alpine.sophis.api.CurveOperator;
 import ch.alpine.sophis.crv.d2.Extract2D;
 import ch.alpine.sophis.crv.dub.DubinsGenerator;
-import ch.alpine.sophis.ref.d1.CurveSubdivision;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -53,7 +53,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
       private final int index;
 
       Midpoints() {
-        CurveSubdivision curveSubdivision = new ControlMidpoints(manifoldDisplay.geodesicSpace());
+        CurveOperator curveSubdivision = new ControlMidpoints(manifoldDisplay.geodesicSpace());
         midpoints = curveSubdivision.string(getGeodesicControlPoints());
         Tensor mouse_dist = Tensor.of(midpoints.stream() //
             .map(manifoldDisplay::point2xy) //

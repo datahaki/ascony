@@ -4,7 +4,7 @@ package ch.alpine.ascony.win;
 import java.io.Serializable;
 import java.util.Iterator;
 
-import ch.alpine.sophis.ref.d1.CurveSubdivision;
+import ch.alpine.sophis.api.CurveOperator;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
@@ -13,7 +13,7 @@ import ch.alpine.tensor.alg.Last;
 /** creates sequence of end points and midpoints
  * 
  * {1, 2, 3} -> {1, 3/2, 5/2, 3} */
-/* package */ record ControlMidpoints(GeodesicSpace geodesicSpace) implements CurveSubdivision, Serializable {
+/* package */ record ControlMidpoints(GeodesicSpace geodesicSpace) implements CurveOperator, Serializable {
   @Override // from CurveSubdivision
   public Tensor cyclic(Tensor tensor) {
     throw new UnsupportedOperationException();
