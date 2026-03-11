@@ -151,7 +151,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
           posit.set(closest.get(0), 0);
           posit.set(closest.get(1), 1);
         }
-        manifoldDisplay.showPoints(color, Color.GRAY, RealScalar.ONE, Tensors.of(posit)) //
+        manifoldDisplay.showPoints(color, Color.GRAY, RealScalar.ONE, Tensors.of(manifoldDisplay.xya2point(posit))) //
             .render(geometricLayer, graphics);
         if (!hold && Tensors.nonEmpty(controlPointsSe2.points_se2()) && controlPointType().indicateMidpoint()) {
           graphics.setColor(Color.RED);
