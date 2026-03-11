@@ -27,7 +27,6 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.alg.Drop;
 import ch.alpine.tensor.alg.Insert;
 import ch.alpine.tensor.alg.VectorQ;
@@ -55,6 +54,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
       Midpoints() {
         CurveOperator curveSubdivision = new ControlMidpoints(manifoldDisplay.geodesicSpace());
         midpoints = curveSubdivision.string(getGeodesicControlPoints());
+        Tensor mouse = mouseSe2CState();
         Tensor mouse_dist = Tensor.of(midpoints.stream() //
             .map(manifoldDisplay::point2xy) //
             .map(mouse.extract(0, 2)::subtract) //
@@ -73,37 +73,37 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
       public void mousePressed(MouseEvent mouseEvent) {
         if (!isPositioningEnabled())
           return;
+        Tensor mouse = mouseSe2CState();
         switch (mouseEvent.getButton()) {
         case MouseEvent.BUTTON1:
           if (isPositioningOngoing()) {
             min_index = null; // release
-            // released();
           } else {
             {
-              Tensor mouse_dist = Tensor.of(control.points_se2().stream() //
+              Tensor mouse_dist = Tensor.of(controlPointsSe2.points_se2().stream() //
                   .map(mouse::subtract) //
                   .map(Extract2D.FUNCTION) //
                   .map(Vector2Norm::of));
               Optional<ArgMinValue> argMinValue = ArgMinValue.of(mouse_dist, getPositioningThreshold());
               min_index = argMinValue.map(ArgMinValue::index).orElse(null);
             }
-            if (!isPositioningOngoing() && addRemoveControlPoints()) {
+            if (!isPositioningOngoing() && controlPointType().addRemove()) {
               // insert
-              if (control.length() < 2 || !isMidpointIndicated()) {
-                control.points_se2().append(mouse);
-                min_index = control.length() - 1;
+              if (controlPointsSe2.length() < 2 || !controlPointType().indicateMidpoint()) {
+                controlPointsSe2.points_se2().append(mouse);
+                min_index = controlPointsSe2.length() - 1;
               } else {
                 Midpoints midpoints = new Midpoints();
-                control = new ControlPointsSe2(Insert.of(control.points_se2(), mouse, midpoints.index));
+                controlPointsSe2 = new ControlPointsSe2(Insert.of(controlPointsSe2.points_se2(), mouse, midpoints.index));
                 min_index = midpoints.index;
               }
             }
           }
           break;
         case MouseEvent.BUTTON3: // remove point
-          if (addRemoveControlPoints()) {
+          if (controlPointType().addRemove()) {
             if (!isPositioningOngoing()) {
-              Tensor mouse_dist = Tensor.of(control.points_se2().stream() //
+              Tensor mouse_dist = Tensor.of(controlPointsSe2.points_se2().stream() //
                   .map(mouse::subtract) //
                   .map(Extract2D.FUNCTION) //
                   .map(Vector2Norm::of));
@@ -111,7 +111,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
               min_index = argMinValue.map(ArgMinValue::index).orElse(null);
             }
             if (isPositioningOngoing()) {
-              control = new ControlPointsSe2(Drop.index(control.points_se2(), min_index));
+              controlPointsSe2 = new ControlPointsSe2(Drop.index(controlPointsSe2.points_se2(), min_index));
               min_index = null;
             }
           }
@@ -120,8 +120,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
         }
       }
     };
-    private ControlPointsSe2 control = new ControlPointsSe2(Tensors.empty());
-    private Tensor mouse = Array.zeros(3);
+    private ControlPointsSe2 controlPointsSe2 = new ControlPointsSe2(Tensors.empty());
     /** min_index is non-null while the user drags a control points */
     private Integer min_index = null;
     private boolean mousePositioning = true;
@@ -131,41 +130,37 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
       ManifoldDisplay manifoldDisplay = manifoldDisplay();
       if (!isPositioningEnabled())
         return;
-      mouse = mouseSe2CState();
+      Tensor mouse = mouseSe2CState();
       if (isPositioningOngoing())
-        control.points_se2().set(mouse, min_index);
+        controlPointsSe2.points_se2().set(mouse, min_index);
       else {
-        final boolean hold;
-        {
-          Tensor mouse_dist = Tensor.of(control.points_se2().stream() //
-              .map(mouse::subtract) //
-              .map(Extract2D.FUNCTION) //
-              .map(Vector2Norm::of));
-          Optional<ArgMinValue> argMinValue = ArgMinValue.of(mouse_dist, getPositioningThreshold());
-          Optional<Scalar> value = argMinValue.map(ArgMinValue::value);
-          hold = value.isPresent() && isPositioningEnabled();
-          graphics.setColor(hold ? ORANGE : GREEN);
-          Tensor posit = mouse;
-          if (hold) {
-            graphics.setStroke(new BasicStroke(2f));
-            Tensor closest = control.points_se2().get(argMinValue.map(ArgMinValue::index).orElseThrow());
-            graphics.draw(geometricLayer.toPath2D(Tensors.of(mouse, closest)));
-            graphics.setStroke(new BasicStroke());
-            posit.set(closest.get(0), 0);
-            posit.set(closest.get(1), 1);
-          }
-          geometricLayer.pushMatrix(manifoldDisplay.matrixLift(manifoldDisplay.xya2point(posit)));
-          graphics.fill(geometricLayer.toPath2D(manifoldDisplay.shape()));
-          geometricLayer.popMatrix();
+        Tensor mouse_dist = Tensor.of(controlPointsSe2.points_se2().stream() //
+            .map(mouse::subtract) //
+            .map(Extract2D.FUNCTION) //
+            .map(Vector2Norm::of));
+        Optional<ArgMinValue> argMinValue = ArgMinValue.of(mouse_dist, getPositioningThreshold());
+        Optional<Scalar> value = argMinValue.map(ArgMinValue::value);
+        final boolean hold = value.isPresent() && isPositioningEnabled();
+        Color color = hold ? ORANGE : GREEN;
+        graphics.setColor(color);
+        Tensor posit = mouse;
+        if (hold) {
+          graphics.setStroke(new BasicStroke(2f));
+          Tensor closest = controlPointsSe2.points_se2().get(argMinValue.map(ArgMinValue::index).orElseThrow());
+          graphics.draw(geometricLayer.toPath2D(Tensors.of(mouse, closest)));
+          posit.set(closest.get(0), 0);
+          posit.set(closest.get(1), 1);
         }
-        if (!hold && Tensors.nonEmpty(control.points_se2()) && isMidpointIndicated()) {
+        manifoldDisplay.showPoints(color, Color.GRAY, RealScalar.ONE, Tensors.of(posit)) //
+            .render(geometricLayer, graphics);
+        if (!hold && Tensors.nonEmpty(controlPointsSe2.points_se2()) && controlPointType().indicateMidpoint()) {
           graphics.setColor(Color.RED);
           graphics.setStroke(STROKE);
           graphics.draw(geometricLayer.toLine2D(mouse, new Midpoints().closestXY()));
           graphics.setStroke(new BasicStroke());
         }
       }
-      if (drawControlPoints()) {
+      if (controlPointType().draw()) {
         LeversRender leversRender = LeversRender.of( //
             manifoldDisplay, getGeodesicControlPoints(), null, geometricLayer, graphics);
         leversRender.renderSequence();
@@ -198,13 +193,13 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
     /** @param control points as matrix of dimensions N x 3 */
     void setControlPointsSe2(Tensor control) {
       min_index = null;
-      this.control = new ControlPointsSe2(Tensor.of(control.stream() //
+      this.controlPointsSe2 = new ControlPointsSe2(Tensor.of(control.stream() //
           .map(row -> VectorQ.requireLength(row, 3).maps(Tensor::copy))));
     }
 
     /** @return control points as matrix of dimensions N x 3 */
     Tensor getControlPointsSe2() {
-      return control.points_se2().unmodifiable(); // TODO ASCONA API should return copy!?
+      return controlPointsSe2.points_se2().unmodifiable(); // TODO ASCONA API should return copy!?
     }
 
     /** @return control points for selected {@link ManifoldDisplay} */
@@ -216,7 +211,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
      * @param maxSize
      * @return */
     Tensor getGeodesicControlPoints(int skip, int maxSize) {
-      return control.getGeodesicControlPoints(manifoldDisplay(), skip, maxSize);
+      return controlPointsSe2.getGeodesicControlPoints(manifoldDisplay(), skip, maxSize);
     }
   }
 
@@ -229,7 +224,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
     geometricComponent.addMouseListener(controlPointsRender.mouseAdapter);
     geometricComponent.addMouseMotionListener(controlPointsRender.mouseAdapter);
     geometricComponent.addRenderInterface(controlPointsRender);
-    if (addRemoveControlPoints()) {
+    if (controlPointType().addRemove()) {
       AwtUtil.addSeparator(jToolBar());
       JButton jButton = new JButton("clear");
       jButton.addActionListener(_ -> controlPointsRender.setControlPointsSe2(Tensors.empty()));
@@ -237,9 +232,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
     }
     {
       boolean hasSe2 = permitted_manifoldDisplays().stream().filter(ManifoldDisplays::isXY_Angle).findAny().isPresent();
-      boolean curvyc = controlPointType().equals(ControlPointTypes.CURVYCURV) //
-      // || controlPointType().equals(ControlPointTypes.HEAD_TAIL)
-      ;
+      boolean curvyc = controlPointType().equals(ControlPointTypes.CURVYCURV);
       if (hasSe2 && curvyc) {
         JButton jButton = new JButton("dubins");
         jButton.setToolTipText("project control points to dubins path");
@@ -255,18 +248,6 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
   }
 
   protected abstract ControlPointType controlPointType();
-
-  private boolean addRemoveControlPoints() {
-    return controlPointType().addRemove();
-  }
-
-  private boolean drawControlPoints() {
-    return controlPointType().draw();
-  }
-
-  private final boolean isMidpointIndicated() {
-    return controlPointType().indicateMidpoint();
-  }
 
   public final boolean isPositioningOngoing() {
     return controlPointsRender.isPositioningOngoing();

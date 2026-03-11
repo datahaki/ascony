@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.ascony.ren;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
@@ -37,6 +38,7 @@ public record PointsRender(Color color_fill, Color color_draw) {
         path2d.closePath();
         geometricLayer.popMatrix();
       }
+      graphics.setStroke(new BasicStroke());
       graphics.setColor(color_fill);
       graphics.fill(path2d);
       graphics.setColor(color_draw);
