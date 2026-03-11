@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.ascony.arp;
 
-import ch.alpine.ascony.api.Box2D;
+import ch.alpine.sophis.crv.d2.ex.Box2D;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.opt.nd.NdCenterInterface;
@@ -38,7 +38,7 @@ public enum CenterNorms {
 
     @Override
     public Tensor shape() {
-      return Box2D.CORNERS;
+      return Box2D.ABSOLUTE_ONE;
     }
   };
 
