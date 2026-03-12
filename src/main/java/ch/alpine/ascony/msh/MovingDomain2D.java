@@ -3,14 +3,13 @@ package ch.alpine.ascony.msh;
 
 import java.util.Objects;
 
-import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.tensor.Tensor;
 
 /** Reference:
  * "Weighted Averages on Surfaces"
  * by Daniele Panozzo, Ilya Baran, Olga Diamanti, Olga Sorkine-Hornung */
 public abstract class MovingDomain2D {
-  final Tensor[][] weights;
+  protected final Tensor[][] weights;
   /* for visualization only */
   private Tensor _wgs = null;
 
@@ -21,7 +20,9 @@ public abstract class MovingDomain2D {
     this.weights = MatrixArray.of(weights);
   }
 
-  public abstract Tensor[][] forward(Tensor target, BiinvariantMean biinvariantMean);
+  /** @param target
+   * @return array for imaging and rendering purpose */
+  public abstract Tensor[][] forward(Tensor target);
 
   /** @return array of weights for visualization */
   public final Tensor arrayReshape_weights() {

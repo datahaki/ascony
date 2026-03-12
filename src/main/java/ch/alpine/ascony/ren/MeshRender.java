@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.ascony.ren;
 
+import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -15,6 +16,7 @@ import ch.alpine.tensor.img.ColorFormat;
 public record MeshRender(Tensor[][] array, ColorDataGradient colorDataGradient) implements RenderInterface {
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    graphics.setStroke(new BasicStroke());
     for (int i0 = 1; i0 < array.length; ++i0)
       for (int i1 = 1; i1 < array[i0].length; ++i1) {
         Tensor po = array[i0][i1];

@@ -4,7 +4,6 @@ package ch.alpine.ascony.msh;
 import java.util.stream.IntStream;
 
 import ch.alpine.sophis.fit.RigidMotionFit;
-import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;
 
@@ -25,7 +24,7 @@ public class RnFittedMovingDomain2D extends MovingDomain2D {
   }
 
   @Override // from MovingDomain2D
-  public Tensor[][] forward(Tensor target, BiinvariantMean biinvariantMean) {
+  public Tensor[][] forward(Tensor target) {
     int rows = domain.length();
     int cols = Unprotect.dimension1(domain);
     Tensor[][] array = new Tensor[rows][cols];
