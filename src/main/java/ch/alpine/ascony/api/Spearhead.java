@@ -6,6 +6,7 @@ import java.util.stream.IntStream;
 import ch.alpine.sophis.crv.clt.ClothoidBuilder;
 import ch.alpine.sophis.crv.clt.ClothoidBuilders;
 import ch.alpine.sophis.crv.d2.Extract2D;
+import ch.alpine.sophis.crv.d2.PolygonNormalize;
 import ch.alpine.sophis.ts.ClothoidTransition;
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.tensor.Scalar;
@@ -36,5 +37,9 @@ public enum Spearhead {
     q.set(Pi.VALUE::add, 2);
     q.set(So2.MOD, 2);
     return q;
+  }
+
+  public static Tensor normal(Tensor p, Scalar width, Scalar area) {
+    return PolygonNormalize.of(of(p, width), area);
   }
 }
