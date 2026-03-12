@@ -5,17 +5,17 @@ import java.awt.Color;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.bridge.gfx.RenderInterface;
+import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 
 public enum ControlPointsStatic {
   ;
-  private static final PointsRender GRAY_POINTS = new PointsRender( //
-      new Color(160, 160, 160, 128), //
-      Color.BLACK);
+  private static final FillDrawColor GRAY = //
+      new FillDrawColor(new Color(160, 160, 160, 128), Color.BLACK);
 
   /** @param manifoldDisplay
    * @param points */
   public static RenderInterface gray(ManifoldDisplay manifoldDisplay, Tensor points) {
-    return GRAY_POINTS.show(manifoldDisplay::matrixLift, manifoldDisplay.shape(), points);
+    return manifoldDisplay.showPoints(GRAY, RealScalar.ONE, points);
   }
 }

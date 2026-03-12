@@ -63,14 +63,12 @@ public class LeversRender {
   private static final Tensor RGBA = Tensors.fromString("{{0, 0, 0, 16}, {0, 0, 0, 255}}");
   private static final ColorDataGradient COLOR_DATA_GRADIENT = LinearColorDataGradient.of(RGBA);
   private static final Scalar NEUTRAL_DEFAULT = RealScalar.of(0.33);
-  private static final PointsRender POINTS_RENDER_0 = //
-      new PointsRender(new Color(255, 128, 128, 64), new Color(255, 128, 128, 255));
+  public static final FillDrawColor PR0 = new FillDrawColor(new Color(255, 128, 128, 64), new Color(255, 128, 128, 255));
   public static final PointsRender ORIGIN_RENDER_0 = //
       new PointsRender(new Color(64, 128, 64, 128), new Color(64, 128, 64, 255));
   private static final Stroke STROKE_GEODESIC = //
       new BasicStroke(2.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
   static final Color COLOR_TEXT_DRAW = new Color(128 - 32, 128 - 32, 128 - 32);
-  private static final Color COLOR_TEXT_FILL = new Color(255 - 32, 255 - 32, 255 - 32, 128);
   private static final ColorDataIndexed CONSTANT = //
       CyclicColorDataIndexed.of(Tensors.of(ColorFormat.toVector(COLOR_TEXT_DRAW)));
   // ---
@@ -367,7 +365,7 @@ public class LeversRender {
   // ---
   private void renderMahalanobisMatrix(Tensor p, Mahalanobis mahalanobis, ColorDataGradient colorDataGradient) {
     graphics.setFont(FONT_MATRIX);
-    MatrixRender matrixRender = MatrixRender.arcTan(graphics, CONSTANT, colorDataGradient);
+    MatrixRender matrixRender = MatrixRender.arcTan(graphics, CONSTANT, colorDataGradient, s -> s);
     Tensor alt = Tensors.of(Eigensystem.ofSymmetric(mahalanobis.sigma_n()).values());
     renderMatrix(p, matrixRender, Transpose.of(alt.maps(Round._4)));
   }
@@ -464,8 +462,7 @@ public class LeversRender {
       Tensor matrix = InfluenceMatrix.of(levers).matrix();
       // ---
       graphics.setFont(FONT_MATRIX);
-      MatrixRender matrixRender = MatrixRender.absoluteOne(graphics, CONSTANT, colorDataGradient);
-      matrixRender.setScalarMapper(Round._2);
+      MatrixRender matrixRender = MatrixRender.absoluteOne(graphics, CONSTANT, colorDataGradient, Round._2);
       renderMatrix(origin, matrixRender, matrix);
     }
   }
@@ -481,8 +478,7 @@ public class LeversRender {
       // ---
       graphics.setFont(FONT_MATRIX);
       int index = 0;
-      MatrixRender matrixRender = MatrixRender.absoluteOne(graphics, CONSTANT, colorDataGradient);
-      matrixRender.setScalarMapper(Round._2);
+      MatrixRender matrixRender = MatrixRender.absoluteOne(graphics, CONSTANT, colorDataGradient, Round._2);
       for (Tensor p : sequence) {
         renderMatrix(p, matrixRender, projections.get(index));
         ++index;
@@ -493,8 +489,7 @@ public class LeversRender {
   // ---
   public void renderMatrix(Tensor pos, Tensor matrix, ColorDataIndexed colorDataIndexed) {
     graphics.setFont(FONT_MATRIX);
-    MatrixRender matrixRender = MatrixRender.of(graphics, colorDataIndexed, new Color(255, 255, 255, 32));
-    matrixRender.setScalarMapper(Round._3);
+    MatrixRender matrixRender = MatrixRender.of(graphics, colorDataIndexed, new Color(255, 255, 255, 32), Round._3);
     renderMatrix(pos, matrixRender, matrix);
   }
 
@@ -521,18 +516,12 @@ public class LeversRender {
       }
     };
     graphics.setFont(FONT_MATRIX);
-    MatrixRender matrixRender = MatrixRender.of(graphics, colorDataIndexed, new Color(255, 255, 255, 32));
-    matrixRender.setScalarMapper(Round._3);
+    MatrixRender matrixRender = MatrixRender.of(graphics, colorDataIndexed, new Color(255, 255, 255, 32), Round._3);
     renderMatrix(p, matrixRender, matrix);
   }
 
-  /** render control points */
   public void renderSequence() {
-    renderSequence(POINTS_RENDER_0);
-  }
-
-  public void renderSequence(PointsRender pointsRender) {
-    pointsRender.show(manifoldDisplay::matrixLift, shape, sequence).render(geometricLayer, graphics);
+    manifoldDisplay.showPoints(PR0, RealScalar.ONE, sequence).render(geometricLayer, graphics);
   }
 
   /** render point of coordinate evaluation */

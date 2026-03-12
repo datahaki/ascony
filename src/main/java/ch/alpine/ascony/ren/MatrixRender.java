@@ -18,32 +18,27 @@ import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.tri.ArcTan;
 
-public class MatrixRender {
-  public static MatrixRender absoluteOne(Graphics2D graphics, ColorDataIndexed colorDataIndexed, ColorDataGradient colorDataGradient) {
-    return new MatrixRender(graphics, colorDataIndexed, //
-        value -> ColorFormat.toColor(colorDataGradient.apply(Clips.absoluteOne().rescale(value))));
+public record MatrixRender( //
+    Graphics2D graphics, ColorDataIndexed colorDataIndexed, Function<Scalar, Color> function, ScalarUnaryOperator round) {
+  public static MatrixRender absoluteOne( //
+      Graphics2D graphics, ColorDataIndexed colorDataIndexed, ColorDataGradient colorDataGradient, ScalarUnaryOperator round) {
+    return new MatrixRender( //
+        graphics, colorDataIndexed, //
+        value -> ColorFormat.toColor(colorDataGradient.apply(Clips.absoluteOne().rescale(value))), //
+        round);
   }
 
-  public static MatrixRender arcTan(Graphics2D graphics, ColorDataIndexed colorDataIndexed, ColorDataGradient colorDataGradient) {
+  public static MatrixRender arcTan( //
+      Graphics2D graphics, ColorDataIndexed colorDataIndexed, ColorDataGradient colorDataGradient, ScalarUnaryOperator round) {
     Clip clip = Clips.absolute(Pi.HALF);
     return new MatrixRender(graphics, colorDataIndexed, //
-        value -> ColorFormat.toColor(colorDataGradient.apply(clip.rescale(ArcTan.FUNCTION.apply(value)))));
+        value -> ColorFormat.toColor(colorDataGradient.apply(clip.rescale(ArcTan.FUNCTION.apply(value)))), //
+        round);
   }
 
-  public static MatrixRender of(Graphics2D graphics, ColorDataIndexed colorDataIndexed, Color color) {
-    return new MatrixRender(graphics, colorDataIndexed, _ -> color);
-  }
-
-  // ---
-  private final Graphics2D graphics;
-  private final ColorDataIndexed colorDataIndexed;
-  private final Function<Scalar, Color> function;
-  private ScalarUnaryOperator round = s -> s;
-
-  private MatrixRender(Graphics2D graphics, ColorDataIndexed colorDataIndexed, Function<Scalar, Color> function) {
-    this.graphics = graphics;
-    this.colorDataIndexed = colorDataIndexed;
-    this.function = function;
+  public static MatrixRender of( //
+      Graphics2D graphics, ColorDataIndexed colorDataIndexed, Color color, ScalarUnaryOperator round) {
+    return new MatrixRender(graphics, colorDataIndexed, _ -> color, round);
   }
 
   public void renderMatrix(Tensor matrix, int pix, int piy) {
@@ -72,9 +67,5 @@ public class MatrixRender {
         graphics.drawString(show, tpx + width - sw, tpy + fheight - 1);
       }
     }
-  }
-
-  public void setScalarMapper(ScalarUnaryOperator scalarUnaryOperator) {
-    round = scalarUnaryOperator;
   }
 }
