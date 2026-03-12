@@ -29,8 +29,8 @@ public class RnFittedMovingDomain2D extends MovingDomain2D {
     int cols = Unprotect.dimension1(domain);
     Tensor[][] array = new Tensor[rows][cols];
     Tensor origin = origin();
-    IntStream.range(0, rows).parallel().forEach(cx -> IntStream.range(0, rows) //
-        .forEach(cy -> array[cx][cy] = RigidMotionFit.of(origin, target, weights.get(cx, cy)).apply(domain.get(cx, cy))));
+    IntStream.range(0, rows).parallel().forEach(i -> IntStream.range(0, rows) //
+        .forEach(j -> array[i][j] = RigidMotionFit.of(origin, target, weights.get(i, j)).apply(domain.get(i, j))));
     return array;
   }
 
