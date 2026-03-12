@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascony.api;
+package ch.alpine.ascony.msh;
 
 import java.util.List;
 

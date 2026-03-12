@@ -1,9 +1,8 @@
 // code by jph
-package ch.alpine.ascony.bas;
+package ch.alpine.ascony.msh;
 
 import java.util.Objects;
 
-import ch.alpine.ascony.api.ImageTiling;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.tensor.Tensor;
@@ -29,11 +28,9 @@ public abstract class MovingDomain2D {
     int rows = domain.length();
     int cols = Unprotect.dimension1(domain);
     weights = new Tensor[rows][cols];
-    for (int cx = 0; cx < rows; ++cx)
-      for (int cy = 0; cy < cols; ++cy) {
-        Tensor point = domain.get(cx, cy);
-        weights[cx][cy] = sedarim.sunder(point);
-      }
+    for (int i = 0; i < rows; ++i)
+      for (int j = 0; j < cols; ++j)
+        weights[i][j] = sedarim.sunder(domain.get(i, j));
   }
 
   public final Tensor origin() {
