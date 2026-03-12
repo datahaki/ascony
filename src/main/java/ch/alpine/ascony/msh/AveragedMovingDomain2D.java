@@ -25,11 +25,11 @@ public class AveragedMovingDomain2D extends MovingDomain2D {
 
   @Override // from MovingDomain2D
   public Tensor[][] forward(Tensor target) {
-    int rows = weights.length;
-    int cols = weights[0].length;
+    int rows = weights.rows();
+    int cols = weights.cols();
     Tensor[][] array = new Tensor[rows][cols];
     IntStream.range(0, rows).parallel().forEach(cx -> IntStream.range(0, rows) //
-        .forEach(cy -> array[cx][cy] = biinvariantMean.optional(target, weights[cx][cy]).orElse(fallback)));
+        .forEach(cy -> array[cx][cy] = biinvariantMean.optional(target, weights.get(cx, cy)).orElse(fallback)));
     return array;
   }
 }

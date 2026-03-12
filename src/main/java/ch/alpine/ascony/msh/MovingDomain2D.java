@@ -9,7 +9,7 @@ import ch.alpine.tensor.Tensor;
  * "Weighted Averages on Surfaces"
  * by Daniele Panozzo, Ilya Baran, Olga Diamanti, Olga Sorkine-Hornung */
 public abstract class MovingDomain2D {
-  protected final Tensor[][] weights;
+  protected final MatrixArray weights;
   /* for visualization only */
   private Tensor _wgs = null;
 
@@ -17,7 +17,7 @@ public abstract class MovingDomain2D {
    * @param sedarim
    * @param domain */
   protected MovingDomain2D(Tensor weights) {
-    this.weights = MatrixArray.of(weights);
+    this.weights = MatrixArray.wrap(weights);
   }
 
   /** @param target
@@ -27,7 +27,7 @@ public abstract class MovingDomain2D {
   /** @return array of weights for visualization */
   public final Tensor arrayReshape_weights() {
     if (Objects.isNull(_wgs))
-      _wgs = ImageTiling.of(MatrixArray.byRef(weights));
+      _wgs = ImageTiling.of(weights.unwrap());
     return _wgs;
   }
 }
