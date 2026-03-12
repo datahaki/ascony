@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.ascony.ren;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
@@ -69,6 +70,7 @@ public class FixGridRender implements RenderInterface, Serializable {
 
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    graphics.setStroke(new BasicStroke());
     graphics.setColor(color);
     for (Tensor x : x_grid)
       graphics.draw(new Line2D.Double( //

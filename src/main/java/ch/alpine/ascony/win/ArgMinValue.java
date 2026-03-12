@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascony.ren;
+package ch.alpine.ascony.win;
 
 import java.io.Serializable;
 import java.util.Optional;
@@ -10,7 +10,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.ext.ArgMin;
 import ch.alpine.tensor.ext.PackageTestAccess;
 
-public record ArgMinValue(int index, Scalar value) implements Serializable {
+record ArgMinValue(int index, Scalar value) implements Serializable {
   /** @param tensor
    * @return */
   public static Optional<ArgMinValue> of(Tensor tensor) {

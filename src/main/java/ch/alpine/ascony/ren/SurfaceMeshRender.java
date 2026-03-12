@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.ascony.ren;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
@@ -23,16 +24,15 @@ import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.Sign;
 
-public record SurfaceMeshRender( //
-    SurfaceMesh surfaceMesh, //
-    ColorDataGradient colorDataGradient) implements RenderInterface {
+/** for meshes where the vertices are vectors of length 3 */
+public record SurfaceMeshRender(SurfaceMesh surfaceMesh, ColorDataGradient colorDataGradient) implements RenderInterface {
   private static final TensorUnaryOperator NORMALIZE_UNLESS_ZERO = NormalizeUnlessZero.with(Vector2Norm::of);
   private static final Tensor REF = NORMALIZE_UNLESS_ZERO.apply(Tensors.vector(-1, 1, 2));
   private static final Color COLOR_EDGE = new Color(128, 128, 128, 32);
 
   @Override
-  public void render(GeometricLayer geometricLayer, Graphics2D _g) {
-    Graphics2D graphics = (Graphics2D) _g.create();
+  public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    graphics.setStroke(new BasicStroke());
     for (int[] face : surfaceMesh.faces()) {
       Tensor polygon = Tensor.of(IntStream.of(face).mapToObj(surfaceMesh.vrt::get));
       Optional<Scalar> optional = SignedCurvature2D.of( //
@@ -57,6 +57,5 @@ public record SurfaceMeshRender( //
         graphics.draw(path2d);
       }
     }
-    graphics.dispose();
   }
 }

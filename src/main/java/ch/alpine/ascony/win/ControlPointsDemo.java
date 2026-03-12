@@ -14,7 +14,6 @@ import javax.swing.JButton;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.ArgMinValue;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.bridge.awt.AwtUtil;
 import ch.alpine.bridge.gfx.GeometricComponent;
@@ -232,7 +231,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
     }
     {
       boolean hasSe2 = permitted_manifoldDisplays().stream().filter(ManifoldDisplays::isXY_Angle).findAny().isPresent();
-      boolean curvyc = controlPointType().equals(ControlPointTypes.CURVYCURV);
+      boolean curvyc = controlPointType().equals(ControlPointType.CURVYCURV);
       if (hasSe2 && curvyc) {
         JButton jButton = new JButton("dubins");
         jButton.setToolTipText("project control points to dubins path");
