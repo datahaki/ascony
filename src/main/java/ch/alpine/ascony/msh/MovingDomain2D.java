@@ -5,14 +5,12 @@ import java.util.Objects;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.Unprotect;
 
 /** Reference:
  * "Weighted Averages on Surfaces"
  * by Daniele Panozzo, Ilya Baran, Olga Diamanti, Olga Sorkine-Hornung */
 public abstract class MovingDomain2D {
-  final Tensor weights;
+  final Tensor[][] weights;
   /* for visualization only */
   private Tensor _wgs = null;
 
@@ -20,19 +18,15 @@ public abstract class MovingDomain2D {
    * @param sedarim
    * @param domain */
   protected MovingDomain2D(Tensor weights) {
-    this.weights = weights;
+    this.weights = MatrixArray.of(weights);
   }
 
   public abstract Tensor[][] forward(Tensor target, BiinvariantMean biinvariantMean);
 
   /** @return array of weights for visualization */
   public final Tensor arrayReshape_weights() {
-    if (Objects.isNull(_wgs)) {
-      int rows = weights.length();
-      int cols = Unprotect.dimension1(weights);
-      Tensor wgs = Tensors.matrix((i, j) -> weights.get(i, j), rows, cols);
-      _wgs = ImageTiling.of(wgs);
-    }
+    if (Objects.isNull(_wgs))
+      _wgs = ImageTiling.of(MatrixArray.byRef(weights));
     return _wgs;
   }
 }
