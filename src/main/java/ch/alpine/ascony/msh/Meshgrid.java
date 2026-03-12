@@ -24,9 +24,4 @@ public record Meshgrid(CoordinateBoundingBox cbb, int resolution) {
             .map(px -> tuo.apply(Unprotect.using(List.of(px, py)))) //
         )));
   }
-
-  /** @return tensor with dimensions */
-  public Tensor image() {
-    return image(t -> t);
-  }
 }

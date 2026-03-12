@@ -3,7 +3,6 @@ package ch.alpine.ascony.msh;
 
 import java.util.stream.IntStream;
 
-import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophis.fit.RigidMotionFit;
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.tensor.Tensor;
@@ -13,11 +12,16 @@ import ch.alpine.tensor.Unprotect;
  * "Weighted Averages on Surfaces"
  * by Daniele Panozzo, Ilya Baran, Olga Diamanti, Olga Sorkine-Hornung */
 public class RnFittedMovingDomain2D extends MovingDomain2D {
+  private final Tensor origin;
+  final Tensor domain;
+
   /** @param origin
-   * @param sedarim
+   * @param weights
    * @param domain */
-  public RnFittedMovingDomain2D(Tensor origin, Sedarim sedarim, Tensor domain) {
-    super(origin, sedarim, domain);
+  public RnFittedMovingDomain2D(Tensor origin, Tensor weights, Tensor domain) {
+    super(weights);
+    this.origin = origin;
+    this.domain = domain;
   }
 
   @Override // from MovingDomain2D
@@ -27,7 +31,11 @@ public class RnFittedMovingDomain2D extends MovingDomain2D {
     Tensor[][] array = new Tensor[rows][cols];
     Tensor origin = origin();
     IntStream.range(0, rows).parallel().forEach(cx -> IntStream.range(0, rows) //
-        .forEach(cy -> array[cx][cy] = RigidMotionFit.of(origin, target, weights[cx][cy]).apply(domain.get(cx, cy))));
+        .forEach(cy -> array[cx][cy] = RigidMotionFit.of(origin, target, weights.get(cx, cy)).apply(domain.get(cx, cy))));
     return array;
+  }
+
+  public final Tensor origin() {
+    return origin;
   }
 }
