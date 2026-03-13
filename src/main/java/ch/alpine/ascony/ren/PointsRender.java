@@ -11,37 +11,22 @@ import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
-public record PointsRender(ColorPair colorPair) {
-  public RenderInterface show(TensorUnaryOperator matrixLift, Tensor shape, Tensor points) {
-    return new Show(matrixLift, shape, points);
-  }
-
-  private class Show implements RenderInterface {
-    private final TensorUnaryOperator matrixLift;
-    private final Tensor shape;
-    private final Tensor points;
-
-    public Show(TensorUnaryOperator matrixLift, Tensor shape, Tensor points) {
-      this.matrixLift = matrixLift;
-      this.shape = shape;
-      this.points = points;
+public record PointsRender(ColorPair colorPair, TensorUnaryOperator matrixLift, Tensor shape, Tensor points) //
+    implements RenderInterface {
+  @Override
+  public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+    int initialCapacity = points.length() * shape.length();
+    Path2D path2d = new Path2D.Double(PathIterator.WIND_NON_ZERO, initialCapacity);
+    for (Tensor point : points) {
+      geometricLayer.pushMatrix(matrixLift.apply(point));
+      geometricLayer.toPath2D(path2d, shape);
+      path2d.closePath();
+      geometricLayer.popMatrix();
     }
-
-    @Override
-    public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-      int initialCapacity = points.length() * shape.length();
-      Path2D path2d = new Path2D.Double(PathIterator.WIND_NON_ZERO, initialCapacity);
-      for (Tensor point : points) {
-        geometricLayer.pushMatrix(matrixLift.apply(point));
-        geometricLayer.toPath2D(path2d, shape);
-        path2d.closePath();
-        geometricLayer.popMatrix();
-      }
-      graphics.setStroke(new BasicStroke());
-      graphics.setColor(colorPair.fill());
-      graphics.fill(path2d);
-      graphics.setColor(colorPair.draw());
-      graphics.draw(path2d);
-    }
+    graphics.setStroke(new BasicStroke());
+    graphics.setColor(colorPair.fill());
+    graphics.fill(path2d);
+    graphics.setColor(colorPair.draw());
+    graphics.draw(path2d);
   }
 }

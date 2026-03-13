@@ -13,7 +13,6 @@ import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 
 public enum RegionRenders {
   ;
-
   /** default color for obstacle region */
   public static RenderInterface of(CoordinateBoundingBox cbb) {
     return new PolygonRegionRender(Box2D.polygon(cbb));
