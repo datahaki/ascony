@@ -63,7 +63,7 @@ public class LeversRender {
   private static final Tensor RGBA = Tensors.fromString("{{0, 0, 0, 16}, {0, 0, 0, 255}}");
   private static final ColorDataGradient COLOR_DATA_GRADIENT = LinearColorDataGradient.of(RGBA);
   private static final Scalar NEUTRAL_DEFAULT = RealScalar.of(0.33);
-  public static final FillDrawColor PR0 = new FillDrawColor(new Color(255, 128, 128, 64), new Color(255, 128, 128, 255));
+  public static final ColorPair PR0 = new ColorPair(new Color(255, 128, 128, 64), new Color(255, 128, 128, 255));
   public static final PointsRender ORIGIN_RENDER_0 = //
       new PointsRender(new Color(64, 128, 64, 128), new Color(64, 128, 64, 255));
   private static final Stroke STROKE_GEODESIC = //

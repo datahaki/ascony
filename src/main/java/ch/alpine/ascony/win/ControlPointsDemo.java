@@ -14,12 +14,12 @@ import javax.swing.JButton;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.bridge.awt.AwtUtil;
 import ch.alpine.bridge.gfx.GeometricComponent;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.RenderInterface;
-import ch.alpine.sophis.api.CurveOperator;
 import ch.alpine.sophis.crv.d2.Extract2D;
 import ch.alpine.sophis.crv.dub.DubinsGenerator;
 import ch.alpine.tensor.RealScalar;
@@ -35,15 +35,12 @@ import ch.alpine.tensor.sca.Abs;
 import ch.alpine.tensor.sca.pow.Sqrt;
 
 /** class is used in other projects outside of owl */
-// TODO ASCONA possibly provide option for cyclic midpoint indication (see R2Bary..Coord..Demo)
 public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
   private class ControlPointsRender implements RenderInterface {
     /** mouse snaps 20 pixel to control points */
     private static final Scalar PIXEL_THRESHOLD = RealScalar.of(20.0);
     /** refined points */
     private static final Stroke STROKE = new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
-    private static final Color ORANGE = new Color(255, 200, 0, 192);
-    private static final Color GREEN = new Color(0, 255, 0, 192);
 
     private class Midpoints {
       private final ManifoldDisplay manifoldDisplay = manifoldDisplay();
@@ -51,8 +48,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
       private final int index;
 
       Midpoints() {
-        CurveOperator curveSubdivision = new ControlMidpoints(manifoldDisplay.geodesicSpace());
-        midpoints = curveSubdivision.string(getGeodesicControlPoints());
+        midpoints = ControlInsertions.of(manifoldDisplay.geodesicSpace(), getGeodesicControlPoints());
         Tensor mouse = mouseSe2CState();
         Tensor mouse_dist = Tensor.of(midpoints.stream() //
             .map(manifoldDisplay::point2xy) //
@@ -78,14 +74,12 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
           if (isPositioningOngoing()) {
             min_index = null; // release
           } else {
-            {
-              Tensor mouse_dist = Tensor.of(controlPointsSe2.points_se2().stream() //
-                  .map(mouse::subtract) //
-                  .map(Extract2D.FUNCTION) //
-                  .map(Vector2Norm::of));
-              Optional<ArgMinValue> argMinValue = ArgMinValue.of(mouse_dist, getPositioningThreshold());
-              min_index = argMinValue.map(ArgMinValue::index).orElse(null);
-            }
+            Tensor mouse_dist = Tensor.of(controlPointsSe2.points_se2().stream() //
+                .map(mouse::subtract) //
+                .map(Extract2D.FUNCTION) //
+                .map(Vector2Norm::of));
+            Optional<ArgMinValue> argMinValue = ArgMinValue.of(mouse_dist, getPositioningThreshold());
+            min_index = argMinValue.map(ArgMinValue::index).orElse(null);
             if (!isPositioningOngoing() && controlPointType().addRemove()) {
               // insert
               if (controlPointsSe2.length() < 2 || !controlPointType().indicateMidpoint()) {
@@ -140,8 +134,8 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
         Optional<ArgMinValue> argMinValue = ArgMinValue.of(mouse_dist, getPositioningThreshold());
         Optional<Scalar> value = argMinValue.map(ArgMinValue::value);
         final boolean hold = value.isPresent() && isPositioningEnabled();
-        Color color = hold ? ORANGE : GREEN;
-        graphics.setColor(color);
+        ColorPair colorPair = hold ? ColorPair.HOL : ColorPair.REL;
+        graphics.setColor(colorPair.fill());
         Tensor posit = mouse;
         if (hold) {
           graphics.setStroke(new BasicStroke(2f));
@@ -150,7 +144,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
           posit.set(closest.get(0), 0);
           posit.set(closest.get(1), 1);
         }
-        manifoldDisplay.showPoints(color, Color.GRAY, RealScalar.ONE, Tensors.of(manifoldDisplay.xya2point(posit))) //
+        manifoldDisplay.showPoints(colorPair, RealScalar.ONE, Tensors.of(manifoldDisplay.xya2point(posit))) //
             .render(geometricLayer, graphics);
         if (!hold && Tensors.nonEmpty(controlPointsSe2.points_se2()) && controlPointType().indicateMidpoint()) {
           graphics.setColor(Color.RED);

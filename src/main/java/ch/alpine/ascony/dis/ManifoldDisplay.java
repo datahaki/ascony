@@ -1,11 +1,10 @@
 // code by jph
 package ch.alpine.ascony.dis;
 
-import java.awt.Color;
 import java.util.concurrent.ThreadLocalRandom;
 
 import ch.alpine.ascony.msh.D2Raster;
-import ch.alpine.ascony.ren.FillDrawColor;
+import ch.alpine.ascony.ren.ColorPair;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.sophis.crv.clt.ClothoidBuilder;
@@ -109,13 +108,8 @@ public interface ManifoldDisplay {
   /** @return rendering of background, for instance a shaded sphere for S^2 */
   RenderInterface background();
 
-  default RenderInterface showPoints(FillDrawColor fillDrawColor, Scalar scale, Tensor points) {
-    return new PointsRender(fillDrawColor.fill(), fillDrawColor.draw()) //
-        .show(this::matrixLift, shape().multiply(scale), points);
-  }
-
-  default RenderInterface showPoints(Color color_fill, Color color_draw, Scalar scale, Tensor points) {
-    return new PointsRender(color_fill, color_draw) //
+  default RenderInterface showPoints(ColorPair colorPair, Scalar scale, Tensor points) {
+    return new PointsRender(colorPair.fill(), colorPair.draw()) //
         .show(this::matrixLift, shape().multiply(scale), points);
   }
 

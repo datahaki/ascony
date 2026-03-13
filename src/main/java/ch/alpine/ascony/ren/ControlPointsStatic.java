@@ -10,8 +10,8 @@ import ch.alpine.tensor.Tensor;
 
 public enum ControlPointsStatic {
   ;
-  private static final FillDrawColor GRAY = //
-      new FillDrawColor(new Color(160, 160, 160, 128), Color.BLACK);
+  private static final ColorPair GRAY = //
+      new ColorPair(new Color(160, 160, 160, 128), Color.BLACK);
 
   /** @param manifoldDisplay
    * @param points */
