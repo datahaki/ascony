@@ -9,13 +9,13 @@ import ch.alpine.sophis.dv.Kriging;
 import ch.alpine.sophis.dv.KrigingCoordinate;
 import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.sophis.itp.CrossAveraging;
+import ch.alpine.sophis.var.InversePowerVariogram;
 import ch.alpine.sophus.bm.LinearBiinvariantMean;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.ScalarUnaryOperator;
 import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 public enum LogWeightings implements LogWeighting {
   DISTANCES {

@@ -22,6 +22,7 @@ import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.sophis.dv.Biinvariant;
 import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
+import ch.alpine.sophis.var.InversePowerVariogram;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.sophus.api.TangentSpace;
@@ -55,7 +56,6 @@ import ch.alpine.tensor.mat.pi.LinearSubspace;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.red.Max;
 import ch.alpine.tensor.sca.Round;
-import ch.alpine.tensor.sca.var.InversePowerVariogram;
 
 public class LeversRender {
   public static final Font FONT_LABELS = new Font(Font.DIALOG, Font.ITALIC, 18);
