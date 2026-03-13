@@ -134,7 +134,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
         Optional<ArgMinValue> argMinValue = ArgMinValue.of(mouse_dist, getPositioningThreshold());
         Optional<Scalar> value = argMinValue.map(ArgMinValue::value);
         final boolean hold = value.isPresent() && isPositioningEnabled();
-        ColorPair colorPair = hold ? ColorPair.HOL : ColorPair.REL;
+        ColorPair colorPair = hold ? ColorPair.MOVEOFFER : ColorPair.INSERTION;
         graphics.setColor(colorPair.fill());
         Tensor posit = mouse;
         if (hold) {

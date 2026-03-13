@@ -63,7 +63,6 @@ public class LeversRender {
   private static final Tensor RGBA = Tensors.fromString("{{0, 0, 0, 16}, {0, 0, 0, 255}}");
   private static final ColorDataGradient COLOR_DATA_GRADIENT = LinearColorDataGradient.of(RGBA);
   private static final Scalar NEUTRAL_DEFAULT = RealScalar.of(0.33);
-  public static final ColorPair PR0 = new ColorPair(new Color(255, 128, 128, 64), new Color(255, 128, 128, 255));
   private static final Stroke STROKE_GEODESIC = //
       new BasicStroke(2.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0);
   static final Color COLOR_TEXT_DRAW = new Color(128 - 32, 128 - 32, 128 - 32);
@@ -191,7 +190,6 @@ public class LeversRender {
       graphics.draw(geometricLayer.toPath2D(ms));
       ++index;
     }
-    graphics.setStroke(new BasicStroke());
   }
 
   // ---
@@ -354,6 +352,7 @@ public class LeversRender {
           .forEach(all::append);
     }
     Path2D path2d = geometricLayer.toPath2D(all);
+    graphics.setStroke(new BasicStroke());
     graphics.setColor(new Color(192, 192, 128, 64));
     graphics.fill(path2d);
     graphics.setColor(new Color(192, 192, 128, 192));
@@ -519,14 +518,18 @@ public class LeversRender {
   }
 
   public void renderSequence() {
-    manifoldDisplay.showPoints(PR0, RealScalar.ONE, sequence).render(geometricLayer, graphics);
+    renderSequence(ColorPair.CONTROL_POINTS);
+  }
+
+  public void renderSequence(ColorPair colorPair) {
+    manifoldDisplay.showPoints(colorPair, RealScalar.ONE, sequence).render(geometricLayer, graphics);
   }
 
   /** render point of coordinate evaluation */
   public void renderOrigin() {
     if (Objects.isNull(origin))
       return;
-    new PointsRender(ColorPair.LEV, manifoldDisplay::matrixLift, shape, Tensors.of(origin)) //
+    new PointsRender(ColorPair.ORIGIN, manifoldDisplay::matrixLift, shape, Tensors.of(origin)) //
         .render(geometricLayer, graphics);
   }
 

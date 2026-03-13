@@ -17,7 +17,7 @@ public record MatrixArray(Tensor[][] arrays) implements Serializable {
   }
 
   /** @return */
-  public Tensor unwrap() {
+  public Tensor unwrap() { // TODO function name not ideal
     return Tensor.of(Arrays.stream(arrays).map(Arrays::stream).map(Tensor::of));
   }
   // public Tensor map(TensorUnaryOperator tuo) {
