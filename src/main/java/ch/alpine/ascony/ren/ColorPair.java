@@ -6,15 +6,17 @@ import java.awt.Color;
 import ch.alpine.bridge.awt.AwtUtil;
 
 public record ColorPair(Color fill, Color draw) {
-  public static final ColorPair BIM = new ColorPair(new Color(192, 0, 255, 192), new Color(192, 0, 255, 255));
-  public static final ColorPair BLC = new ColorPair(new Color(0, 0, 0, 64), new Color(128, 128, 128, 64));
-  public static final ColorPair SPI = new ColorPair(new Color(128, 128, 128, 64), new Color(128, 128, 128, 128));
-  public static final ColorPair DAR = new ColorPair(Color.DARK_GRAY, Color.BLACK);
-  public static final ColorPair GRY = new ColorPair(new Color(128, 128, 128, 128), new Color(128, 128, 128, 128));
-  public static final ColorPair GEO = new ColorPair(new Color(255, 128, 128, 255), new Color(128, 128, 128, 128));
-  public static final ColorPair BMD = new ColorPair(new Color(128, 64, 64, 128), new Color(128, 64, 64, 255));
-  public static final ColorPair GSL = new ColorPair(new Color(64, 196, 64, 128), new Color(64, 196, 64, 128));
-  public static final ColorPair GSY = new ColorPair(new Color(0, 0, 255, 192), new Color(0, 0, 255, 192));
+  /** purple spacial median */
+  public static final ColorPair SPACIAL_MEDIAN = new ColorPair(new Color(192, 0, 255, 128), new Color(192, 0, 255, 192));
+  /** intermediate control points */
+  public static final ColorPair INTERMEDIATE = new ColorPair(new Color(64, 64, 64, 64), new Color(64, 64, 64, 128));
+  /** to highlight a single points for instance at a configurable parameter value */
+  public static final ColorPair MARKER = new ColorPair(new Color(32, 32, 32, 192), new Color(32, 32, 32, 255));
+  /** extrapolation */
+  public static final ColorPair EXTRAPOLATION = new ColorPair(new Color(32, 192, 32, 64), new Color(32, 192, 32, 128));
+  public static final ColorPair APPROXIMATION = new ColorPair(new Color(128, 64, 64, 128), new Color(128, 64, 64, 255));
+  public static final ColorPair SUPPORT = new ColorPair(new Color(0, 0, 255, 128), new Color(0, 0, 192, 192));
+  // ---
   public static final ColorPair DEC = new ColorPair(new Color(255, 128, 128, 64), new Color(255, 128, 128, 255));
   public static final ColorPair DED = new ColorPair(new Color(160, 160, 160, 160), Color.BLACK);
   public static final ColorPair ABE = new ColorPair(new Color(128, 128, 128, 64), new Color(128, 128, 128, 255));
@@ -40,6 +42,7 @@ public record ColorPair(Color fill, Color draw) {
    * when using getRGB because of the color model attached to the
    * image type grayscale */
   public static final ColorPair REG = new ColorPair(new Color(230, 230, 230, 64), new Color(192, 192, 192, 128));
+  public static final ColorPair FIT = new ColorPair(new Color(128, 128, 255, 64), new Color(128, 128, 255, 255));
 
   public ColorPair solid() {
     return new ColorPair( //
