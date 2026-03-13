@@ -41,6 +41,11 @@ public enum Spd2Display implements ManifoldDisplay {
     return CIRCLE_POINTS;
   }
 
+  @Override
+  public final boolean isXYeuclid() {
+    return false;
+  }
+
   private static Tensor xya2sim(Tensor xya) {
     xya = xya.multiply(SCALE);
     Tensor sim = DiagonalMatrix.sparse(xya.extract(0, 2));

@@ -37,6 +37,11 @@ public class So3Display implements ManifoldDisplay, Serializable {
     return TRIANGLE;
   }
 
+  @Override
+  public final boolean isXYeuclid() {
+    return false;
+  }
+
   @Override // from ManifoldDisplay
   public Tensor xya2point(Tensor xya) {
     Tensor axis = xya;

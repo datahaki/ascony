@@ -48,6 +48,11 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
     return CIRCLE;
   }
 
+  @Override
+  public final boolean isXYeuclid() {
+    return true;
+  }
+
   @Override // from ManifoldDisplay
   public final Tensor point2xya(Tensor p) {
     return LIFT.apply(p);

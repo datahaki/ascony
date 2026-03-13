@@ -33,6 +33,8 @@ public interface ManifoldDisplay {
   /** @return polygon to visualize the control point */
   Tensor shape();
 
+  boolean isXYeuclid();
+
   /** @param xya vector of length 3
    * @return control point */
   Tensor xya2point(Tensor xya);

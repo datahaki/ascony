@@ -27,6 +27,11 @@ public enum He1Display implements ManifoldDisplay {
     return SQUARE;
   }
 
+  @Override
+  public final boolean isXYeuclid() {
+    return false;
+  }
+
   @Override // from ManifoldDisplay
   public Tensor xya2point(Tensor xya) {
     return xya.copy();

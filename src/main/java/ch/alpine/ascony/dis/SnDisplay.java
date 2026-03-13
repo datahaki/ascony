@@ -36,6 +36,11 @@ public abstract class SnDisplay implements ManifoldDisplay, Serializable {
   }
 
   @Override
+  public final boolean isXYeuclid() {
+    return false;
+  }
+
+  @Override
   public final GeodesicSpace geodesicSpace() {
     return sphere;
   }

@@ -24,6 +24,11 @@ public abstract class R2S1AbstractDisplay implements ManifoldDisplay, Serializab
     return ARROWHEAD;
   }
 
+  @Override
+  public final boolean isXYeuclid() {
+    return true;
+  }
+
   @Override // from ManifoldDisplay
   public final Tensor xya2point(Tensor xya) {
     Tensor xym = xya.copy();

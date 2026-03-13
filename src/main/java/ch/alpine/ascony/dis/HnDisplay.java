@@ -35,6 +35,11 @@ public abstract class HnDisplay implements ManifoldDisplay, Serializable {
     return hyperboloid.dimensions();
   }
 
+  @Override
+  public final boolean isXYeuclid() {
+    return false;
+  }
+
   @Override // from ManifoldDisplay
   public final Tensor xya2point(Tensor xya) {
     return xya.extract(0, dimensions);

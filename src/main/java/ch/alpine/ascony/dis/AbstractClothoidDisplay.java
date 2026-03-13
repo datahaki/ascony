@@ -33,6 +33,11 @@ public abstract class AbstractClothoidDisplay implements ManifoldDisplay, Serial
     return SPEARHEAD;
   }
 
+  @Override
+  public final boolean isXYeuclid() {
+    return true;
+  }
+
   @Override // from ManifoldDisplay
   public final TensorUnaryOperator tangentProjection(Tensor p) {
     return v -> v.extract(0, 2);

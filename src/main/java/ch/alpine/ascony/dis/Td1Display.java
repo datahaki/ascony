@@ -43,6 +43,11 @@ public enum Td1Display implements ManifoldDisplay {
     return PENTAGON;
   }
 
+  @Override
+  public final boolean isXYeuclid() {
+    return false;
+  }
+
   @Override // from ManifoldDisplay
   public Tensor xya2point(Tensor xya) {
     Tensor point = xya.extract(0, 2);
