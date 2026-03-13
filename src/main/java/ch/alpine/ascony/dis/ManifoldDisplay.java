@@ -109,8 +109,7 @@ public interface ManifoldDisplay {
   RenderInterface background();
 
   default RenderInterface showPoints(ColorPair colorPair, Scalar scale, Tensor points) {
-    return new PointsRender(colorPair.fill(), colorPair.draw()) //
-        .show(this::matrixLift, shape().multiply(scale), points);
+    return new PointsRender(colorPair).show(this::matrixLift, shape().multiply(scale), points);
   }
 
   default D2Raster d2Raster() {

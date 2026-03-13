@@ -33,6 +33,13 @@ public record ColorPair(Color fill, Color draw) {
   public static final ColorPair ASD = new ColorPair(new Color(160, 160, 160, 192), Color.BLACK);
   public static final ColorPair ASC = new ColorPair(new Color(255, 128, 128, 32), new Color(255, 128, 128, 128));
   public static final ColorPair ASN = new ColorPair(new Color(255, 128, 128, 64), new Color(255, 128, 128, 255));
+  public static final ColorPair KNE = new ColorPair(new Color(64, 192, 64, 64), new Color(64, 192, 64, 255));
+  public static final ColorPair KFA = new ColorPair(new Color(192, 64, 64, 64), new Color(192, 64, 64, 255));
+  public static final ColorPair LEV = new ColorPair(new Color(64, 128, 64, 128), new Color(64, 128, 64, 255));
+  /** raster value 230 get's mapped to color {244, 244, 244, 255}
+   * when using getRGB because of the color model attached to the
+   * image type grayscale */
+  public static final ColorPair REG = new ColorPair(new Color(230, 230, 230, 64), new Color(192, 192, 192, 128));
 
   public ColorPair solid() {
     return new ColorPair( //

@@ -2,7 +2,6 @@
 package ch.alpine.ascony.ren;
 
 import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.PathIterator;
@@ -12,7 +11,7 @@ import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
-public record PointsRender(Color color_fill, Color color_draw) {
+public record PointsRender(ColorPair colorPair) {
   public RenderInterface show(TensorUnaryOperator matrixLift, Tensor shape, Tensor points) {
     return new Show(matrixLift, shape, points);
   }
@@ -39,9 +38,9 @@ public record PointsRender(Color color_fill, Color color_draw) {
         geometricLayer.popMatrix();
       }
       graphics.setStroke(new BasicStroke());
-      graphics.setColor(color_fill);
+      graphics.setColor(colorPair.fill());
       graphics.fill(path2d);
-      graphics.setColor(color_draw);
+      graphics.setColor(colorPair.draw());
       graphics.draw(path2d);
     }
   }

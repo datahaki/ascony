@@ -1,8 +1,6 @@
 // code by jph
 package ch.alpine.ascony.reg;
 
-import java.awt.Color;
-
 import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.sophis.crv.d2.Extract2D;
 import ch.alpine.sophis.crv.d2.ex.Box2D;
@@ -15,14 +13,8 @@ import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 
 public enum RegionRenders {
   ;
-  /** raster value 230 get's mapped to color {244, 244, 244, 255}
-   * when using getRGB because of the color model attached to the
-   * image type grayscale */
-  public static final int RGB = 230;
-  /** default color for obstacle region */
-  public static final Color COLOR = new Color(RGB, RGB, RGB, 64);
-  public static final Color BOUNDARY = new Color(192, 192, 192, 128);
 
+  /** default color for obstacle region */
   public static RenderInterface of(CoordinateBoundingBox cbb) {
     return new PolygonRegionRender(Box2D.polygon(cbb));
   }
