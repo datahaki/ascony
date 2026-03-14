@@ -19,7 +19,7 @@ public record Meshgrid(CoordinateBoundingBox cbb, int resolution) {
   public Tensor image(TensorUnaryOperator tuo) {
     Tensor dx = Subdivide.intermediate_increasing(cbb.clip(0), resolution).maps(N.DOUBLE);
     Tensor dy = Subdivide.intermediate_decreasing(cbb.clip(1), resolution).maps(N.DOUBLE);
-    return Tensor.of(dy.stream().map(Scalar.class::cast) //
+    return Tensor.of(dy.stream().map(Scalar.class::cast).parallel() //
         .map(py -> Tensor.of(dx.stream().map(Scalar.class::cast) //
             .map(px -> tuo.apply(Unprotect.using(List.of(px, py)))) //
         )));

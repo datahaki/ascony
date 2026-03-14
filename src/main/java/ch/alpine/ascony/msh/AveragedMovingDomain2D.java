@@ -23,6 +23,6 @@ public class AveragedMovingDomain2D extends MovingDomain2D {
 
   @Override // from MovingDomain2D
   public Tensor[][] forward(Tensor target) {
-    return weights.maps(w -> biinvariantMean.optional(target, w).orElse(fallback));
+    return matrixArray.maps(w -> biinvariantMean.optional(target, w).orElse(fallback));
   }
 }

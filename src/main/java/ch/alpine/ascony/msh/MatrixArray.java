@@ -21,11 +21,11 @@ public record MatrixArray(Tensor[][] arrays) implements Serializable {
     return Tensor.of(Arrays.stream(arrays).map(Arrays::stream).map(Tensor::of));
   }
   // public Tensor map(TensorUnaryOperator tuo) {
-  // return Tensor.of(Arrays.stream(arrays).map(row -> Tensor.of(Arrays.stream(row).map(tuo))));
+  // return Tensor.of(Arrays.stream(arrays).parallel().map(row -> Tensor.of(Arrays.stream(row).map(tuo))));
   // }
 
   public Tensor[][] maps(TensorUnaryOperator tuo) {
-    return Arrays.stream(arrays) //
+    return Arrays.stream(arrays).parallel() //
         .map(row -> Arrays.stream(row).map(tuo).toArray(Tensor[]::new)) //
         .toArray(Tensor[][]::new);
   }
