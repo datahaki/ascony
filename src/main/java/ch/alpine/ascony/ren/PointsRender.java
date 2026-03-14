@@ -11,6 +11,7 @@ import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
+/** rendering of scattered set of control points */
 public record PointsRender(ColorPair colorPair, TensorUnaryOperator matrixLift, Tensor shape, Tensor points) //
     implements RenderInterface {
   @Override

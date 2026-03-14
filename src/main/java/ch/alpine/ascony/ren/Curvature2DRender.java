@@ -52,14 +52,13 @@ public enum Curvature2DRender {
     if (0 < curve.length())
       if (Unprotect.dimension1(curve) != 2)
         throw new Throw(curve);
-    RenderInterface ri1 = new PathRender(Color.BLUE, 1.25f).setCurve(curve, isCyclic);
+    //
     RenderInterface ri2 = comb //
-        ? new PathRender(COLOR_CURVATURE_COMB).setCurve(CurvatureComb.of(curve, scale, isCyclic), isCyclic)
+        ? new PathRender(COLOR_CURVATURE_COMB, 1, CurvatureComb.of(curve, scale, isCyclic), isCyclic)
         : EmptyRender.INSTANCE;
     return new RenderInterface() {
       @Override
       public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-        ri1.render(geometricLayer, graphics);
         ri2.render(geometricLayer, graphics);
       }
     };
