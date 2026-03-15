@@ -5,7 +5,7 @@ import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.N;
 
-public record ControlPointsSe2(Tensor points_se2) {
+public record ControlPosSe2(Tensor points_se2) {
   /** @return control points for selected {@link ManifoldDisplay} */
   public Tensor getGeodesicControlPoints(ManifoldDisplay manifoldDisplay) {
     return getGeodesicControlPoints(manifoldDisplay, 0, Integer.MAX_VALUE);

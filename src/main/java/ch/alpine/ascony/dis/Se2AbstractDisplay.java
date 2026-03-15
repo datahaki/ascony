@@ -18,6 +18,11 @@ public abstract class Se2AbstractDisplay implements ManifoldDisplay, Serializabl
     return 3;
   }
 
+  @Override
+  public Tensor uvw2log(Tensor uvw) {
+    return uvw.copy();
+  }
+
   @Override // from ManifoldDisplay
   public final TensorUnaryOperator tangentProjection(Tensor p) {
     return v -> v.extract(0, 2);

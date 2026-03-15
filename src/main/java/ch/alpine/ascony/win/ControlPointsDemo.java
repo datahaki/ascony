@@ -87,7 +87,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
                 min_index = controlPointsSe2.length() - 1;
               } else {
                 Midpoints midpoints = new Midpoints();
-                controlPointsSe2 = new ControlPointsSe2(Insert.of(controlPointsSe2.points_se2(), mouse, midpoints.index));
+                controlPointsSe2 = new ControlPosSe2(Insert.of(controlPointsSe2.points_se2(), mouse, midpoints.index));
                 min_index = midpoints.index;
               }
             }
@@ -104,7 +104,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
               min_index = argMinValue.map(ArgMinValue::index).orElse(null);
             }
             if (isPositioningOngoing()) {
-              controlPointsSe2 = new ControlPointsSe2(Drop.index(controlPointsSe2.points_se2(), min_index));
+              controlPointsSe2 = new ControlPosSe2(Drop.index(controlPointsSe2.points_se2(), min_index));
               min_index = null;
             }
           }
@@ -113,7 +113,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
         }
       }
     };
-    private ControlPointsSe2 controlPointsSe2 = new ControlPointsSe2(Tensors.empty());
+    private ControlPosSe2 controlPointsSe2 = new ControlPosSe2(Tensors.empty());
     /** min_index is non-null while the user drags a control points */
     private Integer min_index = null;
     private boolean mousePositioning = true;
@@ -189,7 +189,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
     /** @param control points as matrix of dimensions N x 3 */
     void setControlPointsSe2(Tensor control) {
       min_index = null;
-      this.controlPointsSe2 = new ControlPointsSe2(Tensor.of(control.stream() //
+      this.controlPointsSe2 = new ControlPosSe2(Tensor.of(control.stream() //
           .map(row -> VectorQ.requireLength(row, 3).maps(Tensor::copy))));
     }
 

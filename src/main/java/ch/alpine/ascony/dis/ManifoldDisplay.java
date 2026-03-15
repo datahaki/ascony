@@ -44,6 +44,10 @@ public interface ManifoldDisplay {
    * @return control point */
   Tensor xya2point(Tensor xya);
 
+  default Tensor uvw2log(Tensor xya) {
+    throw new UnsupportedOperationException();
+  }
+
   /** pseudo-inverse to xya2point function
    * 
    * @param p
