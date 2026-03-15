@@ -2,10 +2,11 @@
 package ch.alpine.ascony.ren;
 
 import java.awt.Color;
+import java.io.Serializable;
 
 import ch.alpine.bridge.awt.AwtUtil;
 
-public record ColorPair(Color fill, Color draw) {
+public record ColorPair(Color fill, Color draw) implements Serializable {
   /** scattered or sequential control points intended for manipulation by user */
   public static final ColorPair CONTROL_POINTS = new ColorPair(new Color(255, 128, 128, 64), new Color(255, 128, 128, 255));
   /** to highlight a single points for instance at a configurable parameter value */

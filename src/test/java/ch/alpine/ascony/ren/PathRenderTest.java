@@ -3,8 +3,6 @@ package ch.alpine.ascony.ren;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.awt.Color;
-
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.Tensors;
@@ -12,7 +10,7 @@ import ch.alpine.tensor.Tensors;
 class PathRenderTest {
   @Test
   void testFail() {
-    PathRender pathXYRender = new PathRender(Color.BLACK, 1, Tensors.fromString("{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}"), false);
+    PathRender pathXYRender = new PathRender(ColorStroke.CURVE, Tensors.fromString("{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}"), false);
     assertThrows(Exception.class, () -> pathXYRender.render(null, null));
   }
 }

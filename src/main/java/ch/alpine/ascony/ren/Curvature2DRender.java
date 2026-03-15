@@ -54,7 +54,7 @@ public enum Curvature2DRender {
         throw new Throw(curve);
     //
     RenderInterface ri2 = comb //
-        ? new PathRender(COLOR_CURVATURE_COMB, 1, CurvatureComb.of(curve, scale, isCyclic), isCyclic)
+        ? new PathRender(ColorStroke.CURVATURE_COMB, CurvatureComb.of(curve, scale, isCyclic), isCyclic)
         : EmptyRender.INSTANCE;
     return new RenderInterface() {
       @Override
