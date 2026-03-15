@@ -18,12 +18,10 @@ public record ColorPair(Color fill, Color draw) {
   public static final ColorPair APPROXIMATION = new ColorPair(new Color(128, 64, 64, 128), new Color(128, 64, 64, 255));
   /** intermediate control points */
   public static final ColorPair INTERMEDIATE = new ColorPair(new Color(64, 64, 64, 64), new Color(64, 64, 64, 128));
-  /** extrapolation */
-  public static final ColorPair EXTRAPOLATION = new ColorPair(new Color(32, 192, 32, 64), new Color(32, 192, 32, 128));
   /** pyramid scheme intermediate control points */
   public static final ColorPair SPLIT_PROCESS = new ColorPair(new Color(0, 0, 255, 128), new Color(0, 0, 192, 192));
   /** for separation into 2 partitions */
-  public static final ColorPair GROUP_NEAR = new ColorPair(new Color(64, 192, 64, 64), new Color(64, 192, 64, 255));
+  public static final ColorPair GROUP_NEAR = new ColorPair(new Color(64, 64, 192, 64), new Color(64, 64, 192, 255));
   public static final ColorPair GROUP_AFAR = new ColorPair(new Color(192, 64, 64, 64), new Color(192, 64, 64, 255));
   /** insert */
   public static final ColorPair INSERTION = new ColorPair(new Color(0, 255, 0, 192), new Color(0, 192, 0, 255));

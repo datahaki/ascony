@@ -27,11 +27,6 @@ public enum LeversHud {
       leversRender.renderEllipseIdentity();
       leversRender.renderWeightsLength();
       break;
-    // case METRIC2:
-    // leversRender.renderTangentsPtoX(false); // boolean: no tangent plane
-    // leversRender.renderEllipseIdentityP();
-    // leversRender.renderWeightsLength();
-    // break;
     case USANCE:
       leversRender.renderTangentsXtoP(false); // boolean: no tangent plane
       if (leversRender.getSequence().length() <= 2)
@@ -40,10 +35,6 @@ public enum LeversHud {
         leversRender.renderEllipseMahalanobis();
       leversRender.renderWeightsLeveragesSqrt();
       break;
-    // case LEVERAGES2:
-    // leversRender.renderInfluenceX(colorDataGradient);
-    // leversRender.renderWeightsLeveragesSqrt();
-    // break;
     case GARDEN:
       leversRender.renderTangentsPtoX(false); // boolean: no tangent planes
       leversRender.renderEllipseMahalanobisP(); // no evs

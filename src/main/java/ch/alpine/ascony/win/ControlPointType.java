@@ -8,6 +8,7 @@ public record ControlPointType(boolean addRemove, boolean draw, boolean indicate
    * boolean draw
    * boolean indicateMidpoint */
   public static final ControlPointType CURVYCURV = new ControlPointType(true, true, true);
+  public static final ControlPointType CURVYHIDE = new ControlPointType(true, false, true);
   public static final ControlPointType SCATTERED = new ControlPointType(true, true, false);
   public static final ControlPointType ADDREMOVE = new ControlPointType(true, false, false);
   /** only manage position of control points but no removal and draw action */
