@@ -34,6 +34,11 @@ public abstract class Se2AbstractDisplay implements ManifoldDisplay, Serializabl
   }
 
   @Override
+  public final boolean isXY_Angle() {
+    return true;
+  }
+
+  @Override
   public final Tensor point2xya(Tensor p) {
     return p.copy();
   }

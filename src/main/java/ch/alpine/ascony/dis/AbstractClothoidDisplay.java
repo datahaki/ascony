@@ -38,6 +38,11 @@ public abstract class AbstractClothoidDisplay implements ManifoldDisplay, Serial
     return true;
   }
 
+  @Override
+  public final boolean isXY_Angle() {
+    return true;
+  }
+
   @Override // from ManifoldDisplay
   public final TensorUnaryOperator tangentProjection(Tensor p) {
     return v -> v.extract(0, 2);

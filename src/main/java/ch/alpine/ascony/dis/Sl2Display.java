@@ -46,6 +46,11 @@ public class Sl2Display implements ManifoldDisplay, Serializable {
   }
 
   @Override
+  public final boolean isXY_Angle() {
+    return false;
+  }
+
+  @Override
   public Tensor xya2point(Tensor xya) {
     return new Sl2Iwasawa(xya.Get(2), xya.Get(0).multiply(SCALE), xya.Get(1)).matrix();
   }

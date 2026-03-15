@@ -46,6 +46,11 @@ public enum Spd2Display implements ManifoldDisplay {
     return false;
   }
 
+  @Override
+  public final boolean isXY_Angle() {
+    return false;
+  }
+
   private static Tensor xya2sim(Tensor xya) {
     xya = xya.multiply(SCALE);
     Tensor sim = DiagonalMatrix.sparse(xya.extract(0, 2));

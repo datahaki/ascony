@@ -53,6 +53,11 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
     return true;
   }
 
+  @Override
+  public final boolean isXY_Angle() {
+    return false;
+  }
+
   @Override // from ManifoldDisplay
   public final Tensor point2xya(Tensor p) {
     return LIFT.apply(p);

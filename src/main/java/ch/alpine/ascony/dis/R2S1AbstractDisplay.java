@@ -29,6 +29,11 @@ public abstract class R2S1AbstractDisplay implements ManifoldDisplay, Serializab
     return true;
   }
 
+  @Override
+  public final boolean isXY_Angle() {
+    return true;
+  }
+
   @Override // from ManifoldDisplay
   public final Tensor xya2point(Tensor xya) {
     Tensor xym = xya.copy();

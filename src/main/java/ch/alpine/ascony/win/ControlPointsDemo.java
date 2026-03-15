@@ -149,6 +149,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
         if (!hold && Tensors.nonEmpty(controlPointsSe2.points_se2()) && controlPointType().indicateMidpoint()) {
           graphics.setColor(Color.RED);
           graphics.setStroke(STROKE);
+          // TODO visualization can be enhanced
           graphics.draw(geometricLayer.toLine2D(mouse, new Midpoints().closestXY()));
           graphics.setStroke(new BasicStroke());
         }
@@ -226,13 +227,14 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
       jToolBar().add(jButton);
     }
     {
-      boolean hasSe2 = permitted_manifoldDisplays().stream().filter(ManifoldDisplays::isXY_Angle).findAny().isPresent();
+      boolean hasSe2 = permitted_manifoldDisplays().stream().map(ManifoldDisplays::manifoldDisplay) //
+          .filter(ManifoldDisplay::isXY_Angle).findAny().isPresent();
       boolean curvyc = controlPointType().equals(ControlPointType.CURVYCURV);
       if (hasSe2 && curvyc) {
         JButton jButton = new JButton("dubins");
         jButton.setToolTipText("project control points to dubins path");
         jButton.addActionListener(_ -> {
-          if (getSelectedMD().isXY_Angle())
+          if (manifoldDisplay().isXY_Angle())
             controlPointsRender.setControlPointsSe2( //
                 DubinsGenerator.project(controlPointsRender.getControlPointsSe2()));
         });

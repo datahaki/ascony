@@ -31,10 +31,6 @@ public enum ManifoldDisplays {
   He1(He1Display.INSTANCE),
   Td1(Td1Display.INSTANCE);
 
-  public boolean isXY_Angle() {
-    return ordinal() <= Se2.ordinal();
-  }
-
   private final ManifoldDisplay manifoldDisplay;
 
   ManifoldDisplays(ManifoldDisplay manifoldDisplay) {
@@ -107,17 +103,19 @@ public enum ManifoldDisplays {
   }
 
   // ---
+  public static final List<ManifoldDisplays> S2_RP2 = List.of(S2, Rp2);
   public static final List<ManifoldDisplays> S2_TYPES = List.of(S2, Rp2, So3);
   public static final List<ManifoldDisplays> R2_ONLY = List.of(R2);
   public static final List<ManifoldDisplays> R2_S2 = List.of(R2, S2);
-  public static final List<ManifoldDisplays> R2_S2_H2 = List.of(R2, S2, H2);
   public static final List<ManifoldDisplays> R2_H2_S2_SE2C = List.of(R2, H2, S2, Se2C);
   public static final List<ManifoldDisplays> DEFORM_2D = List.of(R2, H2, S2, Se2C, Se2);
   public static final List<ManifoldDisplays> SE2C_R2 = List.of(Se2C, R2);
   // ---
+  /** for dubins */
   public static final List<ManifoldDisplays> SE2_ONLY = List.of(Se2);
-  public static final List<ManifoldDisplays> SE2C_ONLY = List.of(Se2C);
+  public static final List<ManifoldDisplays> SE2_R2_S2 = List.of(Se2, R2, S2);
   // ---
+  /** for gokart data */
   public static final List<ManifoldDisplays> SE2_R2 = List.of( //
       Se2, //
       R2);
@@ -132,7 +130,6 @@ public enum ManifoldDisplays {
       Se2);
   // ---
   public static final List<ManifoldDisplays> S2_ONLY = List.of(S2);
-  public static final List<ManifoldDisplays> H2_ONLY = List.of(H2);
-  public static final List<ManifoldDisplays> CL_ONLY = List.of(ClA);
+  public static final List<ManifoldDisplays> CLA_ONLY = List.of(ClA);
   public static final List<ManifoldDisplays> CLC_ONLY = List.of(ClC);
 }

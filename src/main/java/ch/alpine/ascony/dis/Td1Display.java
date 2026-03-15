@@ -48,6 +48,11 @@ public enum Td1Display implements ManifoldDisplay {
     return false;
   }
 
+  @Override
+  public final boolean isXY_Angle() {
+    return false;
+  }
+
   @Override // from ManifoldDisplay
   public Tensor xya2point(Tensor xya) {
     Tensor point = xya.extract(0, 2);

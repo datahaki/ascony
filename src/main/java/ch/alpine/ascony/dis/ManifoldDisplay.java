@@ -33,7 +33,12 @@ public interface ManifoldDisplay {
   /** @return polygon to visualize the control point */
   Tensor shape();
 
+  /** @return whether point is a vector and the first 2 entries
+   * can be interpreted as a coordinate in the euclidean plane */
   boolean isXYeuclid();
+
+  /** @return true for clothoids and se(2)s */
+  boolean isXY_Angle();
 
   /** @param xya vector of length 3
    * @return control point */
