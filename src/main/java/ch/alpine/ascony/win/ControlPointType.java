@@ -13,5 +13,7 @@ public record ControlPointType(boolean addRemove, boolean draw, boolean indicate
   public static final ControlPointType ADDREMOVE = new ControlPointType(true, false, false);
   /** only manage position of control points but no removal and draw action */
   public static final ControlPointType HEAD_TAIL = new ControlPointType(false, true, false);
+  /** for demos where each control points has to be drawn in a separate color
+   * for instance classification, or distance vector visualization */
   public static final ControlPointType DELEGATED = new ControlPointType(false, false, false);
 }

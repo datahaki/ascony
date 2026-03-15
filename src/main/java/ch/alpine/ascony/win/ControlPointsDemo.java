@@ -157,6 +157,8 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
         LeversRender leversRender = LeversRender.of( //
             manifoldDisplay, getGeodesicControlPoints(), null, geometricLayer, graphics);
         leversRender.renderSequence();
+        if (controlPointType().equals(ControlPointType.CURVYCURV))
+          leversRender.renderIndexP();
       }
     }
 
