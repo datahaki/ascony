@@ -18,7 +18,7 @@ public record ColorPair(Color fill, Color draw) implements Serializable {
   /** mean approximation */
   public static final ColorPair APPROXIMATION = new ColorPair(new Color(128, 64, 64, 128), new Color(128, 64, 64, 255));
   /** intermediate control points */
-  public static final ColorPair INTERMEDIATE = new ColorPair(new Color(64, 64, 64, 64), new Color(64, 64, 64, 128));
+  public static final ColorPair INTERMEDIATE = new ColorPair(new Color(128, 128, 128, 64), new Color(128, 128, 128, 128));
   /** pyramid scheme intermediate control points */
   public static final ColorPair SPLIT_PROCESS = new ColorPair(new Color(0, 0, 255, 128), new Color(0, 0, 192, 192));
   /** for separation into 2 partitions */
