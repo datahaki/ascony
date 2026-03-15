@@ -14,7 +14,9 @@ import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.LineDistance;
 import ch.alpine.sophus.api.SpecificManifold;
 import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.sophus.hs.SpecificHomogeneousSpace;
 import ch.alpine.sophus.lie.LieGroup;
+import ch.alpine.sophus.lie.SpecificLieGroup;
 import ch.alpine.tensor.DoubleScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -88,14 +90,14 @@ public interface ManifoldDisplay {
         : null;
   }
 
-  default HomogeneousSpace homogeneousSpace() {
-    return geodesicSpace() instanceof HomogeneousSpace homogeneousSpace //
+  default SpecificHomogeneousSpace homogeneousSpace() {
+    return geodesicSpace() instanceof SpecificHomogeneousSpace homogeneousSpace //
         ? homogeneousSpace
         : null;
   }
 
-  default LieGroup lieGroup() {
-    return geodesicSpace() instanceof LieGroup lieGroup //
+  default SpecificLieGroup lieGroup() {
+    return geodesicSpace() instanceof SpecificLieGroup lieGroup //
         ? lieGroup
         : null;
   }

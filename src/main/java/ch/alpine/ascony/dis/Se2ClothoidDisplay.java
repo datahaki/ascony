@@ -7,6 +7,7 @@ import ch.alpine.sophis.ts.ClothoidTransitionSpace;
 import ch.alpine.sophis.ts.TransitionSpace;
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.pdf.RandomSampleInterface;
 
 public final class Se2ClothoidDisplay extends AbstractClothoidDisplay {
   public static final ManifoldDisplay ANALYTIC = //
@@ -37,6 +38,11 @@ public final class Se2ClothoidDisplay extends AbstractClothoidDisplay {
     Tensor xym = xya.copy();
     xym.set(So2.MOD, 2);
     return xym;
+  }
+
+  @Override
+  public RandomSampleInterface randomSampleInterface() {
+    return Se2Display.INSTANCE.randomSampleInterface();
   }
 
   @Override // from Object

@@ -6,6 +6,7 @@ import ch.alpine.sophis.crv.clt.ClothoidBuilders;
 import ch.alpine.sophis.ts.ClothoidTransitionSpace;
 import ch.alpine.sophis.ts.TransitionSpace;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.pdf.RandomSampleInterface;
 
 public final class Se2CoveringClothoidDisplay extends AbstractClothoidDisplay {
   public static final ManifoldDisplay INSTANCE = new Se2CoveringClothoidDisplay();
@@ -28,6 +29,11 @@ public final class Se2CoveringClothoidDisplay extends AbstractClothoidDisplay {
   @Override // from ManifoldDisplay
   public final Tensor xya2point(Tensor xya) {
     return xya.copy();
+  }
+
+  @Override
+  public RandomSampleInterface randomSampleInterface() {
+    return Se2CoveringDisplay.INSTANCE.randomSampleInterface();
   }
 
   @Override // from Object

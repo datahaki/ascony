@@ -19,7 +19,6 @@ import ch.alpine.tensor.alg.PadRight;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
-import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
@@ -101,11 +100,6 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
 
   public final CoordinateBoundingBox coordinateBoundingBox() {
     return CoordinateBoundingBox.of(Stream.generate(() -> CLIP).limit(dimensions));
-  }
-
-  @Override // from ManifoldDisplay
-  public final RandomSampleInterface randomSampleInterface() {
-    return rnGroup.randomSampleInterface();
   }
 
   @Override

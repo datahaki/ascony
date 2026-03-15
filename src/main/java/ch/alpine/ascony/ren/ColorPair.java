@@ -11,6 +11,8 @@ public record ColorPair(Color fill, Color draw) implements Serializable {
   public static final ColorPair CONTROL_POINTS = new ColorPair(new Color(255, 128, 128, 64), new Color(255, 128, 128, 255));
   /** to highlight a single points for instance at a configurable parameter value */
   public static final ColorPair MARKER = new ColorPair(new Color(32, 32, 32, 192), new Color(32, 32, 32, 255));
+  /** to highlight a single points for instance at a configurable parameter value */
+  public static final ColorPair IMMOVABLE = new ColorPair(new Color(64, 0, 64, 192), new Color(64, 0, 64, 255));
   /** greenish lever origin == zero reference for computation of coordinates, weightings, etc. */
   public static final ColorPair ORIGIN = new ColorPair(new Color(64, 128, 64, 128), new Color(64, 128, 64, 255));
   /** purple spacial median */
