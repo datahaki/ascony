@@ -17,7 +17,6 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.pdf.RandomSampleInterface;
 
 public class Sl2Display implements ManifoldDisplay, Serializable {
   public static final ManifoldDisplay INSTANCE = new Sl2Display();
@@ -74,11 +73,6 @@ public class Sl2Display implements ManifoldDisplay, Serializable {
   @Override
   public TensorUnaryOperator tangentProjection(Tensor p) {
     return v -> v.extract(0, 2); // TODO !?
-  }
-
-  @Override
-  public RandomSampleInterface randomSampleInterface() {
-    return slNGroup;
   }
 
   @Override

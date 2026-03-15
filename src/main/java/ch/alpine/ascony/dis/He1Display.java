@@ -10,7 +10,6 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.rot.CirclePoints;
-import ch.alpine.tensor.pdf.RandomSampleInterface;
 
 public enum He1Display implements ManifoldDisplay {
   INSTANCE;
@@ -59,11 +58,6 @@ public enum He1Display implements ManifoldDisplay {
 
   @Override
   public LieGroup geodesicSpace() {
-    return new HeNGroup(1);
-  }
-
-  @Override // from ManifoldDisplay
-  public RandomSampleInterface randomSampleInterface() {
     return new HeNGroup(1);
   }
 

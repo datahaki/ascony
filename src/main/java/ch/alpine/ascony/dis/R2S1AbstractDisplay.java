@@ -58,6 +58,6 @@ public abstract class R2S1AbstractDisplay implements ManifoldDisplay, Serializab
 
   @Override // from ManifoldDisplay
   public final RandomSampleInterface randomSampleInterface() {
-    return Se2CoveringGroup.INSTANCE;
+    return Se2CoveringGroup.INSTANCE.randomSampleInterface();
   }
 }

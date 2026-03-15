@@ -17,7 +17,6 @@ import ch.alpine.tensor.alg.VectorQ;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
-import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.sca.Clips;
 import ch.alpine.tensor.sca.exp.Exp;
 import ch.alpine.tensor.sca.exp.Log;
@@ -81,11 +80,6 @@ public enum Td1Display implements ManifoldDisplay {
 
   @Override // from ManifoldDisplay
   public LieGroup geodesicSpace() {
-    return td1Group;
-  }
-
-  @Override // from ManifoldDisplay
-  public RandomSampleInterface randomSampleInterface() {
     return td1Group;
   }
 

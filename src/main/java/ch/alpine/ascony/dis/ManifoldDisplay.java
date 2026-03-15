@@ -12,7 +12,7 @@ import ch.alpine.sophis.ts.TransitionSpace;
 import ch.alpine.sophis.ts.UniformTransitionSpace;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.LineDistance;
-import ch.alpine.sophus.api.Manifold;
+import ch.alpine.sophus.api.SpecificManifold;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.tensor.DoubleScalar;
@@ -82,8 +82,8 @@ public interface ManifoldDisplay {
    * @see ClothoidBuilder */
   GeodesicSpace geodesicSpace();
 
-  default Manifold manifold() {
-    return geodesicSpace() instanceof Manifold manifold //
+  default SpecificManifold manifold() {
+    return geodesicSpace() instanceof SpecificManifold manifold //
         ? manifold
         : null;
   }
@@ -114,7 +114,9 @@ public interface ManifoldDisplay {
 
   /** @return points in manifold that have to be {@link #point2xya(Tensor)}ed
    * in order to become control points in the form xya */
-  RandomSampleInterface randomSampleInterface();
+  default RandomSampleInterface randomSampleInterface() {
+    return manifold().randomSampleInterface();
+  }
 
   /** @return rendering of background, for instance a shaded sphere for S^2 */
   RenderInterface background();

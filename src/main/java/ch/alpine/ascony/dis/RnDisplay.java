@@ -105,7 +105,7 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
 
   @Override // from ManifoldDisplay
   public final RandomSampleInterface randomSampleInterface() {
-    return rnGroup;
+    return rnGroup.randomSampleInterface();
   }
 
   @Override

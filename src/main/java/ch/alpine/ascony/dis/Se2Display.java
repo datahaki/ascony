@@ -5,7 +5,6 @@ import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.lie.se2.Se2Group;
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.pdf.RandomSampleInterface;
 
 public class Se2Display extends Se2AbstractDisplay {
   public static final ManifoldDisplay INSTANCE = new Se2Display();
@@ -24,11 +23,6 @@ public class Se2Display extends Se2AbstractDisplay {
 
   @Override
   public GeodesicSpace geodesicSpace() {
-    return Se2Group.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
-  public RandomSampleInterface randomSampleInterface() {
     return Se2Group.INSTANCE;
   }
 

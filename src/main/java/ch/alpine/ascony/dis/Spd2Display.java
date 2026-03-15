@@ -5,6 +5,7 @@ import ch.alpine.ascony.ren.AxesRender;
 import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.spd.Spd0Exponential;
+import ch.alpine.sophus.hs.spd.Spd0RandomSample;
 import ch.alpine.sophus.hs.spd.SpdNManifold;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -14,6 +15,7 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.mat.DiagonalMatrix;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
+import ch.alpine.tensor.pdf.c.NormalDistribution;
 import ch.alpine.tensor.red.Diagonal;
 
 /** symmetric positive definite 2 x 2 matrices */
@@ -91,7 +93,7 @@ public enum Spd2Display implements ManifoldDisplay {
 
   @Override // from ManifoldDisplay
   public RandomSampleInterface randomSampleInterface() {
-    return spdNManifold;
+    return new Spd0RandomSample(2, NormalDistribution.of(0, 0.2));
   }
 
   @Override // from ManifoldDisplay

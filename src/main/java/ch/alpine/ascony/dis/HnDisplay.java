@@ -12,7 +12,6 @@ import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.PadRight;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
@@ -68,11 +67,6 @@ public abstract class HnDisplay implements ManifoldDisplay, Serializable {
   @Override // from ManifoldDisplay
   public final LineDistance lineDistance() {
     return HLineDistance.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
-  public final RandomSampleInterface randomSampleInterface() {
-    return hyperboloid;
   }
 
   @Override

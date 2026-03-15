@@ -7,13 +7,11 @@ import ch.alpine.ascony.api.Spearhead;
 import ch.alpine.ascony.ren.EmptyRender;
 import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.sophis.crv.clt.ClothoidBuilder;
-import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.pdf.RandomSampleInterface;
 
 public abstract class AbstractClothoidDisplay implements ManifoldDisplay, Serializable {
   private static final Tensor SPEARHEAD = //
@@ -56,11 +54,6 @@ public abstract class AbstractClothoidDisplay implements ManifoldDisplay, Serial
   @Override // from ManifoldDisplay
   public final Tensor matrixLift(Tensor p) {
     return Se2Matrix.of(p);
-  }
-
-  @Override // from ManifoldDisplay
-  public final RandomSampleInterface randomSampleInterface() {
-    return Se2CoveringGroup.INSTANCE;
   }
 
   @Override // from ManifoldDisplay

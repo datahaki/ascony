@@ -10,7 +10,6 @@ import ch.alpine.sophus.hs.s.SnLineDistance;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.lie.rot.CirclePoints;
-import ch.alpine.tensor.pdf.RandomSampleInterface;
 
 /** symmetric positive definite 2 x 2 matrices */
 public abstract class RpnDisplay implements ManifoldDisplay, Serializable {
@@ -52,11 +51,6 @@ public abstract class RpnDisplay implements ManifoldDisplay, Serializable {
   @Override // from ManifoldDisplay
   public final LineDistance lineDistance() {
     return SnLineDistance.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
-  public final RandomSampleInterface randomSampleInterface() {
-    return rpnManifold;
   }
 
   @Override

@@ -15,7 +15,6 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.nrm.Vector2Norm;
-import ch.alpine.tensor.pdf.RandomSampleInterface;
 
 /** orthogonal 3 x 3 matrices */
 public class So3Display implements ManifoldDisplay, Serializable {
@@ -76,11 +75,6 @@ public class So3Display implements ManifoldDisplay, Serializable {
     return So3Group.INSTANCE;
   }
   // TODO ASCONA ALG line distance should be similar to s^3
-
-  @Override
-  public RandomSampleInterface randomSampleInterface() {
-    return So3Group.INSTANCE;
-  }
 
   @Override // from ManifoldDisplay
   public RenderInterface background() {

@@ -4,7 +4,6 @@ package ch.alpine.ascony.dis;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.pdf.RandomSampleInterface;
 
 public class Se2CoveringDisplay extends Se2AbstractDisplay {
   public static final ManifoldDisplay INSTANCE = new Se2CoveringDisplay();
@@ -21,11 +20,6 @@ public class Se2CoveringDisplay extends Se2AbstractDisplay {
 
   @Override
   public GeodesicSpace geodesicSpace() {
-    return Se2CoveringGroup.INSTANCE;
-  }
-
-  @Override // from ManifoldDisplay
-  public RandomSampleInterface randomSampleInterface() {
     return Se2CoveringGroup.INSTANCE;
   }
 
