@@ -4,16 +4,14 @@ package ch.alpine.ascony.msh;
 import java.util.stream.IntStream;
 
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.Unprotect;
 
 public enum Thinning {
   ;
   public static Tensor of(Tensor tensor, int delta) {
-    Tensor result = Tensors.empty();
-    for (int index = 0; index < tensor.length(); index += delta)
-      result.append(tensor.get(index));
-    return result;
+    return Tensor.of(IntStream.range(0, tensor.length() / delta) //
+        .map(i -> i * delta) //
+        .mapToObj(tensor::get));
   }
 
   public static Tensor flatten(Tensor[][] forward, int dx, int dy) {
