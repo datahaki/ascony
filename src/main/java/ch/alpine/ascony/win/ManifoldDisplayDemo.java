@@ -50,7 +50,7 @@ public abstract class ManifoldDisplayDemo extends AbstractDemo implements Render
         listeners.forEach(listener -> listener.accept(selected));
       });
       jTabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-      timerFrame.addWest(jTabbedPane);
+      getWindow().addWest(jTabbedPane);
     }
     geometricComponent.addRenderInterface(this);
     Tensor pvm = PvmBuilder.rhs().setOffset(300, 300).setPerPixel(RealScalar.of(100)).digest();

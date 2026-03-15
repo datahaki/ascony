@@ -2,13 +2,11 @@
 package ch.alpine.ascony.win;
 
 import java.awt.Dimension;
-import java.awt.Window;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.IdentityHashMap;
+import java.util.Map;
 
 import javax.swing.JToolBar;
 
-import ch.alpine.bridge.awt.AwtUtil;
 import ch.alpine.bridge.awt.WindowClosed;
 import ch.alpine.bridge.gfx.GeometricComponent;
 import ch.alpine.bridge.io.ResourceLocator;
@@ -18,8 +16,8 @@ import ch.alpine.bridge.ref.util.FieldsEditor;
 import ch.alpine.bridge.ref.util.ToolbarFieldsEditor;
 
 public class AbstractDemo implements WindowProvider {
-  public final TimerFrame timerFrame = new TimerFrame();
-  private final List<FieldsEditor> fieldsEditors = new ArrayList<>();
+  private final TimerFrame timerFrame = new TimerFrame();
+  private final Map<Object, FieldsEditor> map = new IdentityHashMap<>();
   private final ObjectsParam objectsParam;
 
   /** @param objects may be null */
@@ -31,12 +29,12 @@ public class AbstractDemo implements WindowProvider {
       WindowClosed.runs(timerFrame, () -> resourceLocator.trySave(objectsParam));
     }
     {
-      int index = 0;
+      // int index = 0;
       for (Object object : objects) {
         FieldsEditor fieldsEditor = ToolbarFieldsEditor.addToComponent(object, timerFrame.jToolBar);
-        fieldsEditors.add(fieldsEditor);
-        if (++index < objects.length)
-          AwtUtil.addSeparator(timerFrame.jToolBar);
+        map.put(object, fieldsEditor);
+        // if (++index < objects.length)
+        // AwtUtil.addSeparator(timerFrame.jToolBar);
       }
     }
     timerFrame.setTitle(FriendlyFormat.defaultTitle(getClass()));
@@ -55,14 +53,11 @@ public class AbstractDemo implements WindowProvider {
   }
 
   @Override
-  public final Window getWindow() {
+  public final TimerFrame getWindow() {
     return timerFrame;
   }
 
-  public final FieldsEditor fieldsEditor(int index) {
-    if (index < fieldsEditors.size())
-      return fieldsEditors.get(index);
-    System.err.println("no can do: " + index + " vs. " + fieldsEditors.size());
-    return null;
+  public final FieldsEditor fieldsEditor(Object object) {
+    return map.get(object);
   }
 }
