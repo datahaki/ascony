@@ -192,7 +192,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
 
     /** @return control points as matrix of dimensions N x 3 */
     Tensor getControlPointsSe2() {
-      return controlPointsSe2.points_se2().unmodifiable(); // TODO ASCONA API should return copy!?
+      return controlPointsSe2.points_se2();
     }
 
     /** @return control points for selected {@link ManifoldDisplay} */
