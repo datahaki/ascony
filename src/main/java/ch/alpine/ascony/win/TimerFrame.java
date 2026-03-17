@@ -79,7 +79,7 @@ public class TimerFrame extends JFrame {
   }
 
   public final BufferedImage offscreen() {
-    return OffscreenRender.of(geometricComponent, BufferedImage.TYPE_INT_ARGB);
+    return OffscreenRender.of(geometricComponent);
   }
 
   private boolean west_available = true;
