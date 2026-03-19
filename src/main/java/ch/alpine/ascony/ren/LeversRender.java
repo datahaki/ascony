@@ -124,6 +124,7 @@ public class LeversRender {
     int index = 0;
     Tensor shape = manifoldDisplay.shape();
     graphics.setFont(FONT_LABELS);
+    TextContour textContour = TextContour.of(graphics);
     FontMetrics fontMetrics = graphics.getFontMetrics();
     int fheight = fontMetrics.getAscent();
     graphics.setColor(Color.BLACK);
@@ -135,11 +136,11 @@ public class LeversRender {
       {
         String string = (index + 1) + " ";
         pix -= fontMetrics.stringWidth(string);
-        graphics.drawString(string, pix, piy);
+        textContour.draw(ColorPair.TEXT, string, pix, piy);
       }
       {
         pix -= fontMetrics.stringWidth(plabel);
-        graphics.drawString(plabel, pix, piy - fheight / 3);
+        textContour.draw(ColorPair.TEXT, plabel, pix, piy - fheight / 3);
       }
       // ---
       geometricLayer.popMatrix();
@@ -154,6 +155,7 @@ public class LeversRender {
       return;
     Tensor shape = manifoldDisplay.shape();
     graphics.setFont(FONT_LABELS);
+    TextContour textContour = TextContour.of(graphics);
     FontMetrics fontMetrics = graphics.getFontMetrics();
     int fheight = fontMetrics.getAscent();
     graphics.setColor(Color.BLACK);
@@ -164,7 +166,8 @@ public class LeversRender {
     {
       String string = xlabel + " ";
       pix -= fontMetrics.stringWidth(string);
-      graphics.drawString(string, pix, piy - fheight / 3);
+      textContour.draw(ColorPair.TEXT, string, pix, piy - fheight / 3);
+      // graphics.drawString(string, pix, piy - fheight / 3);
     }
     geometricLayer.popMatrix();
   }
