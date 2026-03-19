@@ -114,6 +114,7 @@ public enum ManifoldDisplays {
   /** for dubins */
   public static final List<ManifoldDisplays> SE2_ONLY = List.of(Se2);
   public static final List<ManifoldDisplays> SE2_R2_S2 = List.of(Se2, R2, S2);
+  public static final List<ManifoldDisplays> SE2C_R2_S2 = List.of(Se2C, R2, S2);
   // ---
   /** for gokart data */
   public static final List<ManifoldDisplays> SE2_R2 = List.of( //

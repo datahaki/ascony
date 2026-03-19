@@ -1,11 +1,12 @@
 // code by jph
-package ch.alpine.ascony.win;
+package ch.alpine.ascony.dat;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.sca.N;
+import ch.alpine.tensor.Tensors;
 
-public record ControlPosSe2(Tensor points_se2) {
+/** [N x 2 x 3] */
+public record ControlPosVelSe2(Tensor points) {
   /** @return control points for selected {@link ManifoldDisplay} */
   public Tensor getGeodesicControlPoints(ManifoldDisplay manifoldDisplay) {
     return getGeodesicControlPoints(manifoldDisplay, 0, Integer.MAX_VALUE);
@@ -15,14 +16,15 @@ public record ControlPosSe2(Tensor points_se2) {
    * @param maxSize
    * @return */
   public Tensor getGeodesicControlPoints(ManifoldDisplay manifoldDisplay, int skip, int maxSize) {
-    return Tensor.of(points_se2.stream() //
+    return Tensor.of(points.stream() //
         .skip(skip) //
         .limit(maxSize) //
-        .map(manifoldDisplay::xya2point) //
-        .map(tensor -> tensor.maps(N.DOUBLE)));
+        .map(pv -> Tensors.of( //
+            manifoldDisplay.xya2point(pv.get(0)), //
+            manifoldDisplay.uvw2log(pv.get(1)))));
   }
 
   public int length() {
-    return points_se2.length();
+    return points.length();
   }
 }

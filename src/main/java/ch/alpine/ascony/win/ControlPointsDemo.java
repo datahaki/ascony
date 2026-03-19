@@ -12,6 +12,7 @@ import java.util.Optional;
 
 import javax.swing.JButton;
 
+import ch.alpine.ascony.dat.ControlPosSe2;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorPair;
