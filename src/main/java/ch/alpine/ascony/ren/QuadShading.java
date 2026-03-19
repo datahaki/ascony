@@ -18,5 +18,10 @@ import ch.alpine.tensor.num.Pi;
     }
   };
 
+  /** @param po
+   * @param p0
+   * @param p1
+   * @param pd
+   * @return */
   public abstract Scalar map(Tensor po, Tensor p0, Tensor p1, Tensor pd);
 }

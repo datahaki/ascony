@@ -46,11 +46,18 @@ public record SurfaceMeshRender(SurfaceMesh surfaceMesh, ColorDataGradient color
         Tensor x = polygon.get(0);
         Tensor y = polygon.get(1);
         Tensor z = polygon.get(2);
-        Tensor nrm = Cross.of(x.subtract(z), y.subtract(z));
-        nrm = NORMALIZE_UNLESS_ZERO.apply(nrm);
-        Scalar s = Clips.unit().apply((Scalar) REF.dot(nrm));
-        Tensor rgba = colorDataGradient.apply(s);
-        Color color = ColorFormat.toColor(rgba);
+        final Color color;
+        if (x.length() == 3) {
+          Tensor nrm = Cross.of(x.subtract(z), y.subtract(z));
+          nrm = NORMALIZE_UNLESS_ZERO.apply(nrm);
+          Scalar s = Clips.unit().apply((Scalar) REF.dot(nrm));
+          Tensor rgba = colorDataGradient.apply(s);
+          color = ColorFormat.toColor(rgba);
+        } else {
+          Scalar s = QuadShading.ANGLE.map(z, x, y, null);
+          Tensor rgba = colorDataGradient.apply(s);
+          color = ColorFormat.toColor(rgba);
+        }
         graphics.setColor(color);
         graphics.fill(path2d);
         graphics.setColor(COLOR_EDGE);
