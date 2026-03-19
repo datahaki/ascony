@@ -6,12 +6,12 @@ import java.awt.FlowLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
+import java.time.Duration;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -28,6 +28,9 @@ import ch.alpine.bridge.gfx.GeometricComponent;
 import ch.alpine.tensor.Throw;
 
 public class TimerFrame extends JFrame {
+  /** frame with repaint rate of 20[Hz] */
+  public static final ThreadLocal<Duration> THREAD_LOCAL = ThreadLocal.withInitial(() -> Duration.ofMillis(50));
+
   record TTWrap(TimerTask task, long delay, long period) {
     public void schedule(Timer timer) {
       timer.schedule(task, delay, period);
@@ -42,11 +45,6 @@ public class TimerFrame extends JFrame {
 
   /** frame with repaint rate of 20[Hz] */
   public TimerFrame() {
-    this(50, TimeUnit.MILLISECONDS);
-  }
-
-  /** @param period between repaint invocations */
-  public TimerFrame(int period, TimeUnit timeUnit) {
     setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     jToolBar.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 0));
     jToolBar.setFloatable(false);
@@ -69,7 +67,7 @@ public class TimerFrame extends JFrame {
             geometricComponent.repaint();
           }
         };
-        timer.schedule(timerTask, 100, TimeUnit.MILLISECONDS.convert(period, timeUnit));
+        timer.schedule(timerTask, 100, THREAD_LOCAL.get().toMillis());
       }
     });
     // DO NOT SIMPLIFY THIS LINE !!!
