@@ -25,8 +25,8 @@ public record GridRender(Supplier<Dimension> supplier) implements RenderInterfac
       if (optional.isPresent()) {
         Rectangle rectangle = optional.orElseThrow();
         CoordinateBoundingBox cbb = geometricLayer.fromRectangle(rectangle).orElseThrow();
-        ShowableConfig showableConfig = ShowableConfig.yDecr(rectangle, cbb); // TODO non general ?!?!
-        new GridDrawer().render(showableConfig, graphics);
+        // the choice of yDecr is mostly correct but not entirely general
+        new GridDrawer().render(ShowableConfig.yDecr(rectangle, cbb), graphics);
       }
     } else {
       graphics.setColor(Color.RED);
