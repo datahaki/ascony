@@ -1,10 +1,10 @@
 // code by jph
 package ch.alpine.ascony.api;
 
-import ch.alpine.sophis.crv.d2.TripleReduceExtrapolation;
 import ch.alpine.sophus.lie.rn.RnLineDistance;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.sca.ply.TripleReduceExtrapolation;
 
 // TODO ASCONA name is not good
 public enum RnLineTrim {
