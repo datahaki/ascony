@@ -2,6 +2,8 @@
 package ch.alpine.ascony.win;
 
 import java.awt.Graphics2D;
+import java.util.Collection;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -31,7 +33,7 @@ public abstract class ManifoldDisplayDemo extends AbstractDemo implements Render
   @SafeVarargs
   protected ManifoldDisplayDemo(Object... objects) {
     super(objects);
-    list = permitted_manifoldDisplays();
+    list = EnumSet.copyOf(permitted_manifoldDisplays()).stream().toList();
     selected_manifoldDisplays = list.getFirst();
     final GeometricComponent geometricComponent = geometricComponent();
     geometricComponent.addRenderInterfaceBackground(new RenderInterface() {
@@ -83,5 +85,5 @@ public abstract class ManifoldDisplayDemo extends AbstractDemo implements Render
   }
 
   /** @return */
-  protected abstract List<ManifoldDisplays> permitted_manifoldDisplays();
+  protected abstract Collection<ManifoldDisplays> permitted_manifoldDisplays();
 }

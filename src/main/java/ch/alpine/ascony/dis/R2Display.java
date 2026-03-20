@@ -15,11 +15,6 @@ public class R2Display extends RnDisplay {
   }
 
   @Override
-  public Tensor uvw2log(Tensor xya) {
-    return xya.extract(0, 2);
-  }
-
-  @Override
   public D2Raster d2Raster() {
     return new D2Raster() {
       @Override

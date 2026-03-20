@@ -2,13 +2,15 @@
 package ch.alpine.ascony.dis;
 
 import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.function.Predicate;
 
 import ch.alpine.ascony.msh.D2Raster;
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.sophus.api.MetricManifold;
-import ch.alpine.sophus.hs.HomogeneousSpace;
 
 public enum ManifoldDisplays {
   ClC(Se2CoveringClothoidDisplay.INSTANCE),
@@ -21,6 +23,7 @@ public enum ManifoldDisplays {
   Spd2(Spd2Display.INSTANCE),
   R1(R1Display.INSTANCE),
   R2(R2Display.INSTANCE),
+  R3(R3Display.INSTANCE),
   S1(S1Display.INSTANCE),
   S2(S2Display.INSTANCE),
   Rp2(Rp2Display.INSTANCE),
@@ -41,20 +44,18 @@ public enum ManifoldDisplays {
     return manifoldDisplay;
   }
 
-  public static final List<ManifoldDisplays> ALL = List.of(values());
+  public static List<ManifoldDisplays> filter(Predicate<ManifoldDisplay> predicate) {
+    return Arrays.stream(values()).filter(md -> predicate.test(md.manifoldDisplay())).toList();
+  }
 
   /** requires biinvariant() */
   public static List<ManifoldDisplays> metricManifolds() {
-    return Arrays.stream(values()) //
-        .filter(md -> md.manifoldDisplay().geodesicSpace() instanceof MetricManifold) //
-        .toList();
+    return filter(md -> md.geodesicSpace() instanceof MetricManifold);
   }
 
   /** manifolds */
   public static List<ManifoldDisplays> manifolds() {
-    return Arrays.stream(values()) //
-        .filter(md -> md.manifoldDisplay().geodesicSpace() instanceof Manifold) //
-        .toList();
+    return filter(md -> Objects.nonNull(md.manifold()));
   }
 
   public static List<ManifoldDisplays> manifolds2DimOrMore() {
@@ -66,17 +67,13 @@ public enum ManifoldDisplays {
 
   /** homogeneous spaces (have biinvariant mean) */
   public static List<ManifoldDisplays> homogeneousSpaces() {
-    return Arrays.stream(values()) //
-        .filter(md -> md.manifoldDisplay().geodesicSpace() instanceof HomogeneousSpace) //
-        .toList();
+    return filter(md -> Objects.nonNull(md.homogeneousSpace()));
   }
 
   // ---
   /** implement {@link D2Raster} */
   public static List<ManifoldDisplays> d2Rasters() {
-    return Arrays.stream(values()) //
-        .filter(md -> Objects.nonNull(md.manifoldDisplay().d2Raster())) //
-        .toList();
+    return filter(md -> Objects.nonNull(md.d2Raster()));
   }
 
   /** implement {@link D2Raster} */
@@ -103,35 +100,30 @@ public enum ManifoldDisplays {
   }
 
   // ---
-  public static final List<ManifoldDisplays> S2_RP2 = List.of(S2, Rp2);
-  public static final List<ManifoldDisplays> S2_TYPES = List.of(S2, Rp2, So3);
-  public static final List<ManifoldDisplays> R2_ONLY = List.of(R2);
-  public static final List<ManifoldDisplays> R2_S2 = List.of(R2, S2);
-  public static final List<ManifoldDisplays> R2_H2_S2_SE2C = List.of(R2, H2, S2, Se2C);
-  public static final List<ManifoldDisplays> DEFORM_2D = List.of(R2, H2, S2, Se2C, Se2);
-  public static final List<ManifoldDisplays> SE2C_R2 = List.of(Se2C, R2);
+  public static final Set<ManifoldDisplays> ALL = EnumSet.allOf(ManifoldDisplays.class);
+  public static final Set<ManifoldDisplays> S2_RP2 = EnumSet.of(S2, Rp2);
+  public static final Set<ManifoldDisplays> S2_TYPES = EnumSet.of(S2, Rp2, So3);
+  public static final Set<ManifoldDisplays> R2_ONLY = EnumSet.of(R2);
+  public static final Set<ManifoldDisplays> R2_S2 = EnumSet.of(R2, S2);
+  public static final Set<ManifoldDisplays> R2_H2_S2_SE2C = EnumSet.of(Se2C, R2, H2, S2);
+  public static final Set<ManifoldDisplays> DEFORM_2D = EnumSet.of(Se2C, Se2, R2, H2, S2);
+  public static final Set<ManifoldDisplays> SE2C_R2 = EnumSet.of(Se2C, R2);
   // ---
   /** for dubins */
-  public static final List<ManifoldDisplays> SE2_ONLY = List.of(Se2);
-  public static final List<ManifoldDisplays> SE2_R2_S2 = List.of(Se2, R2, S2);
-  public static final List<ManifoldDisplays> SE2C_R2_S2 = List.of(Se2C, R2, S2);
-  public static final List<ManifoldDisplays> SE2C_R2_H2 = List.of(Se2C, R2, H2);
+  public static final Set<ManifoldDisplays> SE2_ONLY = EnumSet.of(Se2);
+  public static final Set<ManifoldDisplays> SE2_R2_S2 = EnumSet.of(Se2, R2, S2);
+  public static final Set<ManifoldDisplays> SE2C_R2_S2 = EnumSet.of(Se2C, R2, S2);
+  public static final Set<ManifoldDisplays> SE2C_R2_H2 = EnumSet.of(Se2C, R2, H2);
+  public static final Set<ManifoldDisplays> SE2C_R3 = EnumSet.of(Se2C, R3);
   // ---
   /** for gokart data */
-  public static final List<ManifoldDisplays> SE2_R2 = List.of( //
-      Se2, //
-      R2);
+  public static final Set<ManifoldDisplays> SE2_R2 = EnumSet.of(Se2, R2);
   // ---
-  public static final List<ManifoldDisplays> SE2C_SE2_R2 = List.of( //
-      Se2C, //
-      Se2, //
-      R2);
+  public static final Set<ManifoldDisplays> SE2C_SE2_R2 = EnumSet.of(Se2C, Se2, R2);
   // ---
-  public static final List<ManifoldDisplays> SE2C_SE2 = List.of( //
-      Se2C, //
-      Se2);
+  public static final Set<ManifoldDisplays> SE2C_SE2 = EnumSet.of(Se2C, Se2);
   // ---
-  public static final List<ManifoldDisplays> S2_ONLY = List.of(S2);
-  public static final List<ManifoldDisplays> CLA_ONLY = List.of(ClA);
-  public static final List<ManifoldDisplays> CLC_ONLY = List.of(ClC);
+  public static final Set<ManifoldDisplays> S2_ONLY = EnumSet.of(S2);
+  public static final Set<ManifoldDisplays> CLA_ONLY = EnumSet.of(ClA);
+  public static final Set<ManifoldDisplays> CLC_ONLY = EnumSet.of(ClC);
 }

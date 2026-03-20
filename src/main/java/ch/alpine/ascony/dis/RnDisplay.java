@@ -67,6 +67,11 @@ public abstract class RnDisplay implements ManifoldDisplay, Serializable {
     return xya.extract(0, dimensions);
   }
 
+  @Override
+  public final Tensor uvw2log(Tensor xya) {
+    return xya.extract(0, dimensions);
+  }
+
   @Override // from ManifoldDisplay
   public final Tensor matrixLift(Tensor p) {
     return Se2Matrix.translation(point2xy(p));
