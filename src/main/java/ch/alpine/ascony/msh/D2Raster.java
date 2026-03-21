@@ -3,6 +3,7 @@ package ch.alpine.ascony.msh;
 
 import java.util.Optional;
 
+import ch.alpine.bridge.fig.Meshgrid;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.io.ImageFormat;
@@ -16,7 +17,7 @@ public abstract class D2Raster {
    * input to {@link Rescale}, and {@link ImageFormat}.
    * @see ArrayFunction */
   public final <T extends Tensor> Tensor of(ArrayFunction<T> arrayFunction, CoordinateBoundingBox cbb, int resolution) {
-    return new Meshgrid(cbb, resolution).image(xy -> arrayFunction.apply(d2lift(xy)));
+    return Meshgrid.of(cbb, resolution).image(xy -> arrayFunction.apply(d2lift(xy)));
   }
 
   /** in some simple cases the implementation is just
