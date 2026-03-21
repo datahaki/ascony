@@ -14,5 +14,10 @@ public enum RnLineTrim {
     protected Scalar reduce(Tensor p, Tensor q, Tensor r) {
       return RnLineDistance.INSTANCE.distanceToLine(p, r).distance(q);
     }
+
+    @Override
+    protected Tensor petite(Tensor sequence) {
+      return sequence.copy();
+    };
   };
 }
