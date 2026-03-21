@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.ascony.ren;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 
 import ch.alpine.bridge.gfx.GeometricLayer;
@@ -15,7 +14,6 @@ import ch.alpine.tensor.Unprotect;
 
 public enum Curvature2DRender {
   ;
-  private static final Color COLOR_CURVATURE_COMB = new Color(0, 0, 0, 128);
   private static final Scalar COMB_SCALE = DoubleScalar.of(-1);
 
   /** @param curve {{x0, y0}, {x1, y1}, ...}
