@@ -2,9 +2,11 @@
 package ch.alpine.ascony.win;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -13,11 +15,13 @@ import javax.swing.JTabbedPane;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
+import ch.alpine.bridge.awt.AwtUtil;
 import ch.alpine.bridge.gfx.GeometricComponent;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.PvmBuilder;
 import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.bridge.util.CopyOnWriteLinkedSet;
+import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 
@@ -57,6 +61,28 @@ public abstract class ManifoldDisplayDemo extends AbstractDemo implements Render
     geometricComponent.addRenderInterface(this);
     Tensor pvm = PvmBuilder.rhs().setOffset(300, 300).setPerPixel(RealScalar.of(100)).digest();
     geometricComponent.setModel2Pixel(pvm);
+    {
+      addChangeListener(new Consumer<ManifoldDisplays>() {
+        Tensor prev = null;
+
+        @Override
+        public void accept(ManifoldDisplays md) {
+          if (ManifoldDisplays.S2_RP2.contains(md)) {
+            Point point = AwtUtil.center(getSize());
+            int w = Math.min(point.x, point.y);
+            // TODO perhaps store PVM per MD !?
+            prev = geometricComponent.getModel2Pixel();
+            Tensor pvm = PvmBuilder.rhs().setOffset(point.x, point.y).setPerPixel(Rational.of(w * 3, 4)).digest();
+            geometricComponent.setModel2Pixel(pvm);
+          } else {
+            if (Objects.nonNull(prev)) {
+              geometricComponent.setModel2Pixel(prev);
+              prev = null;
+            }
+          }
+        }
+      });
+    }
   }
 
   protected final void addChangeListener(Consumer<ManifoldDisplays> consumer) {

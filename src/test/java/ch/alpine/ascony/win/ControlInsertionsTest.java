@@ -9,7 +9,7 @@ import ch.alpine.sophus.lie.rn.RGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 
-class ControlMidpointsTest {
+class ControlInsertionsTest {
   @Test
   void testSimple() {
     Tensor tensor = ControlInsertions.of(RGroup.INSTANCE, Tensors.vector(1, 2, 3));

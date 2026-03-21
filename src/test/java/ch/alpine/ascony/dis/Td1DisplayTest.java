@@ -7,7 +7,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.mat.Tolerance;
 
-class T1dDisplayTest {
+class Td1DisplayTest {
   @Test
   void test() {
     Tensor xya = Tensors.vector(-1, -2, -3);

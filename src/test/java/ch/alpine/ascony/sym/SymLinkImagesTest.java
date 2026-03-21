@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.awt.image.BufferedImage;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 import ch.alpine.tensor.Rational;
 import ch.alpine.tensor.RealScalar;
@@ -13,11 +15,11 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.sca.win.WindowFunctions;
 
 class SymLinkImagesTest {
-  @Test
-  void testSmoothingKernel() {
-    for (WindowFunctions smoothingKernel : WindowFunctions.values())
-      for (int radius = 0; radius < 5; ++radius)
-        SymLinkImages.ofGC(smoothingKernel.get(), radius);
+  @ParameterizedTest
+  @EnumSource
+  void testSmoothingKernel(WindowFunctions smoothingKernel) {
+    for (int radius = 0; radius < 5; ++radius)
+      SymLinkImages.ofGC(smoothingKernel.get(), radius);
   }
 
   @Test

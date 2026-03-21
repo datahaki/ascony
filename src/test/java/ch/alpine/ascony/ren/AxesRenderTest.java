@@ -16,8 +16,7 @@ class AxesRenderTest {
   void testSimple() {
     BufferedImage bi = ImageFormat.of(Array.zeros(100, 100, 4));
     Graphics2D graphics = bi.createGraphics();
-    AxesRender.INSTANCE.render( //
-        new GeometricLayer(IdentityMatrix.of(3)), graphics);
+    AxesRender.INSTANCE.render(new GeometricLayer(IdentityMatrix.of(3)), graphics);
     graphics.dispose();
   }
 }

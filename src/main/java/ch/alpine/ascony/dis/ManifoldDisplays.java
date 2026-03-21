@@ -114,7 +114,7 @@ public enum ManifoldDisplays {
   public static final Set<ManifoldDisplays> SE2_R2_S2 = EnumSet.of(Se2, R2, S2);
   public static final Set<ManifoldDisplays> SE2C_R2_S2 = EnumSet.of(Se2C, R2, S2);
   public static final Set<ManifoldDisplays> SE2C_R2_H2 = EnumSet.of(Se2C, R2, H2);
-  public static final Set<ManifoldDisplays> SE2C_R3 = EnumSet.of(Se2C, R3);
+  public static final Set<ManifoldDisplays> SE2C_R3_S2 = EnumSet.of(Se2C, R3, S2);
   // ---
   /** for gokart data */
   public static final Set<ManifoldDisplays> SE2_R2 = EnumSet.of(Se2, R2);

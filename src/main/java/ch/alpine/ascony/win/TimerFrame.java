@@ -68,6 +68,7 @@ public class TimerFrame extends JFrame {
           }
         };
         timer.schedule(timerTask, 100, THREAD_LOCAL.get().toMillis());
+        geometricComponent.showTimings();
       }
     });
     // DO NOT SIMPLIFY THIS LINE !!!

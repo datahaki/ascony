@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.util.List;
 import java.util.Objects;
@@ -15,8 +16,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
+import ch.alpine.sophus.api.Manifold;
 import ch.alpine.sophus.api.MetricManifold;
 import ch.alpine.sophus.hs.HomogeneousSpace;
+import ch.alpine.sophus.lie.se.SeNGroup;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
@@ -31,6 +34,40 @@ import ch.alpine.tensor.pdf.RandomSampleInterface;
 import ch.alpine.tensor.sca.Clips;
 
 class ManifoldDisplaysTest {
+  private static final SeNGroup SE2_MATRIX_GROUP = new SeNGroup(2);
+
+  @ParameterizedTest
+  @EnumSource
+  void testRandom(ManifoldDisplays manifoldDisplays) {
+    ManifoldDisplay md = manifoldDisplays.manifoldDisplay();
+    RandomSampleInterface randomSampleInterface = md.randomSampleInterface();
+    Objects.requireNonNull(randomSampleInterface);
+    Tensor p = RandomSample.of(randomSampleInterface);
+    Tensor xy = md.point2xy(p);
+    Tensor xya = md.point2xya(p);
+    VectorQ.requireLength(xy, 2);
+    VectorQ.requireLength(xya, 3);
+    Tensor matrix = md.matrixLift(p);
+    SE2_MATRIX_GROUP.isPointQ().require(matrix);
+  }
+
+  @ParameterizedTest
+  @EnumSource
+  void testSimple(ManifoldDisplays manifoldDisplays) {
+    ManifoldDisplay md = manifoldDisplays.manifoldDisplay();
+    Manifold manifold = md.manifold();
+    assumeTrue(Objects.nonNull(manifold));
+    RandomSampleInterface randomSampleInterface = md.randomSampleInterface();
+    Tensor p = RandomSample.of(randomSampleInterface);
+    manifold.isPointQ().require(p);
+    Tensor xy = md.point2xy(p);
+    Tensor xya = md.point2xya(p);
+    VectorQ.requireLength(xy, 2);
+    VectorQ.requireLength(xya, 3);
+    Tensor matrix = md.matrixLift(p);
+    SE2_MATRIX_GROUP.isPointQ().require(matrix);
+  }
+
   @Test
   void testSimple() {
     assertTrue(12 <= ManifoldDisplays.values().length);
