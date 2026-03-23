@@ -12,7 +12,7 @@ import ch.alpine.sophis.crv.BezierCurve;
 import ch.alpine.sophis.crv.clt.Clothoid;
 import ch.alpine.sophis.crv.clt.ClothoidBuilders;
 import ch.alpine.sophis.crv.d2.PolygonArea;
-import ch.alpine.sophis.crv.d2.alg.ConvexHull2D;
+import ch.alpine.sophis.hull.d2.ConvexHull2D;
 import ch.alpine.sophus.bm.LinearBiinvariantMean;
 import ch.alpine.sophus.lie.so2.ArcTan2D;
 import ch.alpine.tensor.Scalar;
