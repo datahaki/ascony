@@ -19,7 +19,7 @@ import ch.alpine.tensor.sca.Clips;
 public abstract class HnDisplay implements ManifoldDisplay, Serializable {
   private static final Tensor STAR_POINTS = StarPoints.of(6, 0.12, 0.04).unmodifiable();
   protected static final Clip CLIP = Clips.absolute(2.5);
-  static final TensorUnaryOperator LIFT = PadRight.zeros(3);
+  static final TensorUnaryOperator PAD_ZEROS_3 = PadRight.zeros(3);
   // ---
   private final int dimensions;
   private final Hyperboloid hyperboloid;

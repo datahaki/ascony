@@ -20,7 +20,7 @@ public class H2Display extends HnDisplay {
   @Override
   public Tensor point2xya(Tensor p) {
     // return LIFT.apply(new HWeierstrassCoordinate(p).toPoint());
-    return LIFT.apply(p);
+    return PAD_ZEROS_3.apply(p);
   }
 
   @Override // from ManifoldDisplay

@@ -18,7 +18,7 @@ public class H1Display extends HnDisplay {
 
   @Override
   public final Tensor point2xya(Tensor p) {
-    return LIFT.apply(new HWeierstrassCoordinate(p).toPoint());
+    return PAD_ZEROS_3.apply(new HWeierstrassCoordinate(p).toPoint());
     // return LIFT.apply(p);
   }
 

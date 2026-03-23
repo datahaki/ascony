@@ -26,7 +26,6 @@ import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 
 /** class is used in other projects outside of owl */
-// TODO ASCONA possibly provide option for cyclic midpoint indication (see R2Bary..Coord..Demo)
 public abstract class ManifoldDisplayDemo extends AbstractDemo implements RenderInterface {
   private final List<ManifoldDisplays> list;
   private final JTabbedPane jTabbedPane = new JTabbedPane(JTabbedPane.LEFT);
@@ -70,7 +69,6 @@ public abstract class ManifoldDisplayDemo extends AbstractDemo implements Render
           if (ManifoldDisplays.S2_RP2.contains(md)) {
             Point point = AwtUtil.center(getSize());
             int w = Math.min(point.x, point.y);
-            // TODO perhaps store PVM per MD !?
             prev = geometricComponent.getModel2Pixel();
             Tensor pvm = PvmBuilder.rhs().setOffset(point.x, point.y).setPerPixel(Rational.of(w * 3, 4)).digest();
             geometricComponent.setModel2Pixel(pvm);

@@ -17,7 +17,7 @@ public abstract class MovingDomain2D {
    * @param sedarim
    * @param domain */
   protected MovingDomain2D(Tensor weights) {
-    this.matrixArray = MatrixArray.wrap(weights);
+    this.matrixArray = MatrixArray.from(weights);
   }
 
   /** @param target
@@ -27,7 +27,7 @@ public abstract class MovingDomain2D {
   /** @return array of weights for visualization */
   public final Tensor arrayReshape_weights() {
     if (Objects.isNull(_wgs))
-      _wgs = ImageTiling.of(matrixArray.unwrap());
+      _wgs = ImageTiling.of(matrixArray.lift());
     return _wgs;
   }
 }

@@ -12,12 +12,12 @@ public record MatrixArray(Tensor[][] arrays) implements Serializable {
   /** @param tensor not necessarily with array structure
    * @return
    * @throws Exception if given tensor is not a list of vectors */
-  public static MatrixArray wrap(Tensor tensor) {
+  public static MatrixArray from(Tensor tensor) {
     return new MatrixArray(tensor.stream().map(MatrixArray::ofVector).toArray(Tensor[][]::new));
   }
 
   /** @return */
-  public Tensor unwrap() { // TODO function name not ideal
+  public Tensor lift() {
     return Tensor.of(Arrays.stream(arrays).map(Arrays::stream).map(Tensor::of));
   }
   // public Tensor map(TensorUnaryOperator tuo) {
@@ -37,12 +37,15 @@ public record MatrixArray(Tensor[][] arrays) implements Serializable {
     return arrays[i][j];
   }
 
-  public int rows() {
+  int rows() { // function not used
     return arrays.length;
   }
 
-  public int cols() {
-    return arrays[0].length;
+  int cols() { // function not used
+    int length = arrays[0].length;
+    if (Arrays.stream(arrays).skip(1).allMatch(entry -> entry.length == length))
+      return length;
+    throw new RuntimeException("not an array");
   }
 
   // helper function

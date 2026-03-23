@@ -8,19 +8,26 @@ import ch.alpine.tensor.Unprotect;
 
 public enum Thinning {
   ;
+  /** @param tensor
+   * @param delta
+   * @return */
   public static Tensor of(Tensor tensor, int delta) {
-    return Tensor.of(IntStream.range(0, tensor.length() / delta) //
-        .map(i -> i * delta) //
+    return Tensor.of(IntStream.iterate(0, i -> i + delta) //
+        .limit(tensor.length() / delta) //
         .mapToObj(tensor::get));
   }
 
+  /** @param forward
+   * @param dx
+   * @param dy
+   * @return list of references, i.e. NOT copies to input array */
   public static Tensor flatten(Tensor[][] forward, int dx, int dy) {
-    // TODO implementation
-    return Unprotect.using( //
-        IntStream.range(0, forward.length / dx) //
-            .boxed() //
-            .flatMap(i -> IntStream.range(0, forward[i * dx].length / dy) //
-                .mapToObj(j -> forward[i * dx][j * dy]))
-            .toList());
+    return Unprotect.using(IntStream.iterate(0, i -> i + dx) //
+        .limit(forward.length / dx) //
+        .boxed() //
+        .flatMap(i -> IntStream.iterate(0, j -> j + dy) //
+            .limit(forward[i].length / dy) //
+            .mapToObj(j -> forward[i][j]))
+        .toList());
   }
 }
