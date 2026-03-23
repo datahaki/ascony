@@ -4,6 +4,7 @@ package ch.alpine.ascony.ren;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.Optional;
@@ -21,7 +22,8 @@ public record GridRender(Supplier<Dimension> supplier) implements RenderInterfac
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     if (geometricLayer.isAxisAligned()) {
       Dimension dimension = supplier.get();
-      Optional<Rectangle> optional = Show.optionalDefaultInsets(dimension, graphics.getFont().getSize());
+      FontMetrics fontMetrics = graphics.getFontMetrics();
+      Optional<Rectangle> optional = Show.optionalDefaultInsets(dimension, fontMetrics);
       if (optional.isPresent()) {
         Rectangle rectangle = optional.orElseThrow();
         CoordinateBoundingBox cbb = geometricLayer.fromRectangle(rectangle).orElseThrow();
