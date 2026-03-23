@@ -1,10 +1,10 @@
 // code by jph
 package ch.alpine.ascony.dis;
 
-import ch.alpine.sophis.crv.clt.ClothoidBuilder;
-import ch.alpine.sophis.crv.clt.ClothoidBuilders;
 import ch.alpine.sophis.ts.ClothoidTransitionSpace;
 import ch.alpine.sophis.ts.TransitionSpace;
+import ch.alpine.sophus.clt.ClothoidBuilder;
+import ch.alpine.sophus.clt.ClothoidBuilders;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
 

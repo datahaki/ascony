@@ -3,11 +3,11 @@ package ch.alpine.ascony.api;
 
 import java.util.stream.IntStream;
 
-import ch.alpine.sophis.crv.clt.ClothoidBuilder;
-import ch.alpine.sophis.crv.clt.ClothoidBuilders;
 import ch.alpine.sophis.crv.d2.Extract2D;
 import ch.alpine.sophis.crv.d2.PolygonNormalize;
 import ch.alpine.sophis.ts.ClothoidTransition;
+import ch.alpine.sophus.clt.ClothoidBuilder;
+import ch.alpine.sophus.clt.ClothoidBuilders;
 import ch.alpine.sophus.lie.so2.So2;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
