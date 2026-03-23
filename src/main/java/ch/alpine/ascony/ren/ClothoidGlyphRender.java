@@ -3,9 +3,8 @@ package ch.alpine.ascony.ren;
 
 import java.awt.Graphics2D;
 import java.awt.Shape;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.PathIterator;
 
+import ch.alpine.ascony.dat.GlyphMesh;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.sophis.crv.BezierCurve;
@@ -13,6 +12,7 @@ import ch.alpine.sophis.crv.clt.Clothoid;
 import ch.alpine.sophis.crv.clt.ClothoidBuilders;
 import ch.alpine.sophis.crv.d2.PolygonArea;
 import ch.alpine.sophis.hull.d2.ConvexHull2D;
+import ch.alpine.sophis.srf.SurfaceMesh;
 import ch.alpine.sophus.bm.LinearBiinvariantMean;
 import ch.alpine.sophus.lie.so2.ArcTan2D;
 import ch.alpine.tensor.Scalar;
@@ -49,44 +49,35 @@ public record ClothoidGlyphRender(Shape shape, Tensor domain) implements RenderI
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    Tensor prev = null;
-    Tensor next = null;
-    Tensor stol = null;
-    Tensor last = null;
-    PathIterator pathIterator = shape.getPathIterator(new AffineTransform(1, 0, 0, -1, 0, 0));
-    float[] coords = new float[6];
-    while (!pathIterator.isDone()) {
-      switch (pathIterator.currentSegment(coords)) {
-      case PathIterator.SEG_MOVETO:
-        prev = Tensors.vector(coords[0], coords[1]);
-        break;
-      case PathIterator.SEG_LINETO: {
-        next = Tensors.vector(coords[0], coords[1]);
-        graphics.draw(geometricLayer.toLine2D(prev, next));
-        prev = next;
+    SurfaceMesh surfaceMesh = GlyphMesh.of(shape);
+    for (int[] face : surfaceMesh.faces()) {
+      switch (face.length) {
+      case 2: {
+        graphics.draw(geometricLayer.toLine2D( //
+            surfaceMesh.vrt.get(face[0]), //
+            surfaceMesh.vrt.get(face[1])));
         break;
       }
-      case PathIterator.SEG_QUADTO: {
-        next = Tensors.vector(coords[0], coords[1]);
-        last = Tensors.vector(coords[2], coords[3]);
-        ScalarTensorFunction stf = clothoid(prev, next, last);
+      case 3: {
+        ScalarTensorFunction stf = clothoid( //
+            surfaceMesh.vrt.get(face[0]), //
+            surfaceMesh.vrt.get(face[1]), //
+            surfaceMesh.vrt.get(face[2]));
         graphics.draw(geometricLayer.toPath2D(domain.maps(stf)));
-        prev = last;
         break;
       }
-      case PathIterator.SEG_CUBICTO: {
-        next = Tensors.vector(coords[0], coords[1]);
-        stol = Tensors.vector(coords[2], coords[3]);
-        last = Tensors.vector(coords[4], coords[5]);
-        ScalarTensorFunction stf = clothoid(prev, next, stol, last);
+      case 4: {
+        ScalarTensorFunction stf = clothoid( //
+            surfaceMesh.vrt.get(face[0]), //
+            surfaceMesh.vrt.get(face[1]), //
+            surfaceMesh.vrt.get(face[2]), //
+            surfaceMesh.vrt.get(face[3]));
         graphics.draw(geometricLayer.toPath2D(domain.maps(stf)));
-        prev = last;
         break;
       }
-      case PathIterator.SEG_CLOSE:
-        break;
+      default:
+        throw new IllegalArgumentException("Unexpected value: " + face.length);
       }
-      pathIterator.next();
     }
   }
 }
