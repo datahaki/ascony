@@ -3,6 +3,7 @@ package ch.alpine.ascony.msh;
 
 import ch.alpine.sophus.bm.BiinvariantMean;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.api.TensorUnaryOperator;
 
 /** Reference:
  * "Weighted Averages on Surfaces"
@@ -23,6 +24,13 @@ public class AveragedMovingDomain2D extends MovingDomain2D {
 
   @Override // from MovingDomain2D
   public Tensor[][] forward(Tensor target) {
-    return matrixArray.maps(w -> biinvariantMean.optional(target, w).orElse(fallback));
+    return matrixArray.maps(weights -> biinvariantMean.optional(target, weights).orElse(fallback));
+  }
+
+  /** @param target
+   * @param tuo for instance color extraction from image
+   * @return */
+  public Tensor forward(Tensor target, TensorUnaryOperator tuo) {
+    return matrixArray.maps_lift(weights -> biinvariantMean.optional(target, weights).map(tuo).orElse(fallback));
   }
 }

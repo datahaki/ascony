@@ -8,6 +8,7 @@ import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
 
 import ch.alpine.ascony.ren.ImageRender;
+import ch.alpine.bridge.fig.Meshgrid;
 import ch.alpine.bridge.gfx.AffineFrame2D;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.RenderInterface;
@@ -40,7 +41,7 @@ public class BufferedImageRegion implements MemberQ, BoundedRegion, RenderInterf
     imageRender = new ImageRender(bufferedImage, coordinateBoundingBox);
     width = bufferedImage.getWidth();
     height = bufferedImage.getHeight();
-    pixel2model = ImageRender.pixel2model(coordinateBoundingBox, width, height);
+    pixel2model = ImageRender.pixel2model(new Meshgrid(coordinateBoundingBox, width, height));
     // IO.println(Pretty.of(pixel2model.maps(Round._4)));
     // IO.println(Pretty.of(Inverse.of(pixel2model).maps(Round._4)));
     affineFrame = new AffineFrame2D(Inverse.of(pixel2model));
