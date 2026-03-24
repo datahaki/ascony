@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascony.win;
+package ch.alpine.ascony.dat;
 
 import java.util.Optional;
 

@@ -1,5 +1,5 @@
 // adapted from chatgpt
-package ch.alpine.ascony.win;
+package ch.alpine.ascony.img;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -12,7 +12,8 @@ import javax.swing.ImageIcon;
 
 import ch.alpine.bridge.awt.RenderQuality;
 
-public class RandomIconFactory {
+public enum RandomIconFactory {
+  ;
   public static Icon create(int seed, int size) {
     BufferedImage bufferedImage = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
     Graphics2D graphics = bufferedImage.createGraphics();
