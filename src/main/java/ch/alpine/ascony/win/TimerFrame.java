@@ -38,10 +38,12 @@ public class TimerFrame extends JFrame {
   }
 
   private final JPanel jPanel = new JPanel(new BorderLayout());
-  public final JToolBar jToolBar = new JToolBar();
-  public final GeometricComponent geometricComponent = new GeometricComponent();
-  private Timer timer = null;
+  private final JToolBar jToolBar = new JToolBar();
+  private final GeometricComponent geometricComponent = new GeometricComponent();
   private final List<TTWrap> list = new LinkedList<>();
+  /** timer thread will be creates only as frame is set
+   * to visible and canceled as frame is disposed */
+  private Timer timer = null;
 
   /** frame with repaint rate of 20[Hz] */
   public TimerFrame() {
@@ -75,6 +77,14 @@ public class TimerFrame extends JFrame {
     // the object "timer" is a mutable field !
     WindowClosed.runs(this, () -> timer.cancel());
     AwtUtil.ctrlW(this);
+  }
+
+  public final JToolBar jToolBar() {
+    return jToolBar;
+  }
+
+  public final GeometricComponent geometricComponent() {
+    return geometricComponent;
   }
 
   public final BufferedImage offscreen() {

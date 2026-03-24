@@ -19,4 +19,5 @@ public record ColorStroke(Color color, Stroke stroke) implements Serializable {
   public static final ColorStroke CURVATURE_COMB = new ColorStroke(new Color(0, 192, 0, 128), new BasicStroke());
   public static final ColorStroke TRACE = new ColorStroke(Color.LIGHT_GRAY, STROKE_GEODESIC);
   public static final ColorStroke CONVEX_HULL = new ColorStroke(COLOR_DATA_INDEXED.getColor(1), STROKE_GEODESIC);
+  public static final ColorStroke SPHERE_1 = new ColorStroke(new Color(192, 192, 192, 128), new BasicStroke());
 }

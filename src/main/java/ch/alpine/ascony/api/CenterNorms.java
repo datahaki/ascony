@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascony.msh;
+package ch.alpine.ascony.api;
 
 import ch.alpine.sophis.crv.d2.ex.Box2D;
 import ch.alpine.tensor.Tensor;

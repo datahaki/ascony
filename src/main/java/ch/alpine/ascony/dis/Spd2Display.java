@@ -23,7 +23,7 @@ public enum Spd2Display implements ManifoldDisplay {
   INSTANCE;
 
   // TODO ASCONA make as scale == 1 and zoom instead, or justify
-  private static final Scalar SCALE = RealScalar.of(0.2);
+  private static final Scalar SCALE = RealScalar.of(0.15);
   private static final Tensor CIRCLE_POINTS = CirclePoints.of(43).multiply(SCALE).unmodifiable();
   private static final TensorUnaryOperator PAD_RIGHT = PadRight.zeros(3, 3);
   private final SpdNManifold spdNManifold = new SpdNManifold(2);
@@ -98,7 +98,7 @@ public enum Spd2Display implements ManifoldDisplay {
 
   @Override // from ManifoldDisplay
   public RenderInterface background() {
-    return AxesRender.ONLYNULL;
+    return AxesRender.INSTANCE;
   }
 
   @Override

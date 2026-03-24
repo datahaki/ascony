@@ -21,7 +21,6 @@ public class So3Display implements ManifoldDisplay, Serializable {
   private static final Tensor TRIANGLE = CirclePoints.of(3).multiply(RealScalar.of(0.04)).unmodifiable();
   // ---
   public static final ManifoldDisplay INSTANCE = new So3Display();
-  // ---
 
   private So3Display() {
   }
