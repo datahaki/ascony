@@ -1,8 +1,6 @@
 // code by jph
 package ch.alpine.ascony.dis;
 
-import java.io.Serializable;
-
 import ch.alpine.ascony.api.Spearhead;
 import ch.alpine.ascony.ren.FixGridRender;
 import ch.alpine.bridge.gfx.RenderInterface;
@@ -18,7 +16,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
-public class Sl2Display implements ManifoldDisplay, Serializable {
+public class Sl2Display implements ManifoldDisplay {
   public static final ManifoldDisplay INSTANCE = new Sl2Display();
   private static final Scalar SCALE = RealScalar.of(0.1);
   // ---

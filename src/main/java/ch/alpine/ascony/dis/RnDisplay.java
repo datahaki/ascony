@@ -1,7 +1,6 @@
 // code by jph
 package ch.alpine.ascony.dis;
 
-import java.io.Serializable;
 import java.util.stream.Stream;
 
 import ch.alpine.ascony.ren.EmptyRender;
@@ -22,7 +21,7 @@ import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
-public abstract class RnDisplay implements ManifoldDisplay, Serializable {
+public abstract class RnDisplay implements ManifoldDisplay {
   /** the random samples function uses normal distribution, therefore
    * a clip of [-2.5, 2.5] captures the points typically generated */
   static final Clip CLIP = Clips.absolute(2.5);

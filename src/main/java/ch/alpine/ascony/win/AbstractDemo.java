@@ -23,6 +23,7 @@ public class AbstractDemo extends TimerFrame implements WindowProvider {
     }
   }
 
+  // ---
   private final Map<Object, FieldsEditor> map = new IdentityHashMap<>();
 
   protected AbstractDemo(Object... objects) {

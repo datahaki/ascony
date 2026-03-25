@@ -1,9 +1,7 @@
 // code by jph
 package ch.alpine.ascony.dis;
 
-import java.io.Serializable;
-
-import ch.alpine.ascony.crv.SpikeyPoly;
+import ch.alpine.ascony.crv.SpikyPoly;
 import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
@@ -17,8 +15,8 @@ import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.nrm.Vector2Norm;
 
 /** orthogonal 3 x 3 matrices */
-public class So3Display implements ManifoldDisplay, Serializable {
-  private static final Tensor TRIANGLE = SpikeyPoly.normal(RealScalar.of(0.003));
+public class So3Display implements ManifoldDisplay {
+  private static final Tensor SPIKY = SpikyPoly.normal(RealScalar.of(0.003));
   // ---
   public static final ManifoldDisplay INSTANCE = new So3Display();
 
@@ -32,7 +30,7 @@ public class So3Display implements ManifoldDisplay, Serializable {
 
   @Override // from ManifoldDisplay
   public Tensor shape() {
-    return TRIANGLE;
+    return SPIKY;
   }
 
   @Override

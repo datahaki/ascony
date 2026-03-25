@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.ascony.sym;
 
+import java.io.Serializable;
+
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
@@ -8,7 +10,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.itp.BinaryAverage;
 
 /** characterized by {@link #isNode()} == true */
-public record SymLinkLeaf(Scalar scalar, Tensor position) implements SymLink {
+public record SymLinkLeaf(Scalar scalar, Tensor position) implements SymLink, Serializable {
   @Override // from SymLink
   public Tensor position() {
     return Tensors.of(scalar, RealScalar.ZERO);

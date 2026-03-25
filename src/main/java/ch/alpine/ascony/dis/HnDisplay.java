@@ -1,8 +1,6 @@
 // code by jph
 package ch.alpine.ascony.dis;
 
-import java.io.Serializable;
-
 import ch.alpine.ascony.crv.StarPoints;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.LineDistance;
@@ -16,7 +14,7 @@ import ch.alpine.tensor.sca.Clip;
 import ch.alpine.tensor.sca.Clips;
 
 /** symmetric positive definite 2 x 2 matrices */
-public abstract class HnDisplay implements ManifoldDisplay, Serializable {
+public abstract class HnDisplay implements ManifoldDisplay {
   private static final Tensor STAR_POINTS = StarPoints.of(6, 0.12, 0.04).unmodifiable();
   protected static final Clip CLIP = Clips.absolute(2.5);
   static final TensorUnaryOperator PAD_ZEROS_3 = PadRight.zeros(3);

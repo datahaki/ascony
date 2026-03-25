@@ -1,6 +1,8 @@
 // code by jph
 package ch.alpine.ascony.sym;
 
+import java.io.Serializable;
+
 import ch.alpine.sophus.lie.rn.RGroup;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -9,7 +11,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.itp.BinaryAverage;
 import ch.alpine.tensor.red.Min;
 
-public record SymLinkPart(SymLink lP, SymLink lQ, Scalar lambda) implements SymLink {
+public record SymLinkPart(SymLink lP, SymLink lQ, Scalar lambda) implements SymLink, Serializable {
   private static final Scalar SHIFT_Y = RealScalar.of(0.5);
 
   @Override

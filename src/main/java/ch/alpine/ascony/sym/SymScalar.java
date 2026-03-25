@@ -1,12 +1,10 @@
 // code by jph
 package ch.alpine.ascony.sym;
 
-import java.io.Serializable;
-
 import ch.alpine.tensor.MultiplexScalar;
 import ch.alpine.tensor.Scalar;
 
-public sealed abstract class SymScalar extends MultiplexScalar implements Serializable //
+public sealed abstract class SymScalar extends MultiplexScalar  //
     permits SymScalarLeaf, SymScalarPart {
   /** @return recursive evaluation of this coordinate */
   protected abstract Scalar evaluate();

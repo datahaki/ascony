@@ -1,13 +1,14 @@
 // code by jph
 package ch.alpine.ascony.sym;
 
+import java.io.Serializable;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 
-final class SymScalarLeaf extends SymScalar {
+final class SymScalarLeaf extends SymScalar implements Serializable{
   /** @param index
    * @return */
   public static Scalar of(int index) {

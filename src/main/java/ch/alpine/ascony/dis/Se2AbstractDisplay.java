@@ -1,8 +1,6 @@
 // code by jph
 package ch.alpine.ascony.dis;
 
-import java.io.Serializable;
-
 import ch.alpine.ascony.crv.Arrowhead;
 import ch.alpine.ascony.ren.EmptyRender;
 import ch.alpine.bridge.gfx.RenderInterface;
@@ -10,7 +8,7 @@ import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
-public abstract class Se2AbstractDisplay implements ManifoldDisplay, Serializable {
+public abstract class Se2AbstractDisplay implements ManifoldDisplay {
   private static final Tensor ARROWHEAD = Arrowhead.of(0.3).unmodifiable();
 
   @Override // from ManifoldDisplay
