@@ -1,10 +1,10 @@
 // code by jph
 package ch.alpine.ascony.reg;
 
+import ch.alpine.ascony.crv.Box2D;
+import ch.alpine.ascony.crv.EllipsePoints;
 import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.sophis.crv.d2.Extract2D;
-import ch.alpine.sophis.crv.d2.ex.Box2D;
-import ch.alpine.sophis.crv.d2.ex.EllipsePoints;
 import ch.alpine.sophis.reg.BallRegion;
 import ch.alpine.sophis.reg.EllipsoidRegion;
 import ch.alpine.tensor.Scalar;

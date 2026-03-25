@@ -3,9 +3,9 @@ package ch.alpine.ascony.dis;
 
 import java.io.Serializable;
 
+import ch.alpine.ascony.crv.Arrowhead;
 import ch.alpine.ascony.ren.EmptyRender;
 import ch.alpine.bridge.gfx.RenderInterface;
-import ch.alpine.sophis.crv.d2.ex.Arrowhead;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;

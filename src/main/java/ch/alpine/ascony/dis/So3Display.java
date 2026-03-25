@@ -3,6 +3,7 @@ package ch.alpine.ascony.dis;
 
 import java.io.Serializable;
 
+import ch.alpine.ascony.crv.SpikeyPoly;
 import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
@@ -13,12 +14,11 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.nrm.Vector2Norm;
 
 /** orthogonal 3 x 3 matrices */
 public class So3Display implements ManifoldDisplay, Serializable {
-  private static final Tensor TRIANGLE = CirclePoints.of(3).multiply(RealScalar.of(0.04)).unmodifiable();
+  private static final Tensor TRIANGLE = SpikeyPoly.normal(RealScalar.of(0.003));
   // ---
   public static final ManifoldDisplay INSTANCE = new So3Display();
 

@@ -3,7 +3,7 @@ package ch.alpine.ascony.dis;
 
 import java.io.Serializable;
 
-import ch.alpine.sophis.crv.d2.ex.Arrowhead;
+import ch.alpine.ascony.crv.Arrowhead;
 import ch.alpine.sophus.lie.se2.Se2CoveringGroup;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.sophus.lie.so2.So2;

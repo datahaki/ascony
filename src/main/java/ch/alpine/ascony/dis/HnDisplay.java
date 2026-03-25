@@ -3,7 +3,7 @@ package ch.alpine.ascony.dis;
 
 import java.io.Serializable;
 
-import ch.alpine.sophis.crv.d2.ex.StarPoints;
+import ch.alpine.ascony.crv.StarPoints;
 import ch.alpine.sophus.api.GeodesicSpace;
 import ch.alpine.sophus.api.LineDistance;
 import ch.alpine.sophus.hs.h.HLineDistance;

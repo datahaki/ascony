@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.ascony.api;
 
-import ch.alpine.sophis.crv.d2.ex.Box2D;
+import ch.alpine.ascony.crv.Box2D;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.opt.nd.NdCenterInterface;
