@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.ascony.res;
 
+import java.awt.image.BufferedImage;
 import java.util.Collections;
 import java.util.List;
 
@@ -29,7 +30,11 @@ public class ResourceMapper {
     return lines;
   }
 
-  public Tensor importResource(String key) {
+  public Tensor importTensor(String key) {
     return Import.of(parent + key);
+  }
+
+  public BufferedImage importImage(String key) {
+    return ResourceData.bufferedImage(parent + key);
   }
 }

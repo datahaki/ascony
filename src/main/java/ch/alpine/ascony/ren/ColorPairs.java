@@ -1,12 +1,11 @@
-// code by jph
 package ch.alpine.ascony.ren;
 
 import java.awt.Color;
-import java.io.Serializable;
 
-import ch.alpine.bridge.awt.AwtUtil;
+import ch.alpine.bridge.gfx.ColorPair;
 
-public record ColorPair(Color fill, Color draw) implements Serializable {
+public enum ColorPairs {
+  ;
   /** scattered or sequential control points intended for manipulation by user */
   public static final ColorPair CONTROL_POINTS = new ColorPair(new Color(255, 128, 128, 64), new Color(255, 128, 128, 255));
   /** to highlight a single points for instance at a configurable parameter value */
@@ -37,15 +36,9 @@ public record ColorPair(Color fill, Color draw) implements Serializable {
   public static final ColorPair REGION = new ColorPair(new Color(230, 230, 230, 64), new Color(192, 192, 192, 128));
   // ---
   public static final ColorPair DEC = new ColorPair(new Color(255, 128, 128, 64), new Color(255, 128, 128, 255));
-  public static final ColorPair DED = new ColorPair(new Color(160, 160, 160, 160), Color.BLACK);
   public static final ColorPair ASD = new ColorPair(new Color(160, 160, 160, 192), Color.BLACK);
   public static final ColorPair ASC = new ColorPair(new Color(255, 128, 128, 32), new Color(255, 128, 128, 128));
   public static final ColorPair ASN = new ColorPair(new Color(255, 128, 128, 64), new Color(255, 128, 128, 255));
   public static final ColorPair TEXT = new ColorPair(Color.BLACK, new Color(255, 255, 255, 128));
-
-  public ColorPair solid() {
-    return new ColorPair( //
-        AwtUtil.withAlpha(fill, 255), //
-        AwtUtil.withAlpha(draw, 255));
-  }
+  public static final ColorPair DED = new ColorPair(new Color(160, 160, 160, 160), Color.BLACK);
 }

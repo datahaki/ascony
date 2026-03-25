@@ -1,6 +1,7 @@
 // code by jph
 package ch.alpine.ascony.ren;
 
+import ch.alpine.bridge.gfx.ColorPair;
 import ch.alpine.tensor.img.ColorDataIndexed;
 
 public class ColorPairIndexed {

@@ -15,9 +15,10 @@ import javax.swing.JButton;
 import ch.alpine.ascony.dat.Se2Pos;
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
-import ch.alpine.ascony.ren.ColorPair;
+import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.bridge.awt.AwtUtil;
+import ch.alpine.bridge.gfx.ColorPair;
 import ch.alpine.bridge.gfx.GeometricComponent;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.RenderInterface;
@@ -135,7 +136,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
         Optional<ArgMinValue> argMinValue = ArgMinValue.of(mouse_dist, getPositioningThreshold());
         Optional<Scalar> value = argMinValue.map(ArgMinValue::value);
         final boolean hold = value.isPresent() && isPositioningEnabled();
-        ColorPair colorPair = hold ? ColorPair.MOVEOFFER : ColorPair.INSERTION;
+        ColorPair colorPair = hold ? ColorPairs.MOVEOFFER : ColorPairs.INSERTION;
         graphics.setColor(colorPair.fill());
         Tensor posit = mouse;
         if (hold) {

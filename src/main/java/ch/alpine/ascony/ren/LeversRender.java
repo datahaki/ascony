@@ -18,7 +18,9 @@ import ch.alpine.ascony.dis.R2Display;
 import ch.alpine.ascony.dis.Rp2Display;
 import ch.alpine.ascony.dis.S2Display;
 import ch.alpine.ascony.dis.Se2AbstractDisplay;
+import ch.alpine.bridge.gfx.ColorPair;
 import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.TextContour;
 import ch.alpine.sophis.dv.Biinvariant;
 import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.sophis.dv.Sedarim;
@@ -136,11 +138,11 @@ public class LeversRender {
       {
         String string = (index + 1) + " ";
         pix -= fontMetrics.stringWidth(string);
-        textContour.draw(ColorPair.TEXT, string, pix, piy);
+        textContour.draw(ColorPairs.TEXT, string, pix, piy);
       }
       {
         pix -= fontMetrics.stringWidth(plabel);
-        textContour.draw(ColorPair.TEXT, plabel, pix, piy - fheight / 3);
+        textContour.draw(ColorPairs.TEXT, plabel, pix, piy - fheight / 3);
       }
       // ---
       geometricLayer.popMatrix();
@@ -166,7 +168,7 @@ public class LeversRender {
     {
       String string = xlabel + " ";
       pix -= fontMetrics.stringWidth(string);
-      textContour.draw(ColorPair.TEXT, string, pix, piy - fheight / 3);
+      textContour.draw(ColorPairs.TEXT, string, pix, piy - fheight / 3);
       // graphics.drawString(string, pix, piy - fheight / 3);
     }
     geometricLayer.popMatrix();
@@ -521,7 +523,7 @@ public class LeversRender {
   }
 
   public void renderSequence() {
-    renderSequence(ColorPair.CONTROL_POINTS);
+    renderSequence(ColorPairs.CONTROL_POINTS);
   }
 
   public void renderSequence(ColorPair colorPair) {
@@ -532,7 +534,7 @@ public class LeversRender {
   public void renderOrigin() {
     if (Objects.isNull(origin))
       return;
-    new PointsRender(ColorPair.ORIGIN, manifoldDisplay::matrixLift, shape, Tensors.of(origin)) //
+    new PointsRender(ColorPairs.ORIGIN, manifoldDisplay::matrixLift, shape, Tensors.of(origin)) //
         .render(geometricLayer, graphics);
   }
 

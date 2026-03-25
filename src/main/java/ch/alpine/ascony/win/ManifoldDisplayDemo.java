@@ -69,9 +69,12 @@ public abstract class ManifoldDisplayDemo extends AbstractDemo implements Render
           if (ManifoldDisplays.S2_RP2.contains(md)) {
             Point point = AwtUtil.center(geometricComponent().getSize());
             int w = Math.min(point.x, point.y);
-            prev = geometricComponent.getModel2Pixel();
-            Tensor pvm = PvmBuilder.rhs().setOffset(point.x, point.y).setPerPixel(Rational.of(w * 3, 4)).digest();
-            geometricComponent.setModel2Pixel(pvm);
+            if (0 < w) {
+              prev = geometricComponent.getModel2Pixel();
+              Tensor pvm = PvmBuilder.rhs().setOffset(point.x, point.y).setPerPixel(Rational.of(w * 3, 4)).digest();
+              geometricComponent.setModel2Pixel(pvm);
+            } else
+              IO.println("bypass since window degenerate");
           } else {
             if (Objects.nonNull(prev)) {
               geometricComponent.setModel2Pixel(prev);

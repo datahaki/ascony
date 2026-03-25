@@ -59,6 +59,7 @@ public class ResourceIndexBuilder {
 
   static void main() {
     Path path = HomeDirectory.Projects.resolve("ascona/src/main/resources/ch/alpine/ascona/gokart");
+    path = HomeDirectory.Projects.resolve("ascona/src/main/resources/ch/alpine/ascona/tile");
     ResourceIndexBuilder.of(path);
   }
 }
