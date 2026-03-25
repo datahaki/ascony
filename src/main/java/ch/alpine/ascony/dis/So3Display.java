@@ -5,14 +5,20 @@ import ch.alpine.ascony.crv.SpikyPoly;
 import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
-import ch.alpine.sophus.lie.so.So3Exponential;
 import ch.alpine.sophus.lie.so.So3Group;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
-import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
+import ch.alpine.tensor.Tensors;
+import ch.alpine.tensor.alg.Fold;
+import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.nrm.Vector2Norm;
+import ch.alpine.tensor.lie.rot.AngleVector;
+import ch.alpine.tensor.mat.IdentityMatrix;
+import ch.alpine.tensor.mat.pd.Orthogonalize;
+import ch.alpine.tensor.mat.re.Det;
+import ch.alpine.tensor.nrm.VectorAngle;
+import ch.alpine.tensor.sca.Sign;
 
 /** orthogonal 3 x 3 matrices */
 public class So3Display implements ManifoldDisplay {
@@ -45,16 +51,20 @@ public class So3Display implements ManifoldDisplay {
 
   @Override // from ManifoldDisplay
   public Tensor xya2point(Tensor xya) {
-    Tensor axis = xya;
-    Scalar norm = Vector2Norm.of(axis);
-    if (Scalars.lessThan(RealScalar.ONE, norm))
-      axis = axis.divide(norm);
-    return So3Exponential.vectorExp(axis);
+    Tensor nrm = S2Display.INSTANCE.xya2point(xya.extract(0, 2).append(RealScalar.ZERO));
+    Tensor ang = AngleVector.of(xya.Get(2)).append(RealScalar.ZERO);
+    Tensor matrix = Fold.of(Tensor::append, Tensors.of(nrm, ang), IdentityMatrix.of(3));
+    Tensor mat = Tensor.of(Orthogonalize.of(matrix).stream().limit(3));
+    if (Sign.isNegative(Det.of(mat)))
+      mat.set(Tensor::negate, 2);
+    return mat;
   }
 
   @Override // from ManifoldDisplay
   public Tensor point2xya(Tensor p) {
-    return So3Exponential.vector_log(p);
+    Tensor xy = p.get(0).extract(0, 2);
+    Scalar a = VectorAngle.of(p.get(1), UnitVector.of(3, 0)).orElse(RealScalar.ZERO);
+    return xy.append(a);
   }
 
   @Override // from ManifoldDisplay
