@@ -3,22 +3,17 @@ package ch.alpine.ascony.dis;
 
 import ch.alpine.ascony.crv.SpikyPoly;
 import ch.alpine.bridge.gfx.RenderInterface;
+import ch.alpine.sophus.hs.s.SnRotationMatrix;
 import ch.alpine.sophus.lie.LieGroup;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
+import ch.alpine.sophus.lie.so.So3Exponential;
 import ch.alpine.sophus.lie.so.So3Group;
 import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Tensors;
-import ch.alpine.tensor.alg.Fold;
+import ch.alpine.tensor.alg.Dot;
+import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.lie.rot.AngleVector;
-import ch.alpine.tensor.mat.IdentityMatrix;
-import ch.alpine.tensor.mat.pd.Orthogonalize;
-import ch.alpine.tensor.mat.re.Det;
-import ch.alpine.tensor.nrm.VectorAngle;
-import ch.alpine.tensor.sca.Sign;
 
 /** orthogonal 3 x 3 matrices */
 public class So3Display implements ManifoldDisplay {
@@ -51,20 +46,33 @@ public class So3Display implements ManifoldDisplay {
 
   @Override // from ManifoldDisplay
   public Tensor xya2point(Tensor xya) {
-    Tensor nrm = S2Display.INSTANCE.xya2point(xya.extract(0, 2).append(RealScalar.ZERO));
-    Tensor ang = AngleVector.of(xya.Get(2)).append(RealScalar.ZERO);
-    Tensor matrix = Fold.of(Tensor::append, Tensors.of(nrm, ang), IdentityMatrix.of(3));
-    Tensor mat = Tensor.of(Orthogonalize.of(matrix).stream().limit(3));
-    if (Sign.isNegative(Det.of(mat)))
-      mat.set(Tensor::negate, 2);
-    return mat;
+    Tensor p = UnitVector.of(3, 2);
+    Tensor q = S2Display.INSTANCE.xya2point(xya.extract(0, 2).append(RealScalar.ZERO));
+    Tensor ang = So3Exponential.vectorExp(p.multiply(xya.Get(2).negate()));
+    // Tolerance.CHOP.requireClose(p, ang.dot(p));
+    Tensor rpq = SnRotationMatrix.of(q, p);
+    // Tolerance.CHOP.requireClose(p, rpq.dot(q));
+    Tensor res = Dot.of(ang, rpq);
+    // Tolerance.CHOP.requireClose(p, res.dot(q));
+    return Transpose.of(res);
   }
 
   @Override // from ManifoldDisplay
   public Tensor point2xya(Tensor p) {
-    Tensor xy = p.get(0).extract(0, 2);
-    Scalar a = VectorAngle.of(p.get(1), UnitVector.of(3, 0)).orElse(RealScalar.ZERO);
-    return xy.append(a);
+    Tensor u = UnitVector.of(3, 2);
+    Tensor v = p.get(Tensor.ALL, 2);
+    // IO.println("q=" + q);
+    Tensor rpq = SnRotationMatrix.of(v, u);
+    Tensor ang = rpq.dot(p);
+    // IO.println("ANG=" + Pretty.of(ang));
+    Tensor vec = So3Exponential.INSTANCE.vectorLog().apply(ang);
+    // IO.println("vec=" + vec);
+    // Tensor q = UnitVector.of(3, 2);
+    // Tensor q = S2Display.INSTANCE.xya2point(xya.extract(0, 2).append(RealScalar.ZERO));
+    // Tensor ang = So3Exponential.vectorExp(p.multiply(xya.Get(2)));
+    // Tensor rpq = SnRotationMatrix.of(p, q);
+    // return Dot.of(ang, rpq);
+    return v.extract(0, 2).append(vec.Get(2));
   }
 
   @Override // from ManifoldDisplay
@@ -73,8 +81,8 @@ public class So3Display implements ManifoldDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public Tensor matrixLift(Tensor xyz) {
-    return Se2Matrix.translation(point2xy(xyz));
+  public Tensor matrixLift(Tensor p) {
+    return Se2Matrix.of(point2xya(p));
   }
 
   @Override

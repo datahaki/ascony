@@ -8,7 +8,7 @@ import java.util.function.UnaryOperator;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
 
-final class SymScalarLeaf extends SymScalar implements Serializable{
+final class SymScalarLeaf extends SymScalar implements Serializable {
   /** @param index
    * @return */
   public static Scalar of(int index) {

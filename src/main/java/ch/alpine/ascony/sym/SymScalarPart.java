@@ -9,7 +9,7 @@ import ch.alpine.sophus.lie.rn.RGroup;
 import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensors;
 
-final class SymScalarPart extends SymScalar implements Serializable{
+final class SymScalarPart extends SymScalar implements Serializable {
   private final SymScalar p;
   private final SymScalar q;
   private final Scalar ratio;
