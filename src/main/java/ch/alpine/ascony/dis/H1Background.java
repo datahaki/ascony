@@ -12,7 +12,7 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.sca.pow.Power;
 
-/* package */ enum H1Background implements RenderInterface {
+enum H1Background implements RenderInterface {
   INSTANCE;
 
   private static final Color BORDER = new Color(192, 192, 192, 128);

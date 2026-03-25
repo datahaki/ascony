@@ -43,7 +43,7 @@ public class Rp2Display extends RpnDisplay {
 
   /** @param xyz normalized vector
    * @return 2 x 3 matrix with rows spanning the space tangent to given xyz */
-  /* package */ static Tensor tangentSpace(Tensor xyz) {
+  static Tensor tangentSpace(Tensor xyz) {
     return Orthogonalize.of(Join.of(Tensors.of(xyz), ID3)).extract(1, 3);
   }
 

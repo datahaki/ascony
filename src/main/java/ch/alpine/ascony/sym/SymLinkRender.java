@@ -19,7 +19,7 @@ import ch.alpine.tensor.chq.ExactScalarQ;
 import ch.alpine.tensor.lie.rot.CirclePoints;
 import ch.alpine.tensor.sca.Round;
 
-/* package */ class SymLinkRender implements RenderInterface {
+class SymLinkRender implements RenderInterface {
   static final Tensor CIRCLE_END = CirclePoints.of(51).multiply(RealScalar.of(0.066));
   private static final Tensor CIRCLE_MID = CirclePoints.of(21).multiply(RealScalar.of(0.033));
   // ---

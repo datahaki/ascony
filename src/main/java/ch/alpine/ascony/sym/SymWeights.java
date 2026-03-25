@@ -7,7 +7,7 @@ import ch.alpine.tensor.Scalars;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
 
-/* package */ class SymWeights {
+class SymWeights {
   public static Tensor of(SymScalar root) {
     return new SymWeights(root).vector();
   }

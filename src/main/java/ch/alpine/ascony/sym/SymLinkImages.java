@@ -34,7 +34,7 @@ public enum SymLinkImages {
     return symLinkImage;
   }
 
-  /* package */ public static SymLinkImage symLinkImageGBSF(int degree, int length, Scalar scalar) {
+  public static SymLinkImage symLinkImageGBSF(int degree, int length, Scalar scalar) {
     Tensor vector = SymSequence.of(length);
     ScalarTensorFunction scalarTensorFunction = GeodesicBSplineFunction.of(SymGeodesic.INSTANCE, degree, vector);
     Tensor tensor = scalarTensorFunction.apply(scalar);

@@ -15,7 +15,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Array;
 import ch.alpine.tensor.lie.rot.CirclePoints;
 
-/* package */ enum H2Background implements RenderInterface {
+enum H2Background implements RenderInterface {
   INSTANCE;
 
   private static final Tensor CIRCLE = CirclePoints.of(61);

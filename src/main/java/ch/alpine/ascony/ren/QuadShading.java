@@ -9,7 +9,7 @@ import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.nrm.VectorAngle;
 import ch.alpine.tensor.num.Pi;
 
-/* package */ enum QuadShading {
+enum QuadShading {
   ANGLE {
     @Override
     public Scalar map(Tensor po, Tensor p0, Tensor p1, Tensor pd) {

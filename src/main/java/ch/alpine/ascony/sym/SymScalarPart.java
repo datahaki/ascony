@@ -19,15 +19,15 @@ final class SymScalarPart extends SymScalar {
     this.ratio = ratio;
   }
 
-  /* package */ SymScalar getP() {
+  SymScalar getP() {
     return p;
   }
 
-  /* package */ SymScalar getQ() {
+  SymScalar getQ() {
     return q;
   }
 
-  /* package */ Scalar ratio() {
+  Scalar ratio() {
     return ratio;
   }
 

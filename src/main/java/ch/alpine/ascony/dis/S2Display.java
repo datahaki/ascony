@@ -57,7 +57,7 @@ public class S2Display extends SnDisplay {
 
   /** @param xyz normalized vector, point on 2-dimensional sphere
    * @return 2 x 3 matrix with rows spanning the space tangent to given xyz */
-  /* package */ static Tensor tangentSpace(Tensor xyz) {
+  static Tensor tangentSpace(Tensor xyz) {
     return NullSpace.of(Tensors.of(xyz));
   }
 
