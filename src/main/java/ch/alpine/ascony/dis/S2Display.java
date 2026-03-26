@@ -6,6 +6,7 @@ import java.util.Optional;
 import ch.alpine.ascony.crv.Box2D;
 import ch.alpine.ascony.msh.D2Raster;
 import ch.alpine.bridge.gfx.RenderInterface;
+import ch.alpine.sophus.hs.HsTransport;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
@@ -15,9 +16,12 @@ import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Append;
 import ch.alpine.tensor.alg.PadRight;
 import ch.alpine.tensor.alg.Transpose;
+import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.lie.rot.AngleVector;
+import ch.alpine.tensor.mat.IdentityMatrix;
 import ch.alpine.tensor.mat.NullSpace;
+import ch.alpine.tensor.mat.Tolerance;
 import ch.alpine.tensor.nrm.Vector2Norm;
 import ch.alpine.tensor.nrm.Vector2NormSquared;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
@@ -32,11 +36,15 @@ import ch.alpine.tensor.sca.pow.Sqrt;
 public class S2Display extends SnDisplay {
   private static final TensorUnaryOperator PAD_RIGHT = PadRight.zeros(3, 3);
   // ---
-  public static final ManifoldDisplay INSTANCE = new S2Display();
+  public static final S2Display INSTANCE = new S2Display();
+  private static final Tensor REF_PNT = UnitVector.of(3, 2);
+  private static final Tensor REF_BAS = IdentityMatrix.of(3).extract(0, 2);
+  private final HsTransport hsTransport;
 
   // ---
   private S2Display() {
     super(2);
+    hsTransport = homogeneousSpace().hsTransport();
   }
 
   @Override // from ManifoldDisplay
@@ -55,10 +63,12 @@ public class S2Display extends SnDisplay {
     return p.copy();
   }
 
-  /** @param xyz normalized vector, point on 2-dimensional sphere
+  /** @param xyz vector with Vector2Norm == 1, point on 2-dimensional sphere
    * @return 2 x 3 matrix with rows spanning the space tangent to given xyz */
-  static Tensor tangentSpace(Tensor xyz) {
-    return NullSpace.of(Tensors.of(xyz));
+  Tensor tangentSpace(Tensor xyz) {
+    if (Tolerance.CHOP.isClose(REF_PNT, xyz.negate()))
+      return NullSpace.of(Tensors.of(xyz));
+    return hsTransport.shift(REF_PNT, xyz).slash(REF_BAS);
   }
 
   @Override // from ManifoldDisplay
@@ -85,7 +95,7 @@ public class S2Display extends SnDisplay {
     return Optional.empty();
   }
 
-  private static final Clip CLIP_Z = Clips.interval(-2.5, 1);
+  private static final Clip PERSPECTIVE_Z = Clips.interval(-2.5, 1);
 
   @Override // from ManifoldDisplay
   public Tensor matrixLift(Tensor xyz) {
@@ -94,8 +104,9 @@ public class S2Display extends SnDisplay {
         frame.get(0).extract(0, 2), //
         frame.get(1).extract(0, 2))));
     skew.set(RealScalar.ONE, 2, 2);
-    Scalar r = CLIP_Z.rescale(xyz.Get(2));
+    Scalar r = PERSPECTIVE_Z.rescale(xyz.Get(2)); // shrink the frame
     skew = Times.of(Tensors.of(r, r, RealScalar.ONE), skew);
+    // IO.println(Pretty.of(skew.maps(Round._3)));
     return Se2Matrix.translation(point2xy(xyz)).dot(skew);
   }
 

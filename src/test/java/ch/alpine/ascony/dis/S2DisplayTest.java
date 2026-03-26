@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.RealScalar;
@@ -21,7 +20,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 class S2DisplayTest {
   @Test
   void testSimple() {
-    Tensor tensor = S2Display.tangentSpace(Tensors.vector(0, 1, 0));
+    Tensor tensor = S2Display.INSTANCE.tangentSpace(Tensors.vector(0, 1, 0));
     assertEquals(Dimensions.of(tensor), List.of(2, 3));
   }
 
@@ -36,25 +35,24 @@ class S2DisplayTest {
   @Test
   void testTangent() {
     Tensor xyz = Vector2Norm.NORMALIZE.apply(Tensors.vector(1, 0.3, 0.5));
-    Tensor matrix = S2Display.tangentSpace(xyz);
+    Tensor matrix = S2Display.INSTANCE.tangentSpace(xyz);
     assertEquals(Dimensions.of(matrix), List.of(2, 3));
     Tolerance.CHOP.requireAllZero(matrix.dot(xyz));
   }
 
   @Test
   void testProjTangent() {
-    S2Display s2GeodesicDisplay = (S2Display) S2Display.INSTANCE;
+    S2Display s2Display = S2Display.INSTANCE;
     for (int index = 0; index < 10; ++index) {
       Tensor xya = RandomVariate.of(NormalDistribution.standard(), 3);
-      Tensor xyz = s2GeodesicDisplay.xya2point(xya);
-      Tensor tan = s2GeodesicDisplay.createTangent(xya);
+      Tensor xyz = s2Display.xya2point(xya);
+      Tensor tan = s2Display.createTangent(xya);
       Tolerance.CHOP.requireAllZero(xyz.dot(tan));
     }
   }
 
-  @Disabled
   @Test
   void testFail() {
-    assertThrows(Exception.class, () -> S2Display.tangentSpace(Tensors.vector(1, 1, 1)));
+    assertThrows(Exception.class, () -> S2Display.INSTANCE.tangentSpace(Tensors.vector(1, 1, 1)));
   }
 }

@@ -91,6 +91,7 @@ public class Rp2Display extends RpnDisplay {
 
   @Override // from ManifoldDisplay
   public Tensor matrixLift(Tensor xyz) {
+    // TODO redundant to S2Display
     Tensor frame = tangentSpace(xyz);
     Tensor skew = PAD_RIGHT.apply(Transpose.of(Tensors.of( //
         frame.get(0).extract(0, 2), //
