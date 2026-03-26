@@ -51,7 +51,6 @@ public abstract class ManifoldDisplayDemo extends AbstractDemo implements Render
         jTabbedPane.addTab(manifoldDisplays.manifoldDisplay().geodesicSpace().toString(), new JPanel());
       jTabbedPane.addChangeListener(_ -> {
         ManifoldDisplays selected = list.get(jTabbedPane.getSelectedIndex());
-        // IO.println("INVOKED");
         listeners.forEach(listener -> listener.accept(selected));
       });
       jTabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
