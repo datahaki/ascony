@@ -37,42 +37,19 @@ public interface ManifoldDisplay {
 
   /** @return whether point is a vector and the first 2 entries
    * can be interpreted as a coordinate in the euclidean plane */
-  boolean isXYeuclid();
-
-  /** @return true for clothoids and se(2)s */
-  default boolean isDubins() {
-    return false;
+  default boolean isXYeuclid() {
+    return isDubins();
   }
 
   /** @param xya vector of length 3
    * @return control point */
   Tensor xya2point(Tensor xya);
 
-  default Tensor uvw2log(Tensor xya) {
-    throw new UnsupportedOperationException();
-  }
-
   /** pseudo-inverse to xya2point function
    * 
    * @param p
    * @return xya */
   Tensor point2xya(Tensor p);
-
-  default TensorUnaryOperator point2xya() {
-    return this::point2xya;
-  }
-
-  /** function is for drawing paths
-   * 
-   * @param p control point
-   * @return vector of length 2 with grid coordinates {x, y} */
-  default Tensor point2xy(Tensor p) {
-    return point2xya(p).extract(0, 2);
-  }
-
-  default TensorUnaryOperator point2xy() {
-    return this::point2xy;
-  }
 
   /** function is for drawing control points with proper orientation
    * 
@@ -85,6 +62,21 @@ public interface ManifoldDisplay {
    * @see LieGroup
    * @see ClothoidBuilder */
   GeodesicSpace geodesicSpace();
+
+  /** @param p
+   * @return operator that maps arbitrary dimension tangent vectors to 2d for display */
+  TensorUnaryOperator tangentProjectionM2P(Tensor p);
+
+  /** @return rendering of background, for instance a shaded sphere for S^2 */
+  RenderInterface background();
+
+  /** function is for drawing paths
+   * 
+   * @param p control point
+   * @return vector of length 2 with grid coordinates {x, y} */
+  default Tensor point2xy(Tensor p) {
+    return point2xya(p).extract(0, 2);
+  }
 
   default SpecificManifold manifold() {
     return geodesicSpace() instanceof SpecificManifold manifold //
@@ -108,12 +100,20 @@ public interface ManifoldDisplay {
     return new UniformTransitionSpace(geodesicSpace());
   }
 
-  /** @param p
-   * @return operator that maps arbitrary dimension tangent vectors to 2d for display */
-  TensorUnaryOperator tangentProjectionM2P(Tensor p);
-
   default LineDistance lineDistance() {
     return null;
+  }
+
+  default TensorUnaryOperator point2xy() {
+    return this::point2xy;
+  }
+
+  default Tensor uvw2log(Tensor xya) {
+    throw new UnsupportedOperationException();
+  }
+
+  default TensorUnaryOperator point2xya() {
+    return this::point2xya;
   }
 
   /** @return points in manifold that have to be {@link #point2xya(Tensor)}ed
@@ -122,8 +122,10 @@ public interface ManifoldDisplay {
     return manifold().randomSampleInterface();
   }
 
-  /** @return rendering of background, for instance a shaded sphere for S^2 */
-  RenderInterface background();
+  /** @return true for clothoids and se(2)s */
+  default boolean isDubins() {
+    return false;
+  }
 
   default RenderInterface showPoints(ColorPair colorPair, Scalar scale, Tensor points) {
     return new PointsRender(colorPair, this::matrixLift, shape().multiply(scale), points);

@@ -38,11 +38,6 @@ public class Sl2Display implements ManifoldDisplay {
   }
 
   @Override
-  public final boolean isXYeuclid() {
-    return false;
-  }
-
-  @Override
   public Tensor xya2point(Tensor xya) {
     return new Sl2Iwasawa(xya.Get(2), xya.Get(0).multiply(SCALE), xya.Get(1)).matrix();
   }

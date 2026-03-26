@@ -33,11 +33,6 @@ public class So3Display implements ManifoldDisplay {
     return SPIKY;
   }
 
-  @Override
-  public final boolean isXYeuclid() {
-    return false;
-  }
-
   @Override // from ManifoldDisplay
   public Tensor xya2point(Tensor xya) {
     // use the point on S^2 as rotation axis

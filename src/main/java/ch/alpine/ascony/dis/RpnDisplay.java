@@ -31,11 +31,6 @@ public abstract class RpnDisplay implements ManifoldDisplay {
     return CIRCLE;
   }
 
-  @Override
-  public final boolean isXYeuclid() {
-    return false;
-  }
-
   @Override // from ManifoldDisplay
   public final GeodesicSpace geodesicSpace() {
     return rpnManifold;

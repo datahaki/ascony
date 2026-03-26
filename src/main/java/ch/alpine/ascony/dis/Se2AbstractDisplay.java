@@ -32,11 +32,6 @@ public abstract class Se2AbstractDisplay implements ManifoldDisplay {
   }
 
   @Override
-  public final boolean isXYeuclid() {
-    return true;
-  }
-
-  @Override
   public final boolean isDubins() {
     return true;
   }

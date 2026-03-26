@@ -23,11 +23,6 @@ public abstract class R2S1AbstractDisplay implements ManifoldDisplay {
   }
 
   @Override
-  public final boolean isXYeuclid() {
-    return true;
-  }
-
-  @Override
   public final boolean isDubins() {
     return true;
   }
