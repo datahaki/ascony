@@ -34,7 +34,7 @@ public enum Spd2Display implements ManifoldDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public TensorUnaryOperator tangentProjection(Tensor p) {
+  public TensorUnaryOperator tangentProjectionM2P(Tensor p) {
     return null;
   }
 

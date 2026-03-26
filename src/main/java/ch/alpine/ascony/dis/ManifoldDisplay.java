@@ -108,7 +108,7 @@ public interface ManifoldDisplay {
 
   /** @param p
    * @return operator that maps arbitrary dimension tangent vectors to 2d for display */
-  TensorUnaryOperator tangentProjection(Tensor p);
+  TensorUnaryOperator tangentProjectionM2P(Tensor p);
 
   default LineDistance lineDistance() {
     return null;

@@ -47,7 +47,7 @@ public enum He1Display implements ManifoldDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public final TensorUnaryOperator tangentProjection(Tensor xyz) {
+  public final TensorUnaryOperator tangentProjectionM2P(Tensor xyz) {
     return null;
   }
 

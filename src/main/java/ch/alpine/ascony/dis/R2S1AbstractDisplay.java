@@ -45,7 +45,7 @@ public abstract class R2S1AbstractDisplay implements ManifoldDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public final TensorUnaryOperator tangentProjection(Tensor xyz) {
+  public final TensorUnaryOperator tangentProjectionM2P(Tensor xyz) {
     return null;
   }
 

@@ -34,7 +34,7 @@ public class S1Display extends SnDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public TensorUnaryOperator tangentProjection(Tensor p) {
+  public TensorUnaryOperator tangentProjectionM2P(Tensor p) {
     return null;
   }
 

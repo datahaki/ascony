@@ -24,7 +24,7 @@ public class H2Display extends HnDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public TensorUnaryOperator tangentProjection(Tensor xyz) {
+  public TensorUnaryOperator tangentProjectionM2P(Tensor xyz) {
     return v -> v;
   }
 

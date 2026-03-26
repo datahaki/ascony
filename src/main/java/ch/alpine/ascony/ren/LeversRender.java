@@ -266,7 +266,7 @@ public class LeversRender {
       geometricLayer.pushMatrix(manifoldDisplay.matrixLift(p));
       Tensor v = homogeneousSpace.tangentSpace(p).log(origin);
       graphics.setColor(COLOR_TANGENT);
-      TensorUnaryOperator tangentProjection = manifoldDisplay.tangentProjection(p);
+      TensorUnaryOperator tangentProjection = manifoldDisplay.tangentProjectionM2P(p);
       if (Objects.nonNull(tangentProjection))
         graphics.draw(geometricLayer.toLine2D(tangentProjection.apply(v)));
       // ---
@@ -289,7 +289,7 @@ public class LeversRender {
     geometricLayer.pushMatrix(manifoldDisplay.matrixLift(origin));
     graphics.setStroke(STROKE_TANGENT);
     graphics.setColor(COLOR_TANGENT);
-    TensorUnaryOperator tangentProjection = manifoldDisplay.tangentProjection(origin);
+    TensorUnaryOperator tangentProjection = manifoldDisplay.tangentProjectionM2P(origin);
     if (Objects.nonNull(tangentProjection))
       for (Tensor v : vs)
         graphics.draw(geometricLayer.toLine2D(tangentProjection.apply(v)));
@@ -309,7 +309,7 @@ public class LeversRender {
     Tensor vs = Tensor.of(sequence.stream().map(homogeneousSpace.tangentSpace(origin)::log));
     geometricLayer.pushMatrix(manifoldDisplay.matrixLift(origin));
     graphics.setStroke(STROKE_TANGENT);
-    TensorUnaryOperator tangentProjection = manifoldDisplay.tangentProjection(origin);
+    TensorUnaryOperator tangentProjection = manifoldDisplay.tangentProjectionM2P(origin);
     if (Objects.nonNull(tangentProjection)) {
       Tensor poly = Tensor.of(vs.stream().map(tangentProjection));
       Path2D path2d = geometricLayer.toPath2D(poly, true);

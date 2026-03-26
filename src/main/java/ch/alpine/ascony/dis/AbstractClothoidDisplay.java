@@ -40,7 +40,7 @@ public abstract class AbstractClothoidDisplay implements ManifoldDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public final TensorUnaryOperator tangentProjection(Tensor p) {
+  public final TensorUnaryOperator tangentProjectionM2P(Tensor p) {
     return v -> v.extract(0, 2);
   }
 

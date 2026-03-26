@@ -20,7 +20,7 @@ import ch.alpine.tensor.pdf.c.NormalDistribution;
 class S2DisplayTest {
   @Test
   void testSimple() {
-    Tensor tensor = S2Display.INSTANCE.tangentSpace(Tensors.vector(0, 1, 0));
+    Tensor tensor = S2Display.INSTANCE.tangentSpaceM2P(Tensors.vector(0, 1, 0));
     assertEquals(Dimensions.of(tensor), List.of(2, 3));
   }
 
@@ -35,7 +35,7 @@ class S2DisplayTest {
   @Test
   void testTangent() {
     Tensor xyz = Vector2Norm.NORMALIZE.apply(Tensors.vector(1, 0.3, 0.5));
-    Tensor matrix = S2Display.INSTANCE.tangentSpace(xyz);
+    Tensor matrix = S2Display.INSTANCE.tangentSpaceM2P(xyz);
     assertEquals(Dimensions.of(matrix), List.of(2, 3));
     Tolerance.CHOP.requireAllZero(matrix.dot(xyz));
   }
@@ -53,6 +53,6 @@ class S2DisplayTest {
 
   @Test
   void testFail() {
-    assertThrows(Exception.class, () -> S2Display.INSTANCE.tangentSpace(Tensors.vector(1, 1, 1)));
+    assertThrows(Exception.class, () -> S2Display.INSTANCE.tangentSpaceM2P(Tensors.vector(1, 1, 1)));
   }
 }

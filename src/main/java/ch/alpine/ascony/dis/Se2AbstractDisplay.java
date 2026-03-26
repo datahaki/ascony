@@ -22,7 +22,7 @@ public abstract class Se2AbstractDisplay implements ManifoldDisplay {
   }
 
   @Override // from ManifoldDisplay
-  public final TensorUnaryOperator tangentProjection(Tensor p) {
+  public final TensorUnaryOperator tangentProjectionM2P(Tensor p) {
     return v -> v.extract(0, 2);
   }
 
