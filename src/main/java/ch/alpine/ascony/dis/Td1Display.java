@@ -51,14 +51,9 @@ public enum Td1Display implements ManifoldDisplay {
 
   @Override // from ManifoldDisplay
   public Tensor point2xya(Tensor p) {
-    return Append.of(point2xy(p), RealScalar.ZERO);
-  }
-
-  @Override // from ManifoldDisplay
-  public Tensor point2xy(Tensor p) {
     Tensor q = VectorQ.requireLength(p, 2).copy();
     q.set(Log.FUNCTION, 1);
-    return q;
+    return Append.of(q, RealScalar.ZERO);
   }
 
   @Override // from ManifoldDisplay
