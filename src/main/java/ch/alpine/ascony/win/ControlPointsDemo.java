@@ -230,13 +230,13 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
     }
     {
       boolean hasSe2 = permitted_manifoldDisplays().stream().map(ManifoldDisplays::manifoldDisplay) //
-          .filter(ManifoldDisplay::isXY_Angle).findAny().isPresent();
+          .filter(ManifoldDisplay::isDubins).findAny().isPresent();
       boolean curvyc = controlPointType().equals(ControlPointType.CURVYCURV);
       if (hasSe2 && curvyc) {
         JButton jButton = new JButton("dubins");
         jButton.setToolTipText("project control points to dubins path");
         jButton.addActionListener(_ -> {
-          if (manifoldDisplay().isXY_Angle())
+          if (manifoldDisplay().isDubins())
             controlPointsRender.setControlPointsSe2( //
                 DubinsGenerator.project(controlPointsRender.getControlPointsSe2()));
         });

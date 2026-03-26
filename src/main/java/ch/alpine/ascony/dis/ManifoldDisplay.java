@@ -40,7 +40,9 @@ public interface ManifoldDisplay {
   boolean isXYeuclid();
 
   /** @return true for clothoids and se(2)s */
-  boolean isXY_Angle();
+  default boolean isDubins() {
+    return false;
+  }
 
   /** @param xya vector of length 3
    * @return control point */

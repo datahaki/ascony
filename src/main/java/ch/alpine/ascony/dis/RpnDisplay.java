@@ -36,11 +36,6 @@ public abstract class RpnDisplay implements ManifoldDisplay {
     return false;
   }
 
-  @Override
-  public final boolean isXY_Angle() {
-    return false;
-  }
-
   @Override // from ManifoldDisplay
   public final GeodesicSpace geodesicSpace() {
     return rpnManifold;

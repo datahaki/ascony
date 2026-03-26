@@ -10,14 +10,13 @@ import ch.alpine.sophus.lie.so.So3Exponential;
 import ch.alpine.sophus.lie.so.So3Group;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.alg.Dot;
-import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.alg.UnitVector;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 
 /** orthogonal 3 x 3 matrices */
 public class So3Display implements ManifoldDisplay {
   private static final Tensor SPIKY = SpikyPoly.normal(RealScalar.of(0.003));
+  public static final Tensor REF = UnitVector.of(3, 2).unmodifiable();
   // ---
   public static final ManifoldDisplay INSTANCE = new So3Display();
 
@@ -39,40 +38,19 @@ public class So3Display implements ManifoldDisplay {
     return false;
   }
 
-  @Override
-  public final boolean isXY_Angle() {
-    return false;
-  }
-
   @Override // from ManifoldDisplay
   public Tensor xya2point(Tensor xya) {
-    Tensor p = UnitVector.of(3, 2);
-    Tensor q = S2Display.INSTANCE.xya2point(xya.extract(0, 2).append(RealScalar.ZERO));
-    Tensor ang = So3Exponential.vectorExp(p.multiply(xya.Get(2).negate()));
-    // Tolerance.CHOP.requireClose(p, ang.dot(p));
-    Tensor rpq = SnRotationMatrix.of(q, p);
-    // Tolerance.CHOP.requireClose(p, rpq.dot(q));
-    Tensor res = Dot.of(ang, rpq);
-    // Tolerance.CHOP.requireClose(p, res.dot(q));
-    return Transpose.of(res);
+    // use the point on S^2 as rotation axis
+    Tensor xyz = S2Display.INSTANCE.xya2point(xya.extract(0, 2).append(RealScalar.ZERO));
+    return SnRotationMatrix.of(REF, xyz).dot(So3Exponential.vectorExp(REF.multiply(xya.Get(2))));
   }
 
   @Override // from ManifoldDisplay
   public Tensor point2xya(Tensor p) {
-    Tensor u = UnitVector.of(3, 2);
-    Tensor v = p.get(Tensor.ALL, 2);
-    // IO.println("q=" + q);
-    Tensor rpq = SnRotationMatrix.of(v, u);
-    Tensor ang = rpq.dot(p);
-    // IO.println("ANG=" + Pretty.of(ang));
-    Tensor vec = So3Exponential.INSTANCE.vectorLog().apply(ang);
-    // IO.println("vec=" + vec);
-    // Tensor q = UnitVector.of(3, 2);
-    // Tensor q = S2Display.INSTANCE.xya2point(xya.extract(0, 2).append(RealScalar.ZERO));
-    // Tensor ang = So3Exponential.vectorExp(p.multiply(xya.Get(2)));
-    // Tensor rpq = SnRotationMatrix.of(p, q);
-    // return Dot.of(ang, rpq);
-    return v.extract(0, 2).append(vec.Get(2));
+    Tensor xyz = p.get(Tensor.ALL, 2);
+    Tensor rot = SnRotationMatrix.of(xyz, REF).dot(p);
+    Tensor vec = So3Exponential.INSTANCE.vectorLog().apply(rot);
+    return xyz.extract(0, 2).append(vec.Get(2));
   }
 
   @Override // from ManifoldDisplay
@@ -82,6 +60,7 @@ public class So3Display implements ManifoldDisplay {
 
   @Override // from ManifoldDisplay
   public Tensor matrixLift(Tensor p) {
+    // TODO design more like S2Display
     return Se2Matrix.of(point2xya(p));
   }
 
@@ -89,7 +68,6 @@ public class So3Display implements ManifoldDisplay {
   public LieGroup geodesicSpace() {
     return So3Group.INSTANCE;
   }
-  // TODO ASCONA ALG line distance should be similar to s^3
 
   @Override // from ManifoldDisplay
   public RenderInterface background() {

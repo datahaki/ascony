@@ -35,9 +35,9 @@ import ch.alpine.tensor.sca.pow.Sqrt;
 /** symmetric positive definite 2 x 2 matrices */
 public class S2Display extends SnDisplay {
   private static final TensorUnaryOperator PAD_RIGHT = PadRight.zeros(3, 3);
+  private static final Tensor REF = UnitVector.of(3, 2).unmodifiable();
   // ---
   public static final S2Display INSTANCE = new S2Display();
-  private static final Tensor REF_PNT = UnitVector.of(3, 2);
 
   private S2Display() {
     super(2);
@@ -62,10 +62,10 @@ public class S2Display extends SnDisplay {
   /** @param xyz vector with Vector2Norm == 1, point on 2-dimensional sphere
    * @return 2 x 3 matrix with rows spanning the space tangent to given xyz */
   Tensor tangentSpaceM2P(Tensor xyz) {
-    if (Tolerance.CHOP.isClose(REF_PNT, xyz.negate()))
+    if (Tolerance.CHOP.isClose(REF, xyz.negate()))
       return NullSpace.of(Tensors.of(xyz));
     // hs transport
-    return SnRotationMatrix.of(xyz, REF_PNT).extract(0, 2);
+    return SnRotationMatrix.of(xyz, REF).extract(0, 2);
   }
 
   @Override // from ManifoldDisplay

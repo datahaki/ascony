@@ -40,11 +40,6 @@ public abstract class SnDisplay implements ManifoldDisplay {
   }
 
   @Override
-  public final boolean isXY_Angle() {
-    return false;
-  }
-
-  @Override
   public final GeodesicSpace geodesicSpace() {
     return sphere;
   }

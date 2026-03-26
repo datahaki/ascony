@@ -35,7 +35,7 @@ public abstract class AbstractClothoidDisplay implements ManifoldDisplay {
   }
 
   @Override
-  public final boolean isXY_Angle() {
+  public final boolean isDubins() {
     return true;
   }
 

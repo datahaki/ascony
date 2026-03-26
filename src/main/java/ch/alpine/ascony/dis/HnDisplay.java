@@ -37,11 +37,6 @@ public abstract class HnDisplay implements ManifoldDisplay {
     return false;
   }
 
-  @Override
-  public final boolean isXY_Angle() {
-    return false;
-  }
-
   @Override // from ManifoldDisplay
   public final Tensor xya2point(Tensor xya) {
     return xya.extract(0, dimensions);
