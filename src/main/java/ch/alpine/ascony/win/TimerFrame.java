@@ -3,9 +3,9 @@ package ch.alpine.ascony.win;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Graphics2D;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
 import java.time.Duration;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,9 +22,11 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
 
 import ch.alpine.bridge.awt.AwtUtil;
-import ch.alpine.bridge.awt.OffscreenRender;
 import ch.alpine.bridge.awt.WindowClosed;
 import ch.alpine.bridge.gfx.GeometricComponent;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.RenderInterface;
+import ch.alpine.bridge.io.GitHubCI;
 import ch.alpine.tensor.Throw;
 
 public class TimerFrame extends JFrame {
@@ -77,6 +79,13 @@ public class TimerFrame extends JFrame {
     // the object "timer" is a mutable field !
     WindowClosed.runs(this, () -> timer.cancel());
     AwtUtil.ctrlW(this);
+    if (GitHubCI.isRunner())
+      geometricComponent.addRenderInterface(new RenderInterface() {
+        @Override
+        public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
+          IO.println("TIMER FRAME " + getSize());
+        }
+      });
   }
 
   public final JToolBar jToolBar() {
@@ -85,10 +94,6 @@ public class TimerFrame extends JFrame {
 
   public final GeometricComponent geometricComponent() {
     return geometricComponent;
-  }
-
-  public final BufferedImage offscreen() {
-    return OffscreenRender.of(geometricComponent);
   }
 
   private boolean west_available = true;
