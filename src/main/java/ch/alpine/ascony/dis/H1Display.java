@@ -24,7 +24,8 @@ public class H1Display extends HnDisplay {
 
   @Override // from ManifoldDisplay
   public TensorUnaryOperator tangentProjectionM2P(Tensor xyz) {
-    return v -> Append.of(v, RealScalar.ZERO); // TODO can be better
+    // TODO ASCONY can be better
+    return v -> Append.of(v, RealScalar.ZERO);
   }
 
   @Override

@@ -55,7 +55,7 @@ public class So3Display implements ManifoldDisplay {
 
   @Override // from ManifoldDisplay
   public Tensor matrixLift(Tensor p) {
-    // TODO design more like S2Display
+    // TODO ASCONY design more like S2Display
     return Se2Matrix.of(point2xya(p));
   }
 

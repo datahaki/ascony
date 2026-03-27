@@ -285,7 +285,7 @@ public class LeversRender {
   public void renderTangentsXtoP(boolean tangentPlane) {
     HomogeneousSpace homogeneousSpace = manifoldDisplay.homogeneousSpace();
     Tensor vs = Tensor.of(sequence.stream().map(homogeneousSpace.tangentSpace(origin)::log));
-    // TODO pipeline to get tangent space coordinate system not like this
+    // TODO ASCONY pipeline to get tangent space coordinate system not like this
     geometricLayer.pushMatrix(manifoldDisplay.matrixLift(origin));
     graphics.setStroke(STROKE_TANGENT);
     graphics.setColor(COLOR_TANGENT);
@@ -376,7 +376,7 @@ public class LeversRender {
 
   private void renderEllipse(Tensor p, Tensor sigma_inverse) {
     Tensor vs = null;
-    // TODO ASCONA should be part of manifoldDisplay interface
+    // TODO ASCONY should be part of manifoldDisplay interface
     if (manifoldDisplay.equals(R2Display.INSTANCE) || //
         manifoldDisplay.equals(H2Display.INSTANCE))
       vs = CIRCLE;

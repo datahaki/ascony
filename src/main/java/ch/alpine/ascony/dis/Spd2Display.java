@@ -22,7 +22,7 @@ import ch.alpine.tensor.red.Diagonal;
 public enum Spd2Display implements ManifoldDisplay {
   INSTANCE;
 
-  // TODO ASCONA make as scale == 1 and zoom instead, or justify
+  // TODO ASCONY make as scale == 1 and zoom instead, or justify
   private static final Scalar SCALE = RealScalar.of(0.15);
   private static final Tensor CIRCLE_POINTS = CirclePoints.of(43).multiply(SCALE).unmodifiable();
   private static final TensorUnaryOperator PAD_RIGHT = PadRight.zeros(3, 3);

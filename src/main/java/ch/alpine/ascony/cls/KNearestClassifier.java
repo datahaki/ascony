@@ -26,7 +26,7 @@ public class KNearestClassifier extends Classifier {
   public ClassificationResult result(Tensor weights) {
     Integers.requireEquals(weights.length(), labels.length);
     // ---
-    // TODO ASCONA ALG this is not finished yet!
+    // TODO ASCONY ALG this is not finished yet!
     Map<Tensor, Long> map = Tally.of(Ordering.INCREASING.stream(weights) //
         .limit(k) //
         .map(i -> labels[i]) //

@@ -6,7 +6,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.sca.ply.TripleReduceExtrapolation;
 
-// TODO ASCONA name is not good
+// TODO ASCONY name is not good
 public enum RnLineTrim {
   ;
   public static final TripleReduceExtrapolation TRIPLE_REDUCE_EXTRAPOLATION = new TripleReduceExtrapolation() {

@@ -34,7 +34,7 @@ public class ImageRender implements RenderInterface {
     Tensor scale = Times.of(Tensors.vector(meshgrid.width(), meshgrid.height()), range.maps(Scalar::reciprocal));
     Tensor mat = Se2Matrix.translation(Tensors.of(clipX.min(), clipY.min()));
     Tensor res = mat.dot(Times.of(Append.of(scale.maps(Scalar::reciprocal), RealScalar.ONE), Se2Matrix.flipY(meshgrid.height())));
-    // TODO use PVM
+    // TODO ASCONY use PVM
     Tensor dig = PvmBuilder.rhs().setOffset(0, meshgrid.height()).digest();
     // IO.println("====");
     // IO.println(Pretty.of(res.maps(Round._3)));

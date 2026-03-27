@@ -151,7 +151,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
         if (!hold && Tensors.nonEmpty(controlPointsSe2.points_se2()) && controlPointType().indicateMidpoint()) {
           graphics.setColor(Color.RED);
           graphics.setStroke(STROKE);
-          // TODO visualization can be enhanced
+          // TODO ASCONY visualization can be enhanced
           graphics.draw(geometricLayer.toLine2D(mouse, new Midpoints().closestXY()));
           graphics.setStroke(new BasicStroke());
         }
