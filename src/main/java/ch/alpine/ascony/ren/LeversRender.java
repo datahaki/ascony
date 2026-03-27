@@ -10,7 +10,6 @@ import java.awt.Rectangle;
 import java.awt.Stroke;
 import java.awt.geom.Path2D;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import ch.alpine.ascony.dis.H2Display;
 import ch.alpine.ascony.dis.ManifoldDisplay;
@@ -44,6 +43,7 @@ import ch.alpine.tensor.alg.Subdivide;
 import ch.alpine.tensor.alg.Transpose;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.api.TensorUnaryOperator;
+import ch.alpine.tensor.ext.Int;
 import ch.alpine.tensor.img.ColorDataGradient;
 import ch.alpine.tensor.img.ColorDataIndexed;
 import ch.alpine.tensor.img.ColorFormat;
@@ -230,13 +230,13 @@ public class LeversRender {
     graphics.setFont(FONT_MATRIX);
     FontMetrics fontMetrics = graphics.getFontMetrics();
     int fheight = fontMetrics.getAscent();
-    AtomicInteger atomicInteger = new AtomicInteger();
+    Int myI = new Int();
     for (Tensor point : sequence) {
       Tensor matrix = manifoldDisplay.matrixLift(point);
       geometricLayer.pushMatrix(matrix);
       Path2D path2d = geometricLayer.toPath2D(shape, true);
       Rectangle rectangle = path2d.getBounds();
-      Scalar rounded = Round._2.apply(weights.Get(atomicInteger.getAndIncrement()));
+      Scalar rounded = Round._2.apply(weights.Get(myI.getAndIncrement()));
       String string = " " + rounded.toString();
       int pix = rectangle.x + rectangle.width;
       int piy = rectangle.y + rectangle.height + (-rectangle.height + fheight) / 2;

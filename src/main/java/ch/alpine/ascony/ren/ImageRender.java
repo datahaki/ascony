@@ -30,7 +30,7 @@ public class ImageRender implements RenderInterface {
   public static Tensor pixel2model(Meshgrid meshgrid) {
     Clip clipX = meshgrid.cbb().clip(0);
     Clip clipY = meshgrid.cbb().clip(1);
-    Tensor range = Tensors.of(clipX.width(), clipY.width());
+    Tensor range = Tensors.of(clipX.length(), clipY.length());
     Tensor scale = Times.of(Tensors.vector(meshgrid.width(), meshgrid.height()), range.maps(Scalar::reciprocal));
     Tensor mat = Se2Matrix.translation(Tensors.of(clipX.min(), clipY.min()));
     Tensor res = mat.dot(Times.of(Append.of(scale.maps(Scalar::reciprocal), RealScalar.ONE), Se2Matrix.flipY(meshgrid.height())));
