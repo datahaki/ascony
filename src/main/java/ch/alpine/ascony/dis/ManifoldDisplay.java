@@ -1,8 +1,6 @@
 // code by jph
 package ch.alpine.ascony.dis;
 
-import java.util.concurrent.ThreadLocalRandom;
-
 import ch.alpine.ascony.msh.D2Raster;
 import ch.alpine.ascony.ren.PointsRender;
 import ch.alpine.bridge.gfx.ColorPair;
@@ -22,6 +20,7 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
+import ch.alpine.tensor.pdf.RandomSample;
 import ch.alpine.tensor.pdf.RandomSampleInterface;
 
 /** Hint: the interface is intended for use in the demo layer
@@ -140,7 +139,6 @@ public interface ManifoldDisplay {
   }
 
   default Tensor indetPoint() {
-    return randomSampleInterface().randomSample(ThreadLocalRandom.current()) //
-        .maps(_ -> DoubleScalar.INDETERMINATE);
+    return RandomSample.of(randomSampleInterface()).maps(_ -> DoubleScalar.INDETERMINATE);
   }
 }

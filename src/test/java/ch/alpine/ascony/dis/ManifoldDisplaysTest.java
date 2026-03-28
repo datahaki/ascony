@@ -5,9 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,10 +17,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
+import ch.alpine.ascony.ren.ColorPairs;
+import ch.alpine.bridge.gfx.GeometricLayer;
+import ch.alpine.bridge.gfx.PvmBuilder;
 import ch.alpine.sophus.api.Manifold;
 import ch.alpine.sophus.api.MetricManifold;
 import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.lie.se.SeNGroup;
+import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
@@ -40,15 +45,26 @@ class ManifoldDisplaysTest {
   @EnumSource
   void testRandom(ManifoldDisplays manifoldDisplays) {
     ManifoldDisplay md = manifoldDisplays.manifoldDisplay();
+    md.indetPoint();
     RandomSampleInterface randomSampleInterface = md.randomSampleInterface();
-    Objects.requireNonNull(randomSampleInterface);
     Tensor p = RandomSample.of(randomSampleInterface);
+    md.showPoints(ColorPairs.APPROXIMATION, RealScalar.ONE, Tensors.of(p));
     Tensor xy = md.point2xy(p);
     Tensor xya = md.point2xya(p);
     VectorQ.requireLength(xy, 2);
     VectorQ.requireLength(xya, 3);
     Tensor matrix = md.matrixLift(p);
     SE2_MATRIX_GROUP.isPointQ().require(matrix);
+  }
+
+  @ParameterizedTest
+  @EnumSource
+  void testBackground(ManifoldDisplays manifoldDisplays) {
+    GeometricLayer geometricLayer = new GeometricLayer(PvmBuilder.rhs().digest());
+    BufferedImage bufferedImage = new BufferedImage(300, 300, BufferedImage.TYPE_INT_ARGB);
+    Graphics2D graphics = bufferedImage.createGraphics();
+    manifoldDisplays.manifoldDisplay().background().render(geometricLayer, graphics);
+    graphics.dispose();
   }
 
   @ParameterizedTest
@@ -141,28 +157,16 @@ class ManifoldDisplaysTest {
       assertTrue(manifoldDisplays.manifoldDisplay().geodesicSpace() instanceof MetricManifold);
   }
 
-  @Test
-  void testRandomSample() {
-    for (ManifoldDisplays manifoldDisplays : ManifoldDisplays.manifolds()) {
-      if (Objects.isNull(manifoldDisplays.manifoldDisplay().randomSampleInterface())) {
-        System.err.println(manifoldDisplays);
-        fail();
-      }
-    }
-  }
-
   @ParameterizedTest
   @EnumSource
   void testList(ManifoldDisplays manifoldDisplays) {
     ManifoldDisplay manifoldDisplay = manifoldDisplays.manifoldDisplay();
     RandomSampleInterface randomSampleInterface = manifoldDisplay.randomSampleInterface();
-    if (Objects.nonNull(randomSampleInterface)) {
-      Tensor p = RandomSample.of(randomSampleInterface);
-      Tensor xya = manifoldDisplay.point2xya(p);
-      Tensor q = manifoldDisplay.xya2point(xya);
-      if (!manifoldDisplays.equals(ManifoldDisplays.So3))
-        Tolerance.CHOP.requireClose(p, q);
-    }
+    Tensor p = RandomSample.of(randomSampleInterface);
+    Tensor xya = manifoldDisplay.point2xya(p);
+    Tensor q = manifoldDisplay.xya2point(xya);
+    if (!manifoldDisplays.equals(ManifoldDisplays.So3))
+      Tolerance.CHOP.requireClose(p, q);
   }
 
   @ParameterizedTest
@@ -170,12 +174,10 @@ class ManifoldDisplaysTest {
   void testToPoint2(ManifoldDisplays manifoldDisplays) {
     ManifoldDisplay manifoldDisplay = manifoldDisplays.manifoldDisplay();
     RandomSampleInterface randomSampleInterface = manifoldDisplay.randomSampleInterface();
-    if (Objects.nonNull(randomSampleInterface)) {
-      Tensor p = RandomSample.of(randomSampleInterface);
-      Tensor xya = manifoldDisplay.point2xya(p);
-      Tensor xy_ = manifoldDisplay.point2xy(p);
-      Tolerance.CHOP.requireClose(xya.extract(0, 2), xy_);
-    }
+    Tensor p = RandomSample.of(randomSampleInterface);
+    Tensor xya = manifoldDisplay.point2xya(p);
+    Tensor xy_ = manifoldDisplay.point2xy(p);
+    Tolerance.CHOP.requireClose(xya.extract(0, 2), xy_);
   }
 
   @ParameterizedTest
@@ -183,13 +185,11 @@ class ManifoldDisplaysTest {
   void testToPoint3(ManifoldDisplays manifoldDisplays) {
     ManifoldDisplay manifoldDisplay = manifoldDisplays.manifoldDisplay();
     RandomSampleInterface randomSampleInterface = new BoxRandomSample(CoordinateBoundingBox.of(Clips.unit(), Clips.unit(), Clips.unit()));
-    if (Objects.nonNull(randomSampleInterface)) {
-      Tensor rand = RandomSample.of(randomSampleInterface);
-      Tensor p = manifoldDisplay.xya2point(rand);
-      Tensor xya = manifoldDisplay.point2xya(p);
-      Tensor xy_ = manifoldDisplay.point2xy(p);
-      Tolerance.CHOP.requireClose(xya.extract(0, 2), xy_);
-    }
+    Tensor rand = RandomSample.of(randomSampleInterface);
+    Tensor p = manifoldDisplay.xya2point(rand);
+    Tensor xya = manifoldDisplay.point2xya(p);
+    Tensor xy_ = manifoldDisplay.point2xy(p);
+    Tolerance.CHOP.requireClose(xya.extract(0, 2), xy_);
   }
 
   @Test
@@ -201,7 +201,6 @@ class ManifoldDisplaysTest {
   @Test
   void testRaster() {
     assertTrue(5 <= ManifoldDisplays.d2Rasters().size());
-    ManifoldDisplays.d2Rasters().forEach(IO::println);
   }
 
   @Test

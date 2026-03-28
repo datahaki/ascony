@@ -24,10 +24,11 @@ public class AbstractDemo extends TimerFrame implements WindowProvider {
   }
 
   // ---
+  final ObjectsParam objectsParam;
   private final Map<Object, FieldsEditor> map = new IdentityHashMap<>();
 
   protected AbstractDemo(Object... objects) {
-    ObjectsParam objectsParam = new ObjectsParam(objects);
+    objectsParam = new ObjectsParam(objects);
     ResourceLocator resourceLocator = ResourceLocator.of(getClass());
     resourceLocator.tryLoad(objectsParam);
     WindowClosed.runs(this, () -> resourceLocator.trySave(objectsParam));
