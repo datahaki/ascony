@@ -10,6 +10,10 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
       fail-fast: false
     runs-on: ${{ matrix.os }}
+    env:
+      MAVEN_OPTS: -Dstyle.color=always
+      FORCE_COLOR: 1
+      TERM: xterm-256color
     steps:
       - name: checkout main repo
         uses: actions/checkout@v5
@@ -61,7 +65,7 @@ jobs:
         shell: bash
         run: |
           if [ "$RUNNER_OS" == "Linux" ]; then
-            xvfb-run --auto-servernum mvn -B test
+            xvfb-run --auto-servernum mvn -B -Dstyle.color=always test
           else
-            mvn -B test
+            mvn -B -Dstyle.color=always test
           fi

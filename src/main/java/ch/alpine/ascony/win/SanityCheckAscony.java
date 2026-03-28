@@ -54,9 +54,10 @@ public class SanityCheckAscony extends SanityCheckRunProvider {
         manifoldDisplayDemo.setManifoldDisplay(manifoldDisplays);
         geometricComponent.printAll(graphics);
       } catch (Exception exception) {
-        GitHubCI.SEVERE.println(manifoldDisplayDemo.getClass().getName() + " MD=" + manifoldDisplays);
+        GitHubCI.SEVERE.println(manifoldDisplayDemo.getClass().getName() + " :: " + manifoldDisplays);
         GitHubCI.SEVERE.println(ObjectProperties.list(manifoldDisplayDemo.objectsParam));
         graphics.dispose();
+        exception.printStackTrace();
         throw exception;
       }
     graphics.dispose();
