@@ -3,7 +3,7 @@ package ch.alpine.ascony.ren;
 
 import java.awt.Color;
 
-import ch.alpine.bridge.gfx.ColorPair;
+import ch.alpine.bridge.col.ColorPair;
 
 public enum ColorPairs {
   ;

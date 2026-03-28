@@ -17,7 +17,7 @@ import ch.alpine.ascony.dis.R2Display;
 import ch.alpine.ascony.dis.Rp2Display;
 import ch.alpine.ascony.dis.S2Display;
 import ch.alpine.ascony.dis.Se2AbstractDisplay;
-import ch.alpine.bridge.gfx.ColorPair;
+import ch.alpine.bridge.col.ColorPair;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.TextContour;
 import ch.alpine.sophis.dv.Biinvariant;

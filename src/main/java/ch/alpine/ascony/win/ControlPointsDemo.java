@@ -18,7 +18,7 @@ import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.ascony.ren.ColorPairs;
 import ch.alpine.ascony.ren.LeversRender;
 import ch.alpine.bridge.awt.AwtUtil;
-import ch.alpine.bridge.gfx.ColorPair;
+import ch.alpine.bridge.col.ColorPair;
 import ch.alpine.bridge.gfx.GeometricComponent;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.RenderInterface;
