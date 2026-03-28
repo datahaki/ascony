@@ -12,11 +12,9 @@ import ch.alpine.bridge.pro.SanityCheckRunProvider;
 import ch.alpine.bridge.pro.WindowProvider;
 import ch.alpine.bridge.ref.util.ObjectProperties;
 import ch.alpine.bridge.ref.util.RandomFieldsAssignment;
-import ch.alpine.tensor.Throw;
 
 /** DO NOT USE IN THE APPLICATION LAYER */
 public class SanityCheckAscony extends SanityCheckRunProvider {
-  private static final int SIZE = 800;
   private final int limit;
 
   public SanityCheckAscony(int limit) {
@@ -29,7 +27,7 @@ public class SanityCheckAscony extends SanityCheckRunProvider {
       subcheck(windowProvider);
       RandomFieldsAssignment.of(abstractDemo.objectsParam).randomize(limit) //
           .forEach(obj -> {
-            GitHubCI.println(" PARAM=" + ObjectProperties.list(obj));
+            GitHubCI.INFO.println(ObjectProperties.list(obj));
             subcheck(windowProvider);
           });
     } else
@@ -51,17 +49,16 @@ public class SanityCheckAscony extends SanityCheckRunProvider {
     BufferedImage bufferedImage = new BufferedImage(SIZE, SIZE, BufferedImage.TYPE_INT_ARGB);
     Graphics2D graphics = bufferedImage.createGraphics();
     manifoldDisplayDemo.getWindow().setSize(SIZE, SIZE);
-    boolean status = true;
     for (ManifoldDisplays manifoldDisplays : manifoldDisplayDemo.permitted_manifoldDisplays())
       try {
         manifoldDisplayDemo.setManifoldDisplay(manifoldDisplays);
         geometricComponent.printAll(graphics);
       } catch (Exception exception) {
-        GitHubCI.println("Exception in: " + manifoldDisplayDemo.getClass().getName() + " MD=" + manifoldDisplays);
-        exception.printStackTrace();
-        status = false;
+        GitHubCI.SEVERE.println(manifoldDisplayDemo.getClass().getName() + " MD=" + manifoldDisplays);
+        GitHubCI.SEVERE.println(ObjectProperties.list(manifoldDisplayDemo.objectsParam));
+        graphics.dispose();
+        throw exception;
       }
     graphics.dispose();
-    Throw.unless(status);
   }
 }
