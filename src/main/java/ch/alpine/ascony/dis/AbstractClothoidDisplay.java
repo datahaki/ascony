@@ -1,7 +1,7 @@
 // code by jph
 package ch.alpine.ascony.dis;
 
-import ch.alpine.ascony.api.Spearhead;
+import ch.alpine.ascony.crv.Spearhead;
 import ch.alpine.ascony.ren.EmptyRender;
 import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.sophus.clt.ClothoidBuilder;

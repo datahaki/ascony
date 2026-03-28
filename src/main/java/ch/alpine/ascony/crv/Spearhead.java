@@ -1,5 +1,5 @@
 // code by jph
-package ch.alpine.ascony.api;
+package ch.alpine.ascony.crv;
 
 import java.util.stream.IntStream;
 

@@ -4,10 +4,10 @@ package ch.alpine.ascony.ren;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 
-import ch.alpine.ascony.dat.GlyphMesh;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.sophis.crv.BezierCurve;
+import ch.alpine.sophis.srf.GlyphMesh;
 import ch.alpine.sophis.srf.SurfaceMesh;
 import ch.alpine.sophus.bm.LinearBiinvariantMean;
 import ch.alpine.tensor.Tensor;
