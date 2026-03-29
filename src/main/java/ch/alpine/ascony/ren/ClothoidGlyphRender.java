@@ -2,14 +2,12 @@
 package ch.alpine.ascony.ren;
 
 import java.awt.Graphics2D;
-import java.awt.Shape;
 
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.sophis.crv.BezierCurve;
 import ch.alpine.sophis.crv.d2.PolygonArea;
 import ch.alpine.sophis.hull.d2.ConvexHull2D;
-import ch.alpine.sophis.srf.GlyphMesh;
 import ch.alpine.sophis.srf.SurfaceMesh;
 import ch.alpine.sophus.bm.LinearBiinvariantMean;
 import ch.alpine.sophus.clt.Clothoid;
@@ -22,7 +20,7 @@ import ch.alpine.tensor.alg.Append;
 import ch.alpine.tensor.api.ScalarTensorFunction;
 import ch.alpine.tensor.sca.Chop;
 
-public record ClothoidGlyphRender(Shape shape, Tensor domain) implements RenderInterface {
+public record ClothoidGlyphRender(SurfaceMesh surfaceMesh, Tensor domain) implements RenderInterface {
   private static final Chop CHOP = Chop._05;
 
   public static ScalarTensorFunction clothoid(Tensor p0, Tensor p1, Tensor p2, Tensor p3) {
@@ -49,7 +47,6 @@ public record ClothoidGlyphRender(Shape shape, Tensor domain) implements RenderI
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
-    SurfaceMesh surfaceMesh = GlyphMesh.of(shape);
     for (int[] face : surfaceMesh.faces()) {
       switch (face.length) {
       case 1: {
