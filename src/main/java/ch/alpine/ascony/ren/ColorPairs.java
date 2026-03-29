@@ -40,6 +40,5 @@ public enum ColorPairs {
   public static final ColorPair ASD = new ColorPair(new Color(160, 160, 160, 192), Color.BLACK);
   public static final ColorPair ASC = new ColorPair(new Color(255, 128, 128, 32), new Color(255, 128, 128, 128));
   public static final ColorPair ASN = new ColorPair(new Color(255, 128, 128, 64), new Color(255, 128, 128, 255));
-  public static final ColorPair TEXT = new ColorPair(Color.BLACK, new Color(255, 255, 255, 128));
   public static final ColorPair DED = new ColorPair(new Color(160, 160, 160, 160), Color.BLACK);
 }

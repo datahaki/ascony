@@ -8,6 +8,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Stroke;
+import java.awt.font.FontRenderContext;
 import java.awt.geom.Path2D;
 import java.util.Objects;
 
@@ -138,11 +139,11 @@ public class LeversRender {
       {
         String string = (index + 1) + " ";
         pix -= fontMetrics.stringWidth(string);
-        textContour.draw(ColorPairs.TEXT, string, pix, piy);
+        textContour.draw(string, pix, piy);
       }
       {
         pix -= fontMetrics.stringWidth(plabel);
-        textContour.draw(ColorPairs.TEXT, plabel, pix, piy - fheight / 3);
+        textContour.draw(plabel, pix, piy - fheight / 3);
       }
       // ---
       geometricLayer.popMatrix();
@@ -168,7 +169,7 @@ public class LeversRender {
     {
       String string = xlabel + " ";
       pix -= fontMetrics.stringWidth(string);
-      textContour.draw(ColorPairs.TEXT, string, pix, piy - fheight / 3);
+      textContour.draw(string, pix, piy - fheight / 3);
       // graphics.drawString(string, pix, piy - fheight / 3);
     }
     geometricLayer.popMatrix();
@@ -240,13 +241,8 @@ public class LeversRender {
       String string = " " + rounded.toString();
       int pix = rectangle.x + rectangle.width;
       int piy = rectangle.y + rectangle.height + (-rectangle.height + fheight) / 2;
-      graphics.setColor(Color.WHITE);
-      graphics.drawString(string, pix - 1, piy - 1);
-      graphics.drawString(string, pix + 1, piy - 1);
-      graphics.drawString(string, pix - 1, piy + 1);
-      graphics.drawString(string, pix + 1, piy + 1);
-      graphics.setColor(Color.BLACK);
-      graphics.drawString(string, pix, piy);
+      FontRenderContext frc = graphics.getFontRenderContext();
+      TextContour.of(graphics).draw(string, pix, piy);
       geometricLayer.popMatrix();
     }
   }
