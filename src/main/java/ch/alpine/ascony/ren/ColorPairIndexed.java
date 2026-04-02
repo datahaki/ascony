@@ -2,7 +2,7 @@
 package ch.alpine.ascony.ren;
 
 import ch.alpine.bridge.col.ColorPair;
-import ch.alpine.tensor.img.ColorDataIndexed;
+import ch.alpine.tensor.col.ColorDataIndexed;
 
 public class ColorPairIndexed {
   private final ColorDataIndexed cdiF;

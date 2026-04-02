@@ -6,8 +6,8 @@ import java.awt.Color;
 import java.awt.Stroke;
 import java.io.Serializable;
 
-import ch.alpine.tensor.img.ColorDataIndexed;
-import ch.alpine.tensor.img.ColorDataLists;
+import ch.alpine.tensor.col.ColorDataIndexed;
+import ch.alpine.tensor.col.ColorDataLists;
 
 public record ColorStroke(Color color, Stroke stroke) implements Serializable {
   private static final ColorDataIndexed COLOR_DATA_INDEXED = ColorDataLists._097.strict();

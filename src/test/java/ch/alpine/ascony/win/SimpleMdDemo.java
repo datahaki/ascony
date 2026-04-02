@@ -8,7 +8,7 @@ import java.util.Collection;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.ref.ann.ReflectionMarker;
-import ch.alpine.tensor.img.ColorDataGradients;
+import ch.alpine.tensor.col.ColorDataGradients;
 
 class SimpleMdDemo extends ManifoldDisplayDemo {
   @ReflectionMarker

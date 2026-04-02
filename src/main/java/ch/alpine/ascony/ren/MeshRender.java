@@ -10,8 +10,8 @@ import ch.alpine.tensor.Scalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.chq.FiniteTensorQ;
-import ch.alpine.tensor.img.ColorDataGradient;
-import ch.alpine.tensor.img.ColorFormat;
+import ch.alpine.tensor.col.ColorDataGradient;
+import ch.alpine.tensor.col.ColorFormat;
 
 public record MeshRender(Tensor[][] array, ColorDataGradient colorDataGradient) implements RenderInterface {
   @Override

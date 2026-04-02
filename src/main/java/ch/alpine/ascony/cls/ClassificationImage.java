@@ -5,8 +5,8 @@ import ch.alpine.sophis.dv.Sedarim;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorUnaryOperator;
-import ch.alpine.tensor.img.ColorDataGradients;
-import ch.alpine.tensor.img.ColorDataIndexed;
+import ch.alpine.tensor.col.ColorDataGradients;
+import ch.alpine.tensor.col.ColorDataIndexed;
 
 public enum ClassificationImage {
   BLENDED {

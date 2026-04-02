@@ -3,8 +3,8 @@ package ch.alpine.ascony.ren;
 
 import ch.alpine.sophis.dv.Biinvariants;
 import ch.alpine.tensor.RealScalar;
-import ch.alpine.tensor.img.ColorDataGradient;
-import ch.alpine.tensor.img.ColorDataGradients;
+import ch.alpine.tensor.col.ColorDataGradient;
+import ch.alpine.tensor.col.ColorDataGradients;
 
 public enum LeversHud {
   ;
