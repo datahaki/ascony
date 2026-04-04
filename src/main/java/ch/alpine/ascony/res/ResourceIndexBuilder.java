@@ -10,8 +10,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import ch.alpine.tensor.Tensor;
-import ch.alpine.tensor.Unprotect;
 import ch.alpine.tensor.ext.HomeDirectory;
+import ch.alpine.tensor.io.Export;
 import ch.alpine.tensor.io.StringScalar;
 
 public class ResourceIndexBuilder {
@@ -32,7 +32,11 @@ public class ResourceIndexBuilder {
     check(root);
     Collections.sort(list);
     Tensor tensor = Tensor.of(list.stream().map(StringScalar::of));
-    Unprotect.Export(root.resolve(FILENAME), tensor);
+    try {
+      Export.of(root.resolve(FILENAME), tensor);
+    } catch (IOException ioException) {
+      throw new UncheckedIOException(ioException);
+    }
   }
 
   void check(Path folder) {
