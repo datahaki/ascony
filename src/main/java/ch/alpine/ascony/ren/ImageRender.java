@@ -9,7 +9,6 @@ import ch.alpine.ascony.crv.Box2D;
 import ch.alpine.bridge.fig.Meshgrid;
 import ch.alpine.bridge.gfx.AffineTransforms;
 import ch.alpine.bridge.gfx.GeometricLayer;
-import ch.alpine.bridge.gfx.PvmBuilder;
 import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
@@ -35,7 +34,7 @@ public class ImageRender implements RenderInterface {
     Tensor mat = Se2Matrix.translation(Tensors.of(clipX.min(), clipY.min()));
     Tensor res = mat.dot(Times.of(Append.of(scale.maps(Scalar::reciprocal), RealScalar.ONE), Se2Matrix.flipY(meshgrid.height())));
     // TODO ASCONY use PVM
-    Tensor dig = PvmBuilder.rhs().setOffset(0, meshgrid.height()).digest();
+    // Tensor dig = PvmBuilder.rhs().setOffset(0, meshgrid.height()).digest();
     // IO.println("====");
     // IO.println(Pretty.of(res.maps(Round._3)));
     // IO.println(Pretty.of(dig.maps(Round._3)));

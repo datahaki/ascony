@@ -8,7 +8,6 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Stroke;
-import java.awt.font.FontRenderContext;
 import java.awt.geom.Path2D;
 import java.util.Objects;
 
@@ -241,7 +240,6 @@ public class LeversRender {
       String string = " " + rounded.toString();
       int pix = rectangle.x + rectangle.width;
       int piy = rectangle.y + rectangle.height + (-rectangle.height + fheight) / 2;
-      FontRenderContext frc = graphics.getFontRenderContext();
       TextContour.of(graphics).draw(string, pix, piy);
       geometricLayer.popMatrix();
     }
