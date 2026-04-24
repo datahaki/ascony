@@ -215,7 +215,6 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
 
   private final ControlPointsRender controlPointsRender = new ControlPointsRender();
 
-  @SafeVarargs
   protected ControlPointsDemo(Object... objects) {
     super(objects);
     final GeometricComponent geometricComponent = geometricComponent();

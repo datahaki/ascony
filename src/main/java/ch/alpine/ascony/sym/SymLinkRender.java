@@ -32,7 +32,7 @@ class SymLinkRender implements RenderInterface {
   @Override // from RenderInterface
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
     Tensor position = symLink.position();
-    if (symLink instanceof SymLinkPart symLinkPart) {
+    if (symLink instanceof SymLinkPart(SymLink lP, SymLink lQ, Scalar lambda)) {
       {
         geometricLayer.pushMatrix(Se2Matrix.translation(position));
         Path2D path2d = geometricLayer.toPath2D(CIRCLE_MID);
@@ -43,16 +43,16 @@ class SymLinkRender implements RenderInterface {
         geometricLayer.popMatrix();
       }
       {
-        new SymLinkRender(symLinkPart.lP()).render(geometricLayer, graphics);
-        Tensor there = symLinkPart.lP().position();
+        new SymLinkRender(lP).render(geometricLayer, graphics);
+        Tensor there = lP.position();
         Path2D path2d = geometricLayer.toPath2D(Tensors.of(position, there));
         graphics.setStroke(new BasicStroke(1.5f));
         graphics.setColor(Color.BLACK);
         graphics.draw(path2d);
       }
       {
-        new SymLinkRender(symLinkPart.lQ()).render(geometricLayer, graphics);
-        Tensor there = symLinkPart.lQ().position();
+        new SymLinkRender(lQ).render(geometricLayer, graphics);
+        Tensor there = lQ.position();
         Path2D path2d = geometricLayer.toPath2D(Tensors.of(position, there));
         graphics.setStroke(new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 3 }, 0));
         graphics.setColor(Color.BLACK);
@@ -60,7 +60,7 @@ class SymLinkRender implements RenderInterface {
       }
       {
         Point2D point2d = geometricLayer.toPoint2D(position);
-        String string = nice3(symLinkPart.lambda());
+        String string = nice3(lambda);
         FontMetrics fontMetrics = graphics.getFontMetrics();
         int stringWidth = fontMetrics.stringWidth(string);
         int rgb = 192 + 32;

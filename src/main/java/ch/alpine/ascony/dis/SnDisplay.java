@@ -16,7 +16,7 @@ public abstract class SnDisplay implements ManifoldDisplay {
   private static final Tensor CIRCLE = CirclePoints.of(15).multiply(RealScalar.of(0.05)).unmodifiable();
   // ---
   private final int dimensions;
-  private Sphere sphere;
+  private final Sphere sphere;
 
   protected SnDisplay(int dimensions) {
     this.dimensions = dimensions;

@@ -33,7 +33,6 @@ public abstract class ManifoldDisplayDemo extends AbstractDemo implements Render
   // ---
   private ManifoldDisplays selected_manifoldDisplays;
 
-  @SafeVarargs
   protected ManifoldDisplayDemo(Object... objects) {
     super(objects);
     list = EnumSet.copyOf(permitted_manifoldDisplays()).stream().toList();
@@ -46,7 +45,7 @@ public abstract class ManifoldDisplayDemo extends AbstractDemo implements Render
       }
     });
     listeners.add(this::setManifoldDisplay);
-    if (0 < list.size()) {
+    if (!list.isEmpty()) {
       for (ManifoldDisplays manifoldDisplays : list)
         jTabbedPane.addTab(manifoldDisplays.manifoldDisplay().geodesicSpace().toString(), new JPanel());
       jTabbedPane.addChangeListener(_ -> {
@@ -60,7 +59,7 @@ public abstract class ManifoldDisplayDemo extends AbstractDemo implements Render
     Tensor pvm = PvmBuilder.rhs().setOffset(300, 300).setPerPixel(RealScalar.of(100)).digest();
     geometricComponent.setModel2Pixel(pvm);
     {
-      addChangeListener(new Consumer<ManifoldDisplays>() {
+      addChangeListener(new Consumer<>() {
         Tensor prev = null;
 
         @Override

@@ -18,6 +18,6 @@ public enum RnLineTrim {
     @Override
     protected Tensor petite(Tensor sequence) {
       return sequence.copy();
-    };
+    }
   };
 }

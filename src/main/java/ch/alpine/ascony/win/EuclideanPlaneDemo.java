@@ -6,7 +6,6 @@ import java.util.Collection;
 import ch.alpine.ascony.dis.ManifoldDisplays;
 
 public abstract class EuclideanPlaneDemo extends ControlPointsDemo {
-  @SafeVarargs
   protected EuclideanPlaneDemo(Object... objects) {
     super(objects);
   }
