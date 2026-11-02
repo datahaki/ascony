@@ -60,7 +60,7 @@ public class Sl2Display implements ManifoldDisplay {
 
   @Override
   public TensorUnaryOperator tangentProjectionM2P(Tensor p) {
-    return v -> v.extract(0, 2); // TODO ASCONY !?
+    return v -> v.extract(0, 2); // TODO !?
   }
 
   @Override

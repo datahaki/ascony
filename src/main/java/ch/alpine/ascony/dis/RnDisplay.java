@@ -73,7 +73,7 @@ public abstract class RnDisplay implements ManifoldDisplay {
 
   @Override // from ManifoldDisplay
   public final TensorUnaryOperator tangentProjectionM2P(Tensor p) {
-    // TODO ASCONY not clear
+    // TODO not clear
     return PadRight.zeros(2);
   }
 
