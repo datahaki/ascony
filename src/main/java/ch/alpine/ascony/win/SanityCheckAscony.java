@@ -41,7 +41,7 @@ public class SanityCheckAscony extends SanityCheckRunProvider {
       super.check(windowProvider);
   }
 
-  private void checkDemo(ManifoldDisplayDemo manifoldDisplayDemo) {
+  private static void checkDemo(ManifoldDisplayDemo manifoldDisplayDemo) {
     Window window = manifoldDisplayDemo.getWindow();
     window.setSize(SIZE, SIZE);
     GeometricComponent geometricComponent = manifoldDisplayDemo.geometricComponent();

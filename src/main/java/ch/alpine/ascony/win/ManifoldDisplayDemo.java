@@ -12,6 +12,7 @@ import java.util.function.Consumer;
 
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingConstants;
 
 import ch.alpine.ascony.dis.ManifoldDisplay;
 import ch.alpine.ascony.dis.ManifoldDisplays;
@@ -28,7 +29,7 @@ import ch.alpine.tensor.Tensor;
 /** class is used in other projects outside of owl */
 public abstract class ManifoldDisplayDemo extends AbstractDemo implements RenderInterface {
   private final List<ManifoldDisplays> list;
-  private final JTabbedPane jTabbedPane = new JTabbedPane(JTabbedPane.LEFT);
+  private final JTabbedPane jTabbedPane = new JTabbedPane(SwingConstants.LEFT);
   private final Set<Consumer<ManifoldDisplays>> listeners = new CopyOnWriteLinkedSet<>();
   // ---
   private ManifoldDisplays selected_manifoldDisplays;
