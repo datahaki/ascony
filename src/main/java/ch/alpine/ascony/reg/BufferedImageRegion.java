@@ -21,7 +21,7 @@ import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
 /** region in R2 */
 public class BufferedImageRegion implements MemberQ, BoundedRegion, RenderInterface {
   private transient final BufferedImage bufferedImage;
-  private final CoordinateBoundingBox coordinateBoundingBox;
+  private final CoordinateBoundingBox cbb;
   private final ImageRender imageRender;
   private transient final AffineFrame2D affineFrame;
   private final Tensor pixel2model;
@@ -31,17 +31,17 @@ public class BufferedImageRegion implements MemberQ, BoundedRegion, RenderInterf
   private final boolean outside;
 
   /** @param bufferedImage of type BufferedImage.TYPE_BYTE_GRAY
-   * @param coordinateBoundingBox
+   * @param cbb
    * @param outside membership */
-  public BufferedImageRegion(BufferedImage bufferedImage, CoordinateBoundingBox coordinateBoundingBox, boolean outside) {
+  public BufferedImageRegion(BufferedImage bufferedImage, CoordinateBoundingBox cbb, boolean outside) {
     if (bufferedImage.getType() != BufferedImage.TYPE_BYTE_GRAY)
       throw new IllegalArgumentException("" + bufferedImage.getType());
     this.bufferedImage = bufferedImage;
-    this.coordinateBoundingBox = coordinateBoundingBox;
-    imageRender = new ImageRender(bufferedImage, coordinateBoundingBox);
+    this.cbb = cbb;
+    imageRender = new ImageRender(bufferedImage, cbb);
     width = bufferedImage.getWidth();
     height = bufferedImage.getHeight();
-    pixel2model = ImageRender.pixel2model(new Meshgrid(coordinateBoundingBox, width, height));
+    pixel2model = ImageRender.pixel2model(new Meshgrid(cbb, width, height));
     // IO.println(Pretty.of(pixel2model.maps(Round._4)));
     // IO.println(Pretty.of(Inverse.of(pixel2model).maps(Round._4)));
     affineFrame = new AffineFrame2D(Inverse.of(pixel2model));
@@ -79,6 +79,6 @@ public class BufferedImageRegion implements MemberQ, BoundedRegion, RenderInterf
 
   @Override
   public CoordinateBoundingBox coordinateBounds() {
-    return coordinateBoundingBox;
+    return cbb;
   }
 }

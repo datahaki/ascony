@@ -20,13 +20,13 @@ public enum Box2D {
     return CoordinateBoundingBox.of(clip, clip);
   }
 
-  /** @param coordinateBoundingBox
+  /** @param cbb
    * @return polygon defined by the corners of the first two dimensions of given
    * coordinateBoundingBox starting with the min,min corner and visiting ccw
    * so that {@link PolygonArea} gives a non-negative number */
-  public static Tensor polygon(CoordinateBoundingBox coordinateBoundingBox) {
-    Clip clipX = coordinateBoundingBox.clip(0);
-    Clip clipY = coordinateBoundingBox.clip(1);
+  public static Tensor polygon(CoordinateBoundingBox cbb) {
+    Clip clipX = cbb.clip(0);
+    Clip clipY = cbb.clip(1);
     return Unprotect.byRef( //
         Tensors.of(clipX.min(), clipY.min()), //
         Tensors.of(clipX.max(), clipY.min()), //

@@ -22,9 +22,7 @@ import ch.alpine.tensor.sca.Clip;
 
 /** coordinate bounding box is area of image in model space */
 public class ImageRender implements RenderInterface {
-  /** @param coordinateBoundingBox
-   * @param w
-   * @param h
+  /** @param meshgrid
    * @return */
   public static Tensor pixel2model(Meshgrid meshgrid) {
     Clip clipX = meshgrid.cbb().clip(0);

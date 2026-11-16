@@ -97,7 +97,7 @@ public abstract class RnDisplay implements ManifoldDisplay {
     return EmptyRender.INSTANCE;
   }
 
-  public final CoordinateBoundingBox coordinateBoundingBox() {
+  public final CoordinateBoundingBox cbb() {
     return CoordinateBoundingBox.of(Stream.generate(() -> CLIP).limit(dimensions));
   }
 
