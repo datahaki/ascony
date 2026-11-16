@@ -3,8 +3,6 @@ package ch.alpine.ascony.sym;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.IOException;
-
 import org.junit.jupiter.api.Test;
 
 import ch.alpine.tensor.Rational;
@@ -13,7 +11,7 @@ import ch.alpine.tensor.ext.Serialization;
 
 class SymScalarTest {
   @Test
-  void testSimple() throws ClassNotFoundException, IOException {
+  void testSimple() {
     Serialization.copy(SymScalarLeaf.of(3)).hashCode();
     new SymScalarPart(SymScalarLeaf.of(2), SymScalarLeaf.of(3), Rational.HALF).hashCode();
   }
