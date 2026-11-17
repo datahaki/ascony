@@ -3,7 +3,7 @@ package ch.alpine.ascony.msh;
 
 import java.util.Optional;
 
-import ch.alpine.bridge.fig.Meshgrid;
+import ch.alpine.bridge.math.Meshgrid;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.alg.Rescale;
 import ch.alpine.tensor.io.ImageFormat;

@@ -8,10 +8,10 @@ import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
 
 import ch.alpine.ascony.ren.ImageRender;
-import ch.alpine.bridge.fig.Meshgrid;
 import ch.alpine.bridge.gfx.AffineFrame2D;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.RenderInterface;
+import ch.alpine.bridge.math.Meshgrid;
 import ch.alpine.sophis.reg.BoundedRegion;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.chq.MemberQ;

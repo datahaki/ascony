@@ -6,10 +6,10 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import ch.alpine.ascony.crv.Box2D;
-import ch.alpine.bridge.fig.Meshgrid;
 import ch.alpine.bridge.gfx.AffineTransforms;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.RenderInterface;
+import ch.alpine.bridge.math.Meshgrid;
 import ch.alpine.sophus.lie.se2.Se2Matrix;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
