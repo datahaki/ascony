@@ -10,9 +10,9 @@ import java.awt.Rectangle;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-import ch.alpine.bridge.fig.GridDrawer;
 import ch.alpine.bridge.fig.Show;
-import ch.alpine.bridge.fig.ShowableConfig;
+import ch.alpine.bridge.fig.ShowOptions;
+import ch.alpine.bridge.fig.grd.GridDrawer;
 import ch.alpine.bridge.gfx.GeometricLayer;
 import ch.alpine.bridge.gfx.RenderInterface;
 import ch.alpine.tensor.opt.nd.CoordinateBoundingBox;
@@ -28,7 +28,8 @@ public record GridRender(Supplier<Dimension> supplier) implements RenderInterfac
         Rectangle rectangle = optional.orElseThrow();
         CoordinateBoundingBox cbb = geometricLayer.fromRectangle(rectangle).orElseThrow();
         // the choice of yDecr is mostly correct but not entirely general
-        new GridDrawer().render(ShowableConfig.yDecr(rectangle, cbb), graphics);
+        ShowOptions showOptions = new ShowOptions();
+        new GridDrawer(showOptions).render(showOptions.config(rectangle, cbb), graphics);
       }
     } else {
       graphics.setColor(Color.RED);
