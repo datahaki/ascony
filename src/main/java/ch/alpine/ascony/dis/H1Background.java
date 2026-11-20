@@ -16,7 +16,7 @@ enum H1Background implements RenderInterface {
   INSTANCE;
 
   private static final Color BORDER = new Color(192, 192, 192, 128);
-  private static final Tensor H1_DOMAIN = Subdivide.of(-2.0, 2.0, 20).maps(Power.function(3));
+  private static final Tensor H1_DOMAIN = Subdivide.of(-2.0, 2.0, 20).maps(Power.withExponent(3));
 
   @Override
   public void render(GeometricLayer geometricLayer, Graphics2D graphics) {
