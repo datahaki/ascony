@@ -32,6 +32,7 @@ import ch.alpine.sophus.hs.HomogeneousSpace;
 import ch.alpine.sophus.hs.s.TSnMemberQ;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Array;
@@ -189,7 +190,7 @@ public class LeversRender {
     for (Tensor p : sequence) {
       ScalarTensorFunction scalarTensorFunction = geodesicSpace.curve(origin, p);
       Tensor domain = Subdivide.of(0, 1, 21);
-      Tensor ms = manifoldDisplay.point2xy().slash(domain.maps(scalarTensorFunction));
+      Tensor ms = Slash.of(domain.maps(scalarTensorFunction), manifoldDisplay.point2xy());
       Tensor rgba = COLOR_DATA_GRADIENT.apply(rescale.Get(index));
       graphics.setColor(ColorFormat.toColor(rgba));
       graphics.draw(geometricLayer.toPath2D(ms));
@@ -379,10 +380,10 @@ public class LeversRender {
         manifoldDisplay.equals(Rp2Display.INSTANCE)) {
       TSnMemberQ tSnMemberQ = new TSnMemberQ(p);
       LinearSubspace linearSubspace = LinearSubspace.of(tSnMemberQ::defect, 3);
-      vs = linearSubspace.slash(CIRCLE);
+      vs = Slash.of(CIRCLE, linearSubspace);
     } else //
     if (manifoldDisplay instanceof Se2AbstractDisplay) {
-      vs = PadRight.zeros(3).slash(CIRCLE);
+      vs = Slash.of(CIRCLE, PadRight.zeros(3));
     }
     // ---
     if (Objects.nonNull(vs)) {
@@ -413,7 +414,7 @@ public class LeversRender {
   public void renderEllipseMahalanobis() {
     if (Tensors.nonEmpty(sequence)) {
       Manifold manifold = manifoldDisplay.manifold();
-      Tensor levers = manifold.tangentSpace(origin).vectorLog().slash(sequence);
+      Tensor levers = Slash.of(sequence, manifold.tangentSpace(origin).vectorLog());
       Mahalanobis mahalanobis = new Mahalanobis(levers);
       renderEllipse(origin, mahalanobis.sigma_inverse());
     }
@@ -434,7 +435,7 @@ public class LeversRender {
   public void renderMahalanobisFormXEV(ColorDataGradient colorDataGradient) {
     if (Tensors.nonEmpty(sequence)) {
       Manifold manifold = manifoldDisplay.manifold();
-      Tensor levers = manifold.tangentSpace(origin).vectorLog().slash(sequence);
+      Tensor levers = Slash.of(sequence, manifold.tangentSpace(origin).vectorLog());
       Mahalanobis mahalanobis = new Mahalanobis(levers);
       renderMahalanobisMatrix(origin, mahalanobis, colorDataGradient);
     }
@@ -443,7 +444,7 @@ public class LeversRender {
   public void renderEllipseMahalanobisP() {
     Manifold manifold = manifoldDisplay.manifold();
     for (Tensor point : sequence) {
-      Tensor levers = manifold.tangentSpace(point).vectorLog().slash(sequence);
+      Tensor levers = Slash.of(sequence, manifold.tangentSpace(point).vectorLog());
       Mahalanobis mahalanobis = new Mahalanobis(levers);
       renderEllipse(point, mahalanobis.sigma_inverse());
     }
@@ -454,7 +455,7 @@ public class LeversRender {
   public void renderInfluenceX(ColorDataGradient colorDataGradient) {
     if (Tensors.nonEmpty(sequence)) {
       Manifold manifold = manifoldDisplay.manifold();
-      Tensor levers = manifold.tangentSpace(origin).vectorLog().slash(sequence);
+      Tensor levers = Slash.of(sequence, manifold.tangentSpace(origin).vectorLog());
       Tensor matrix = InfluenceMatrix.of(levers).matrix();
       // ---
       graphics.setFont(FONT_MATRIX);
@@ -470,7 +471,7 @@ public class LeversRender {
       // Tensor matrix = new HsDesign(vectorLogManifold).matrix(sequence, origin);
       Tensor projections = Tensor.of(sequence.stream() //
           .map(point -> InfluenceMatrix.of( //
-              manifold.tangentSpace(point).vectorLog().slash(sequence)).matrix()));
+              Slash.of(sequence, manifold.tangentSpace(point).vectorLog())).matrix()));
       // ---
       graphics.setFont(FONT_MATRIX);
       int index = 0;

@@ -7,6 +7,7 @@ import ch.alpine.sophis.gbc.d2.IterativeCoordinateLevel;
 import ch.alpine.sophis.gbc.d2.ThreePointScalings;
 import ch.alpine.sophis.gbc.d2.ThreePointWeighting;
 import ch.alpine.sophus.api.Manifold;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.api.TensorScalarFunction;
 import ch.alpine.tensor.sca.Chop;
@@ -27,6 +28,6 @@ public enum IterativeGenesis {
 
   public TensorScalarFunction counts(Manifold manifold, Tensor sequence, int max) {
     TensorScalarFunction tsf = with(max);
-    return point -> tsf.apply(manifold.tangentSpace(point).log().slash(sequence));
+    return point -> tsf.apply(Slash.of(sequence, manifold.tangentSpace(point).log()));
   }
 }

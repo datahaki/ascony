@@ -26,6 +26,7 @@ import ch.alpine.sophis.crv.d2.Extract2D;
 import ch.alpine.sophis.crv.dub.DubinsGenerator;
 import ch.alpine.tensor.RealScalar;
 import ch.alpine.tensor.Scalar;
+import ch.alpine.tensor.Slash;
 import ch.alpine.tensor.Tensor;
 import ch.alpine.tensor.Tensors;
 import ch.alpine.tensor.alg.Drop;
@@ -272,7 +273,7 @@ public abstract class ControlPointsDemo extends ManifoldDisplayDemo {
 
   /** @param points */
   public final void setGeodesicControlPoints(Tensor points) {
-    setControlPointsSe2(manifoldDisplay().point2xya().slash(points));
+    setControlPointsSe2(Slash.of(points, manifoldDisplay().point2xya()));
   }
 
   public final Tensor mouseSe2CState() {
